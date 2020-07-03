@@ -30,18 +30,50 @@
 #ifndef MACHO_HPP
 #define MACHO_HPP
 
-#include <MachO/BinaryStream.hpp>
 #include <MachO/BinaryDataStream.hpp>
 #include <MachO/BinaryFileStream.hpp>
+#include <MachO/BinaryStream.hpp>
 #include <MachO/Casts.hpp>
-#include <MachO/File.hpp>
 #include <MachO/FATArch.hpp>
 #include <MachO/FATFile.hpp>
+#include <MachO/File.hpp>
 #include <MachO/Functions.hpp>
 #include <MachO/LoadCommand.hpp>
-#include <MachO/LoadCommands/Unknown.hpp>
-#include <MachO/LoadCommands/LoadDylib.hpp>
+
+#include <MachO/LoadCommands/BuildVersion.hpp>
+#include <MachO/LoadCommands/DyldInfo.hpp>
+#include <MachO/LoadCommands/Dylib.hpp>
+#include <MachO/LoadCommands/Dylinker.hpp>
+#include <MachO/LoadCommands/DysymTab.hpp>
+#include <MachO/LoadCommands/EncryptionInfo.hpp>
+#include <MachO/LoadCommands/EncryptionInfo64.hpp>
+#include <MachO/LoadCommands/EntryPoint.hpp>
+#include <MachO/LoadCommands/FilesetEntry.hpp>
+#include <MachO/LoadCommands/FVMFile.hpp>
+#include <MachO/LoadCommands/FVMLib.hpp>
+#include <MachO/LoadCommands/Ident.hpp>
+#include <MachO/LoadCommands/LinkEditData.hpp>
+#include <MachO/LoadCommands/LinkerOption.hpp>
+#include <MachO/LoadCommands/Note.hpp>
+#include <MachO/LoadCommands/PrebindChecksum.hpp>
+#include <MachO/LoadCommands/PreboundDylib.hpp>
+#include <MachO/LoadCommands/PrePage.hpp>
+#include <MachO/LoadCommands/Routines.hpp>
+#include <MachO/LoadCommands/Routines64.hpp>
+#include <MachO/LoadCommands/RPath.hpp>
 #include <MachO/LoadCommands/Segment.hpp>
 #include <MachO/LoadCommands/Segment64.hpp>
+#include <MachO/LoadCommands/SourceVersion.hpp>
+#include <MachO/LoadCommands/SubClient.hpp>
+#include <MachO/LoadCommands/SubFramework.hpp>
+#include <MachO/LoadCommands/SubLibrary.hpp>
+#include <MachO/LoadCommands/SubUmbrella.hpp>
+#include <MachO/LoadCommands/SymSeg.hpp>
+#include <MachO/LoadCommands/SymTab.hpp>
+#include <MachO/LoadCommands/Thread.hpp>
+#include <MachO/LoadCommands/TwoLevelHints.hpp>
+#include <MachO/LoadCommands/Unknown.hpp>
+#include <MachO/LoadCommands/UUID.hpp>
+#include <MachO/LoadCommands/VersionMin.hpp>
 
 #endif /* MACHO_HPP */

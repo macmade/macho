@@ -105,7 +105,7 @@ void Display::operator()( const MachO::File & file ) const
     
     if( file.loadCommands().size() != 0 )
     {
-        std::vector< MachO::LoadCommands::LoadDylib > dylibs;
+        std::vector< MachO::LoadCommands::Dylib     > dylibs;
         std::vector< MachO::LoadCommands::Segment   > segments;
         std::vector< MachO::LoadCommands::Segment64 > segments64;
         
@@ -121,7 +121,7 @@ void Display::operator()( const MachO::File & file ) const
             
             try
             {
-                dylibs.push_back( dynamic_cast< MachO::LoadCommands::LoadDylib & >( command ) );
+                dylibs.push_back( dynamic_cast< MachO::LoadCommands::Dylib & >( command ) );
             }
             catch( ... )
             {}

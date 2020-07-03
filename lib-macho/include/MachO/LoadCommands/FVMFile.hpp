@@ -23,12 +23,12 @@
  ******************************************************************************/
 
 /*!
- * @header      LoadDylib.hpp
+ * @header      FVMFile.hpp
  * @copyright   (c) 2020, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef MACHO_LOAD_COMMANDS_LOAD_DYLIB_HPP
-#define MACHO_LOAD_COMMANDS_LOAD_DYLIB_HPP
+#ifndef MACHO_LOAD_COMMANDS_FVM_FILE_HPP
+#define MACHO_LOAD_COMMANDS_FVM_FILE_HPP
 
 #include <MachO/LoadCommand.hpp>
 #include <MachO/BinaryStream.hpp>
@@ -37,26 +37,21 @@ namespace MachO
 {
     namespace LoadCommands
     {
-        class LoadDylib: public LoadCommand
+        class FVMFile: public LoadCommand
         {
             public:
                 
-                LoadDylib( uint32_t command, uint32_t size, BinaryStream & stream );
-                LoadDylib( const LoadDylib & o );
-                LoadDylib( LoadDylib && o ) noexcept;
-                ~LoadDylib() override;
+                FVMFile( uint32_t command, uint32_t size, BinaryStream & stream );
+                FVMFile( const FVMFile & o );
+                FVMFile( FVMFile && o ) noexcept;
+                ~FVMFile() override;
                 
-                LoadDylib & operator =( LoadDylib o );
+                FVMFile & operator =( FVMFile o );
                 
                 uint32_t command() const override;
                 uint32_t size()    const override;
                 
-                std::string name()                 const;
-                uint32_t    timestamp()            const;
-                uint32_t    currentVersion()       const;
-                uint32_t    compatibilityVersion() const;
-                
-                friend void swap( LoadDylib & o1, LoadDylib & o2 );
+                friend void swap( FVMFile & o1, FVMFile & o2 );
                 
             private:
                 
@@ -67,4 +62,4 @@ namespace MachO
     }
 }
 
-#endif /* MACHO_LOAD_COMMANDS_LOAD_DYLIB_HPP */
+#endif /* MACHO_LOAD_COMMANDS_FVM_FILE_HPP */

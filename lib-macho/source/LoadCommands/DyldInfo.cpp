@@ -23,18 +23,18 @@
  ******************************************************************************/
 
 /*!
- * @file        LoadDylib.cpp
+ * @file        DyldInfo.cpp
  * @copyright   (c) 2020, Jean-David Gadina - www.xs-labs.com
  */
 
-#include <MachO/LoadCommands/LoadDylib.hpp>
+#include <MachO/LoadCommands/DyldInfo.hpp>
 #include <MachO/Casts.hpp>
 
 namespace MachO
 {
     namespace LoadCommands
     {
-        class LoadDylib::IMPL
+        class DyldInfo::IMPL
         {
             public:
                 
@@ -42,98 +42,62 @@ namespace MachO
                 IMPL( const IMPL & o );
                 ~IMPL();
                 
-                uint32_t    _command;
-                uint32_t    _size;
-                std::string _name;
-                uint32_t    _timestamp;
-                uint32_t    _currentVersion;
-                uint32_t    _compatibilityVersion;
+                uint32_t _command;
+                uint32_t _size;
         };
 
-        LoadDylib::LoadDylib( uint32_t command, uint32_t size, BinaryStream & stream ):
+        DyldInfo::DyldInfo( uint32_t command, uint32_t size, BinaryStream & stream ):
             impl( std::make_unique< IMPL >( command, size, stream ) )
         {}
         
-        LoadDylib::LoadDylib( const LoadDylib & o ):
+        DyldInfo::DyldInfo( const DyldInfo & o ):
             impl( std::make_unique< IMPL >( *( o.impl ) ) )
         {}
 
-        LoadDylib::LoadDylib( LoadDylib && o ) noexcept:
+        DyldInfo::DyldInfo( DyldInfo && o ) noexcept:
             impl( std::move( o.impl ) )
         {}
 
-        LoadDylib::~LoadDylib()
+        DyldInfo::~DyldInfo()
         {}
 
-        LoadDylib & LoadDylib::operator =( LoadDylib o )
+        DyldInfo & DyldInfo::operator =( DyldInfo o )
         {
             swap( *( this ), o );
             
             return *( this );
         }
         
-        uint32_t LoadDylib::command() const
+        uint32_t DyldInfo::command() const
         {
             return this->impl->_command;
         }
         
-        uint32_t LoadDylib::size() const
+        uint32_t DyldInfo::size() const
         {
             return this->impl->_size;
         }
         
-        std::string LoadDylib::name() const
-        {
-            return this->impl->_name;
-        }
-        
-        uint32_t LoadDylib::timestamp() const
-        {
-            return this->impl->_timestamp;
-        }
-        
-        uint32_t LoadDylib::currentVersion() const
-        {
-            return this->impl->_currentVersion;
-        }
-        
-        uint32_t LoadDylib::compatibilityVersion() const
-        {
-            return this->impl->_compatibilityVersion;
-        }
-        
-        void swap( LoadDylib & o1, LoadDylib & o2 )
+        void swap( DyldInfo & o1, DyldInfo & o2 )
         {
             using std::swap;
             
             swap( o1.impl, o2.impl );
         }
         
-        LoadDylib::IMPL::IMPL( uint32_t command, uint32_t size, BinaryStream & stream ):
+        DyldInfo::IMPL::IMPL( uint32_t command, uint32_t size, BinaryStream & stream ):
             _command( command ),
             _size(    size )
         {
-            uint32_t offset( stream.readUInt32() );
-            
-            this->_timestamp            = stream.readUInt32();
-            this->_currentVersion       = stream.readUInt32();
-            this->_compatibilityVersion = stream.readUInt32();
-            
-            stream.seek( offset, BinaryStream::SeekDirection::Begin );
-            
-            this->_name = stream.readNULLTerminatedString();
+            ( void )stream;
         }
         
-        LoadDylib::IMPL::IMPL( const IMPL & o ):
-            _command(              o._command ),
-            _size(                 o._size ),
-            _name(                 o._name ),
-            _timestamp(            o._timestamp ),
-            _currentVersion(       o._currentVersion ),
-            _compatibilityVersion( o._compatibilityVersion )
+        DyldInfo::IMPL::IMPL( const IMPL & o ):
+            _command( o._command ),
+            _size(    o._size )
         {}
 
-        LoadDylib::IMPL::~IMPL()
+        DyldInfo::IMPL::~IMPL()
         {}
     }
 }
