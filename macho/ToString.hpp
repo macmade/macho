@@ -30,8 +30,9 @@
 #ifndef TO_STRING_HPP
 #define TO_STRING_HPP
 
-#include <MachO.hpp>
-#include <stdexcept>
+#include <cstdint>
+#include <string>
+#include <vector>
 
 class ToString
 {
@@ -44,6 +45,7 @@ class ToString
         static std::string size( uint64_t size );
         static std::string cpu( uint32_t type, uint32_t subType );
         static std::string fileType( uint32_t type );
+        static std::vector< std::string > flags( uint32_t value );
 };
 
 #endif /* TO_STRING_HPP */

@@ -337,3 +337,40 @@ std::string ToString::fileType( uint32_t type )
         default:   return "Unknown";
     }
 }
+
+std::vector< std::string > ToString::flags( uint32_t value )
+{
+    std::vector< std::string > flags;
+    
+    if( ( value & 0x00000001 ) != 0 ) { flags.push_back( "No undefined references" ); }
+    if( ( value & 0x00000002 ) != 0 ) { flags.push_back( "Incremental linking" ); }
+    if( ( value & 0x00000004 ) != 0 ) { flags.push_back( "Dynamic linker input" ); }
+    if( ( value & 0x00000008 ) != 0 ) { flags.push_back( "Bind at load" ); }
+    if( ( value & 0x00000010 ) != 0 ) { flags.push_back( "Prebound" ); }
+    if( ( value & 0x00000020 ) != 0 ) { flags.push_back( "Split segments" ); }
+    if( ( value & 0x00000040 ) != 0 ) { flags.push_back( "Lazy init" ); }
+    if( ( value & 0x00000080 ) != 0 ) { flags.push_back( "Two level" ); }
+    if( ( value & 0x00000100 ) != 0 ) { flags.push_back( "Force flat" ); }
+    if( ( value & 0x00000200 ) != 0 ) { flags.push_back( "No multiple definitions" ); }
+    if( ( value & 0x00000400 ) != 0 ) { flags.push_back( "No prebinding notification" ); }
+    if( ( value & 0x00000800 ) != 0 ) { flags.push_back( "Can be rebound" ); }
+    if( ( value & 0x00001000 ) != 0 ) { flags.push_back( "All modules bound" ); }
+    if( ( value & 0x00002000 ) != 0 ) { flags.push_back( "Subsections via symbols" ); }
+    if( ( value & 0x00004000 ) != 0 ) { flags.push_back( "Canonical" ); }
+    if( ( value & 0x00008000 ) != 0 ) { flags.push_back( "Has weak symbols" ); }
+    if( ( value & 0x00010000 ) != 0 ) { flags.push_back( "Uses weak symbols" ); }
+    if( ( value & 0x00020000 ) != 0 ) { flags.push_back( "Allows stack execution" ); }
+    if( ( value & 0x00040000 ) != 0 ) { flags.push_back( "Root safe" ); }
+    if( ( value & 0x00080000 ) != 0 ) { flags.push_back( "SetUID safe" ); }
+    if( ( value & 0x00100000 ) != 0 ) { flags.push_back( "No reexported dylibs" ); }
+    if( ( value & 0x00200000 ) != 0 ) { flags.push_back( "Position independant" ); }
+    if( ( value & 0x00400000 ) != 0 ) { flags.push_back( "Dead strippable" ); }
+    if( ( value & 0x00800000 ) != 0 ) { flags.push_back( "Has TLV descriptors" ); }
+    if( ( value & 0x01000000 ) != 0 ) { flags.push_back( "No heap execution" ); }
+    if( ( value & 0x02000000 ) != 0 ) { flags.push_back( "App extension safe" ); }
+    if( ( value & 0x04000000 ) != 0 ) { flags.push_back( "Out of sync symbols" ); }
+    if( ( value & 0x08000000 ) != 0 ) { flags.push_back( "Simulator support" ); }
+    if( ( value & 0x80000000 ) != 0 ) { flags.push_back( "In shared cache" ); }
+    
+    return flags;
+}

@@ -90,5 +90,11 @@ void Display::operator()( const MachO::File & file ) const
               << ":"
               << ToString::hex( file.cpuSubType() )
               << ":\n\n"
-              << "    - Type: " << ToString::fileType( file.type() ) << "\n";
+              << "    - Type:  " << ToString::fileType( file.type() ) << "\n"
+              << "    - Flags: 0x" << ToString::hex( file.flags() ) << "\n";
+    
+    for( const auto & flag: ToString::flags( file.flags() ) )
+    {
+        std::cout << "             - " << flag << "\n";
+    }
 }
