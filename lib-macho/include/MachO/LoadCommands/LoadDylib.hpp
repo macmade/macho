@@ -23,23 +23,43 @@
  ******************************************************************************/
 
 /*!
- * @header      MachO.hpp
+ * @header      LoadDylib.hpp
  * @copyright   (c) 2020, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef MACHO_HPP
-#define MACHO_HPP
+#ifndef MACHO_LOAD_COMMANDS_LOAD_DYLIB_HPP
+#define MACHO_LOAD_COMMANDS_LOAD_DYLIB_HPP
 
-#include <MachO/BinaryStream.hpp>
-#include <MachO/BinaryDataStream.hpp>
-#include <MachO/BinaryFileStream.hpp>
-#include <MachO/Casts.hpp>
-#include <MachO/File.hpp>
-#include <MachO/FATArch.hpp>
-#include <MachO/FATFile.hpp>
-#include <MachO/Functions.hpp>
 #include <MachO/LoadCommand.hpp>
-#include <MachO/LoadCommands/Unknown.hpp>
-#include <MachO/LoadCommands/LoadDylib.hpp>
+#include <MachO/BinaryStream.hpp>
 
-#endif /* MACHO_HPP */
+namespace MachO
+{
+    namespace LoadCommands
+    {
+        class LoadDylib: public LoadCommand
+        {
+            public:
+                
+                LoadDylib( uint32_t command, uint32_t size, BinaryStream & stream );
+                LoadDylib( const LoadDylib & o );
+                LoadDylib( LoadDylib && o ) noexcept;
+                ~LoadDylib() override;
+                
+                LoadDylib & operator =( LoadDylib o );
+                
+                uint32_t command() const override;
+                uint32_t size()    const override;
+                
+                friend void swap( LoadDylib & o1, LoadDylib & o2 );
+                
+            private:
+                
+                class IMPL;
+                
+                std::unique_ptr< IMPL > impl;
+        };
+    }
+}
+
+#endif /* MACHO_LOAD_COMMANDS_LOAD_DYLIB_HPP */

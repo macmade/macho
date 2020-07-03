@@ -23,23 +23,26 @@
  ******************************************************************************/
 
 /*!
- * @header      MachO.hpp
+ * @header      LoadCommand.hpp
  * @copyright   (c) 2020, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef MACHO_HPP
-#define MACHO_HPP
+#ifndef MACHO_LOAD_COMMAND_HPP
+#define MACHO_LOAD_COMMAND_HPP
 
-#include <MachO/BinaryStream.hpp>
-#include <MachO/BinaryDataStream.hpp>
-#include <MachO/BinaryFileStream.hpp>
-#include <MachO/Casts.hpp>
-#include <MachO/File.hpp>
-#include <MachO/FATArch.hpp>
-#include <MachO/FATFile.hpp>
-#include <MachO/Functions.hpp>
-#include <MachO/LoadCommand.hpp>
-#include <MachO/LoadCommands/Unknown.hpp>
-#include <MachO/LoadCommands/LoadDylib.hpp>
+#include <cstdint>
 
-#endif /* MACHO_HPP */
+namespace MachO
+{
+    class LoadCommand
+    {
+        public:
+            
+            virtual ~LoadCommand() = default;
+            
+            virtual uint32_t command() const = 0;
+            virtual uint32_t size()    const = 0;
+    };
+}
+
+#endif /* MACHO_LOAD_COMMAND_HPP */

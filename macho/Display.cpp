@@ -29,6 +29,7 @@
 
 #include "Display.hpp"
 #include "ToString.hpp"
+#include <MachO.hpp>
 #include <iostream>
 #include <sstream>
 #include <iomanip>
@@ -77,8 +78,6 @@ void Display::operator()( const MachO::FATFile & file ) const
     for( const auto & p: archs )
     {
         this->operator()( p.second );
-        
-        std::cout << std::endl;
     }
 }
 
@@ -90,11 +89,58 @@ void Display::operator()( const MachO::File & file ) const
               << ":"
               << ToString::hex( file.cpuSubType() )
               << ":\n\n"
-              << "    - Type:  " << ToString::fileType( file.type() ) << "\n"
-              << "    - Flags: 0x" << ToString::hex( file.flags() ) << "\n";
+              << "    - Type:          " << ToString::fileType( file.type() ) << "\n"
+              << "    - Load commands: " << file.loadCommands().size()        << "\n"
+              << "    - Flags:         0x" << ToString::hex( file.flags() )   << "\n";
     
-    for( const auto & flag: ToString::flags( file.flags() ) )
+    if( file.flags() != 0 )
     {
-        std::cout << "             - " << flag << "\n";
+        std::cout << "\n    Flags:\n";
+        
+        for( const auto & flag: ToString::flags( file.flags() ) )
+        {
+            std::cout << "        - " << flag << "\n";
+        }
     }
+    
+    if( file.loadCommands().size() != 0 )
+    {
+        std::vector< MachO::LoadCommands::LoadDylib > dylibs;
+        
+        std::cout << "\n    Load commands:\n";
+        
+        for( const auto & ref: file.loadCommands() )
+        {
+            MachO::LoadCommand & command( ref.get() );
+            
+            std::cout << "        - "
+                      << ToString::loadCommand( command.command() )
+                      << " - "
+                      << ToString::size( command.size() )
+                      << "\n";
+            
+            try
+            {
+                MachO::LoadCommands::LoadDylib & dylib( dynamic_cast< MachO::LoadCommands::LoadDylib & >( command ) );
+                
+                dylibs.push_back( dylib );
+            }
+            catch( ... )
+            {}
+        }
+        
+        if( dylibs.size() > 0 )
+        {
+            std::cout << "\n    Dynamic libraries:\n";
+            
+            for( const auto & dylib: dylibs )
+            {
+                std::cout << "        - \n";
+                
+                ( void )dylib;
+            }
+        }
+    }
+    
+    std::cout << std::endl;
 }

@@ -33,7 +33,9 @@
 #include <memory>
 #include <algorithm>
 #include <string>
+#include <vector>
 #include <MachO/BinaryStream.hpp>
+#include <MachO/LoadCommand.hpp>
 
 namespace MachO
 {
@@ -67,6 +69,8 @@ namespace MachO
             uint32_t   cpuSubType() const;
             uint32_t   type()       const;
             uint32_t   flags()      const;
+            
+            std::vector< std::reference_wrapper< LoadCommand > > loadCommands() const;
             
             friend void swap( File & o1, File & o2 );
             

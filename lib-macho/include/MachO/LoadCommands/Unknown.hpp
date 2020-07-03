@@ -23,23 +23,44 @@
  ******************************************************************************/
 
 /*!
- * @header      MachO.hpp
+ * @header      Unknown.hpp
  * @copyright   (c) 2020, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef MACHO_HPP
-#define MACHO_HPP
+#ifndef MACHO_LOAD_COMMANDS_UNKNWON_HPP
+#define MACHO_LOAD_COMMANDS_UNKNWON_HPP
 
-#include <MachO/BinaryStream.hpp>
-#include <MachO/BinaryDataStream.hpp>
-#include <MachO/BinaryFileStream.hpp>
-#include <MachO/Casts.hpp>
-#include <MachO/File.hpp>
-#include <MachO/FATArch.hpp>
-#include <MachO/FATFile.hpp>
-#include <MachO/Functions.hpp>
 #include <MachO/LoadCommand.hpp>
-#include <MachO/LoadCommands/Unknown.hpp>
-#include <MachO/LoadCommands/LoadDylib.hpp>
+#include <MachO/BinaryStream.hpp>
+#include <MachO/File.hpp>
 
-#endif /* MACHO_HPP */
+namespace MachO
+{
+    namespace LoadCommands
+    {
+        class Unknown: public LoadCommand
+        {
+            public:
+                
+                Unknown( uint32_t command, uint32_t size, BinaryStream & stream );
+                Unknown( const Unknown & o );
+                Unknown( Unknown && o ) noexcept;
+                ~Unknown() override;
+                
+                Unknown & operator =( Unknown o );
+                
+                uint32_t command() const override;
+                uint32_t size()    const override;
+                
+                friend void swap( Unknown & o1, Unknown & o2 );
+                
+            private:
+                
+                class IMPL;
+                
+                std::unique_ptr< IMPL > impl;
+        };
+    }
+}
+
+#endif /* MACHO_LOAD_COMMANDS_UNKNWON_HPP */
