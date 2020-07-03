@@ -96,24 +96,24 @@ namespace MachO
     
     uint16_t BinaryStream::readUInt16( void )
     {
-        uint16_t n;
-        
-        n = 0;
-        
-        this->read( reinterpret_cast< uint8_t * >( &n ), 2 );
-        
-        return n;
-    }
-    
-    int16_t BinaryStream::readInt16( void )
-    {
-        int16_t n;
-        
-        n = 0;
-        
-        this->read( reinterpret_cast< uint8_t * >( &n ), 2 );
-        
-        return n;
+        if( this->preferredEndianness() == Endianness::LittleEndian )
+        {
+            return this->readLittleEndianUInt16();
+        }
+        else if( this->preferredEndianness() == Endianness::BigEndian )
+        {
+            return this->readBigEndianUInt16();
+        }
+        else
+        {
+            uint16_t n;
+            
+            n = 0;
+            
+            this->read( reinterpret_cast< uint8_t * >( &n ), 2 );
+            
+            return n;
+        }
     }
     
     uint16_t BinaryStream::readBigEndianUInt16( void )
@@ -160,24 +160,24 @@ namespace MachO
     
     uint32_t BinaryStream::readUInt32( void )
     {
-        uint32_t n;
-        
-        n = 0;
-        
-        this->read( reinterpret_cast< uint8_t * >( &n ), 4 );
-        
-        return n;
-    }
-    
-    int32_t BinaryStream::readInt32( void )
-    {
-        int32_t n;
-        
-        n = 0;
-        
-        this->read( reinterpret_cast< uint8_t * >( &n ), 4 );
-        
-        return n;
+        if( this->preferredEndianness() == Endianness::LittleEndian )
+        {
+            return this->readLittleEndianUInt32();
+        }
+        else if( this->preferredEndianness() == Endianness::BigEndian )
+        {
+            return this->readBigEndianUInt32();
+        }
+        else
+        {
+            uint32_t n;
+            
+            n = 0;
+            
+            this->read( reinterpret_cast< uint8_t * >( &n ), 4 );
+            
+            return n;
+        }
     }
     
     uint32_t BinaryStream::readBigEndianUInt32( void )
@@ -240,24 +240,24 @@ namespace MachO
     
     uint64_t BinaryStream::readUInt64( void )
     {
-        uint64_t n;
-        
-        n = 0;
-        
-        this->read( reinterpret_cast< uint8_t * >( &n ), 8 );
-        
-        return n;
-    }
-    
-    int64_t BinaryStream::readInt64( void )
-    {
-        int64_t n;
-        
-        n = 0;
-        
-        this->read( reinterpret_cast< uint8_t * >( &n ), 8 );
-        
-        return n;
+        if( this->preferredEndianness() == Endianness::LittleEndian )
+        {
+            return this->readLittleEndianUInt64();
+        }
+        else if( this->preferredEndianness() == Endianness::BigEndian )
+        {
+            return this->readBigEndianUInt64();
+        }
+        else
+        {
+            uint64_t n;
+            
+            n = 0;
+            
+            this->read( reinterpret_cast< uint8_t * >( &n ), 8 );
+            
+            return n;
+        }
     }
     
     uint64_t BinaryStream::readBigEndianUInt64( void )

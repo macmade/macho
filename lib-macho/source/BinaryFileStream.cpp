@@ -46,6 +46,7 @@ namespace MachO
             std::string   _path;
             size_t        _size;
             size_t        _pos;
+            Endianness    _endianness;
     };
     
     BinaryFileStream::BinaryFileStream( std::string path ):
@@ -54,6 +55,16 @@ namespace MachO
     
     BinaryFileStream::~BinaryFileStream( void )
     {}
+    
+    BinaryStream::Endianness BinaryFileStream::preferredEndianness() const
+    {
+        return this->impl->_endianness;
+    }
+    
+    void BinaryFileStream::setPreferredEndianness( Endianness value )
+    {
+        this->impl->_endianness = value;
+    }
     
     void BinaryFileStream::read( uint8_t * buf, size_t size )
     {
@@ -126,7 +137,8 @@ namespace MachO
     BinaryFileStream::IMPL::IMPL( const std::string & path ):
         _path( path ),
         _size( 0 ),
-        _pos( 0 )
+        _pos( 0 ),
+        _endianness( Endianness::Default )
     {
         this->_stream.open( this->_path, std::ios::binary | std::ios::in );
         

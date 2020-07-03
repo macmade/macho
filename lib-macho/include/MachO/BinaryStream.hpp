@@ -47,7 +47,17 @@ namespace MachO
                 End
             };
             
+            enum class Endianness
+            {
+                Default,
+                LittleEndian,
+                BigEndian
+            };
+            
             virtual ~BinaryStream( void ) = default;
+            
+            virtual Endianness preferredEndianness()                const = 0;
+            virtual void       setPreferredEndianness( Endianness value ) = 0;
             
             virtual void   read( uint8_t * buf, size_t size )        = 0;
             virtual void   seek( ssize_t offset, SeekDirection dir ) = 0;
@@ -65,17 +75,14 @@ namespace MachO
             int8_t  readInt8( void );
             
             uint16_t readUInt16( void );
-            int16_t  readInt16( void );
             uint16_t readBigEndianUInt16( void );
             uint16_t readLittleEndianUInt16( void );
             
             uint32_t readUInt32( void );
-            int32_t  readInt32( void );
             uint32_t readBigEndianUInt32( void );
             uint32_t readLittleEndianUInt32( void );
             
             uint64_t readUInt64( void );
-            int64_t  readInt64( void );
             uint64_t readBigEndianUInt64( void );
             uint64_t readLittleEndianUInt64( void );
             

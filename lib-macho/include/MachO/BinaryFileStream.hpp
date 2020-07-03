@@ -54,6 +54,9 @@ namespace MachO
             
             using BinaryStream::read;
             
+            Endianness preferredEndianness()                const override;
+            void       setPreferredEndianness( Endianness value ) override;
+            
             void   read( uint8_t * buf, size_t size )        override;
             void   seek( ssize_t offset, SeekDirection dir ) override;
             size_t tell( void )                        const override;

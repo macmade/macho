@@ -46,6 +46,7 @@ namespace MachO
             
             std::vector< uint8_t > _data;
             size_t                 _pos;
+            Endianness             _endianness;
     };
     
     BinaryDataStream::BinaryDataStream( void ):
@@ -72,6 +73,16 @@ namespace MachO
         swap( *( this ), o );
         
         return *( this );
+    }
+    
+    BinaryStream::Endianness BinaryDataStream::preferredEndianness() const
+    {
+        return this->impl->_endianness;
+    }
+    
+    void BinaryDataStream::setPreferredEndianness( Endianness value )
+    {
+        this->impl->_endianness = value;
     }
     
     void BinaryDataStream::read( uint8_t * buf, size_t size )
@@ -174,17 +185,20 @@ namespace MachO
     }
     
     BinaryDataStream::IMPL::IMPL( void ):
-        _pos( 0 )
+        _pos(        0 ),
+        _endianness( Endianness::Default )
     {}
     
     BinaryDataStream::IMPL::IMPL( const std::vector< uint8_t > & data ):
-        _data( data ),
-        _pos( 0 )
+        _data(       data ),
+        _pos(        0 ),
+        _endianness( Endianness::Default )
     {}
     
     BinaryDataStream::IMPL::IMPL( const IMPL & o ):
-        _data( o._data ),
-        _pos( o._pos )
+        _data(       o._data ),
+        _pos(        o._pos ),
+        _endianness( o._endianness )
     {}
     
     BinaryDataStream::IMPL::~IMPL( void )

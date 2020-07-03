@@ -44,10 +44,6 @@ namespace MachO
             IMPL( const IMPL & o );
             ~IMPL();
             
-            uint16_t readUInt16( BinaryStream & stream );
-            uint32_t readUInt32( BinaryStream & stream );
-            uint64_t readUInt64( BinaryStream & stream );
-            
             void parse( BinaryStream & stream );
             void parseLoadCommands( uint32_t count, BinaryStream & stream );
             
@@ -161,36 +157,6 @@ namespace MachO
     File::IMPL::~IMPL()
     {}
     
-    uint16_t File::IMPL::readUInt16( BinaryStream & stream )
-    {
-        if( this->_endianness == Endianness::LittleEndian )
-        {
-            return stream.readLittleEndianUInt16();
-        }
-        
-        return stream.readBigEndianUInt16();
-    }
-    
-    uint32_t File::IMPL::readUInt32( BinaryStream & stream )
-    {
-        if( this->_endianness == Endianness::LittleEndian )
-        {
-            return stream.readLittleEndianUInt32();
-        }
-        
-        return stream.readBigEndianUInt32();
-    }
-    
-    uint64_t File::IMPL::readUInt64( BinaryStream & stream )
-    {
-        if( this->_endianness == Endianness::LittleEndian )
-        {
-            return stream.readLittleEndianUInt64();
-        }
-        
-        return stream.readBigEndianUInt64();
-    }
-    
     void File::IMPL::parse( BinaryStream & stream )
     {
         uint32_t magic( stream.readUInt32() );
@@ -199,45 +165,54 @@ namespace MachO
         {
             this->_kind       = Kind::MachO32;
             this->_endianness = Endianness::LittleEndian;
+            
+            stream.setPreferredEndianness( BinaryStream::Endianness::LittleEndian );
         }
         else if( magic == 0xFEEDFACF )
         {
             this->_kind       = Kind::MachO64;
             this->_endianness = Endianness::LittleEndian;
+            
+            stream.setPreferredEndianness( BinaryStream::Endianness::LittleEndian );
         }
         else if( magic == 0xCEFAEDFE )
         {
             this->_kind       = Kind::MachO32;
             this->_endianness = Endianness::BigEndian;
+            
+            stream.setPreferredEndianness( BinaryStream::Endianness::BigEndian );
         }
         else if( magic == 0xCFFAEDFE )
         {
             this->_kind       = Kind::MachO64;
             this->_endianness = Endianness::BigEndian;
+            
+            stream.setPreferredEndianness( BinaryStream::Endianness::BigEndian );
         }
         else
         {
             throw std::runtime_error( "Invalid Mach-O signature" );
         }
         
-        this->_cpuType    = this->readUInt32( stream );
-        this->_cpuSubType = this->readUInt32( stream );
-        this->_type       = this->readUInt32( stream );
+        this->_cpuType    = stream.readUInt32();
+        this->_cpuSubType = stream.readUInt32();
+        this->_type       = stream.readUInt32();
         
         {
-            uint32_t ncmd( this->readUInt32( stream ) );
-            uint32_t scmd( this->readUInt32( stream ) );
+            uint32_t ncmd( stream.readUInt32() );
+            uint32_t scmd( stream.readUInt32() );
             
-            this->_flags = this->readUInt32( stream );
+            this->_flags = stream.readUInt32();
             
             if( this->_kind == Kind::MachO64 )
             {
-                this->readUInt32( stream );
+                stream.readUInt32();
             }
             
             {
                 BinaryDataStream data( stream.read( scmd ) );
                 
+                data.setPreferredEndianness( stream.preferredEndianness() );
                 this->parseLoadCommands( ncmd, data );
             }
         }
@@ -247,8 +222,8 @@ namespace MachO
     {
         for( uint32_t i = 0; i < count; i++ )
         {
-            uint32_t command( this->readUInt32( stream ) );
-            uint32_t size(    this->readUInt32( stream ) );
+            uint32_t command( stream.readUInt32() );
+            uint32_t size(    stream.readUInt32() );
             
             if( size < 8 )
             {
@@ -258,6 +233,8 @@ namespace MachO
             {
                 BinaryDataStream data( stream.read( size - 8 ) );
                 std::shared_ptr< LoadCommand > cmd;
+                
+                data.setPreferredEndianness( stream.preferredEndianness() );
                 
                 switch( command )
                 {
