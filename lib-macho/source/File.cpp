@@ -32,6 +32,8 @@
 #include <MachO/BinaryDataStream.hpp>
 #include <MachO/LoadCommands/Unknown.hpp>
 #include <MachO/LoadCommands/LoadDylib.hpp>
+#include <MachO/LoadCommands/Segment.hpp>
+#include <MachO/LoadCommands/Segment64.hpp>
 
 namespace MachO
 {
@@ -241,7 +243,9 @@ namespace MachO
                 
                 switch( command )
                 {
+                    case 0x01: this->_loadCommands.push_back( std::make_shared< LoadCommands::Segment   >( command, size, data ) ); break;
                     case 0x0C: this->_loadCommands.push_back( std::make_shared< LoadCommands::LoadDylib >( command, size, data ) ); break;
+                    case 0x19: this->_loadCommands.push_back( std::make_shared< LoadCommands::Segment64 >( command, size, data ) ); break;
                     default:   this->_loadCommands.push_back( std::make_shared< LoadCommands::Unknown   >( command, size, data ) ); break;
                 }
             }

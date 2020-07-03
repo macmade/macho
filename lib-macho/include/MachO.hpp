@@ -41,5 +41,7 @@
 #include <MachO/LoadCommand.hpp>
 #include <MachO/LoadCommands/Unknown.hpp>
 #include <MachO/LoadCommands/LoadDylib.hpp>
+#include <MachO/LoadCommands/Segment.hpp>
+#include <MachO/LoadCommands/Segment64.hpp>
 
 #endif /* MACHO_HPP */

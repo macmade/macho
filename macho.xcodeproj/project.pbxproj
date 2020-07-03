@@ -33,6 +33,10 @@
 		05C8C36C24AF7CDD0095E313 /* Unknown.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 05C8C36A24AF7CDD0095E313 /* Unknown.hpp */; };
 		05C8C36F24AF888A0095E313 /* LoadDylib.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05C8C36D24AF888A0095E313 /* LoadDylib.cpp */; };
 		05C8C37024AF888A0095E313 /* LoadDylib.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 05C8C36E24AF888A0095E313 /* LoadDylib.hpp */; };
+		05C8C37324AFAC010095E313 /* Segment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05C8C37124AFAC010095E313 /* Segment.cpp */; };
+		05C8C37424AFAC010095E313 /* Segment.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 05C8C37224AFAC010095E313 /* Segment.hpp */; };
+		05C8C37624AFAF040095E313 /* Segment64.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 05C8C37524AFAF040095E313 /* Segment64.hpp */; };
+		05C8C37824AFAF100095E313 /* Segment64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05C8C37724AFAF100095E313 /* Segment64.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -132,6 +136,10 @@
 		05C8C36A24AF7CDD0095E313 /* Unknown.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Unknown.hpp; sourceTree = "<group>"; };
 		05C8C36D24AF888A0095E313 /* LoadDylib.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LoadDylib.cpp; sourceTree = "<group>"; };
 		05C8C36E24AF888A0095E313 /* LoadDylib.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LoadDylib.hpp; sourceTree = "<group>"; };
+		05C8C37124AFAC010095E313 /* Segment.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Segment.cpp; sourceTree = "<group>"; };
+		05C8C37224AFAC010095E313 /* Segment.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Segment.hpp; sourceTree = "<group>"; };
+		05C8C37524AFAF040095E313 /* Segment64.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Segment64.hpp; sourceTree = "<group>"; };
+		05C8C37724AFAF100095E313 /* Segment64.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Segment64.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -364,6 +372,8 @@
 			isa = PBXGroup;
 			children = (
 				05C8C36E24AF888A0095E313 /* LoadDylib.hpp */,
+				05C8C37224AFAC010095E313 /* Segment.hpp */,
+				05C8C37524AFAF040095E313 /* Segment64.hpp */,
 				05C8C36A24AF7CDD0095E313 /* Unknown.hpp */,
 			);
 			path = LoadCommands;
@@ -373,6 +383,8 @@
 			isa = PBXGroup;
 			children = (
 				05C8C36D24AF888A0095E313 /* LoadDylib.cpp */,
+				05C8C37124AFAC010095E313 /* Segment.cpp */,
+				05C8C37724AFAF100095E313 /* Segment64.cpp */,
 				05C8C36924AF7CDD0095E313 /* Unknown.cpp */,
 			);
 			path = LoadCommands;
@@ -395,7 +407,9 @@
 				05C8C33D24AE2D400095E313 /* Functions.hpp in Headers */,
 				05C8C33224AE24460095E313 /* BinaryStream.hpp in Headers */,
 				05C8C33924AE2D050095E313 /* FATFile.hpp in Headers */,
+				05C8C37624AFAF040095E313 /* Segment64.hpp in Headers */,
 				05C8C33524AE24B10095E313 /* Casts.hpp in Headers */,
+				05C8C37424AFAC010095E313 /* Segment.hpp in Headers */,
 				05C8C37024AF888A0095E313 /* LoadDylib.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -490,6 +504,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				05C8C37824AFAF100095E313 /* Segment64.cpp in Sources */,
 				05C8C34024AE49D10095E313 /* FATArch.cpp in Sources */,
 				05C8C33824AE2D050095E313 /* FATFile.cpp in Sources */,
 				05C8C32B24AE243F0095E313 /* BinaryFileStream.cpp in Sources */,
@@ -497,6 +512,7 @@
 				05C8C36B24AF7CDD0095E313 /* Unknown.cpp in Sources */,
 				05C8C33C24AE2D400095E313 /* Functions.cpp in Sources */,
 				05C8C32D24AE243F0095E313 /* BinaryStream.cpp in Sources */,
+				05C8C37324AFAC010095E313 /* Segment.cpp in Sources */,
 				05C8C32C24AE243F0095E313 /* BinaryDataStream.cpp in Sources */,
 				05C8C36F24AF888A0095E313 /* LoadDylib.cpp in Sources */,
 			);

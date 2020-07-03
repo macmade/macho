@@ -106,6 +106,8 @@ void Display::operator()( const MachO::File & file ) const
     if( file.loadCommands().size() != 0 )
     {
         std::vector< MachO::LoadCommands::LoadDylib > dylibs;
+        std::vector< MachO::LoadCommands::Segment   > segments;
+        std::vector< MachO::LoadCommands::Segment64 > segments64;
         
         std::cout << "\n    Load commands:\n";
         
@@ -121,12 +123,39 @@ void Display::operator()( const MachO::File & file ) const
             
             try
             {
-                MachO::LoadCommands::LoadDylib & dylib( dynamic_cast< MachO::LoadCommands::LoadDylib & >( command ) );
-                
-                dylibs.push_back( dylib );
+                dylibs.push_back( dynamic_cast< MachO::LoadCommands::LoadDylib & >( command ) );
             }
             catch( ... )
             {}
+            
+            try
+            {
+                segments.push_back( dynamic_cast< MachO::LoadCommands::Segment & >( command ) );
+            }
+            catch( ... )
+            {}
+            
+            try
+            {
+                segments64.push_back( dynamic_cast< MachO::LoadCommands::Segment64 & >( command ) );
+            }
+            catch( ... )
+            {}
+        }
+        
+        if( segments.size() > 0 || segments64.size() > 0 )
+        {
+            std::cout << "\n    Segments:\n";
+            
+            for( const auto & segment: segments )
+            {
+                std::cout << "        - " << segment.name() << "\n";
+            }
+            
+            for( const auto & segment: segments64 )
+            {
+                std::cout << "        - " << segment.name() << "\n";
+            }
         }
         
         if( dylibs.size() > 0 )
@@ -136,8 +165,6 @@ void Display::operator()( const MachO::File & file ) const
             for( const auto & dylib: dylibs )
             {
                 std::cout << "        - " << dylib.name() << "\n";
-                
-                ( void )dylib;
             }
         }
     }
