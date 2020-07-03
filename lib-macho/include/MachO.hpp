@@ -38,6 +38,8 @@
 #include <MachO/FATFile.hpp>
 #include <MachO/File.hpp>
 #include <MachO/Functions.hpp>
+#include <MachO/Info.hpp>
+#include <MachO/InfoObject.hpp>
 #include <MachO/LoadCommand.hpp>
 
 #include <MachO/LoadCommands/BuildVersion.hpp>
