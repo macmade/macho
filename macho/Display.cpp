@@ -117,8 +117,6 @@ void Display::operator()( const MachO::File & file ) const
             
             std::cout << "        - "
                       << ToString::loadCommand( command.command() )
-                      << " - "
-                      << ToString::size( command.size() )
                       << "\n";
             
             try
