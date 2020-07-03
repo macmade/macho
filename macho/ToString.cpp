@@ -32,6 +32,58 @@
 #include <sstream>
 #include <iomanip>
 
+std::string ToString::hex( uint8_t u )
+{
+    std::stringstream ss;
+    
+    ss << std::hex
+       << std::uppercase
+       << std::setw( 2 )
+       << std::setfill( '0' )
+       << u;
+    
+    return ss.str();
+}
+
+std::string ToString::hex( uint16_t u )
+{
+    std::stringstream ss;
+    
+    ss << std::hex
+       << std::uppercase
+       << std::setw( 4 )
+       << std::setfill( '0' )
+       << u;
+    
+    return ss.str();
+}
+
+std::string ToString::hex( uint32_t u )
+{
+    std::stringstream ss;
+    
+    ss << std::hex
+       << std::uppercase
+       << std::setw( 8 )
+       << std::setfill( '0' )
+       << u;
+    
+    return ss.str();
+}
+
+std::string ToString::hex( uint64_t u )
+{
+    std::stringstream ss;
+    
+    ss << std::hex
+       << std::uppercase
+       << std::setw( 16 )
+       << std::setfill( '0' )
+       << u;
+    
+    return ss.str();
+}
+
 std::string ToString::size( uint64_t size )
 {
     if( size < 1000 )
@@ -70,13 +122,6 @@ std::string ToString::cpu( uint32_t type, uint32_t subType )
     std::stringstream ss;
     uint32_t          abi(    type &  0xFF000000 );
     uint32_t          family( type & ~0xFF000000 );
-    
-    ss << std::hex << std::uppercase << std::setw( 8 ) << std::setfill( '0' )
-       << type
-       << "."
-       << std::hex << std::uppercase << std::setw( 8 ) << std::setfill( '0' )
-       << subType
-       << ": ";
     
     if( family == 1 )
     {

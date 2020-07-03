@@ -37,6 +37,10 @@ class ToString
 {
     public:
         
+        static std::string hex( uint8_t u );
+        static std::string hex( uint16_t u );
+        static std::string hex( uint32_t u );
+        static std::string hex( uint64_t u );
         static std::string size( uint64_t size );
         static std::string cpu( uint32_t type, uint32_t subType );
         static std::string fileType( uint32_t type );

@@ -52,6 +52,8 @@ namespace MachO
             uint32_t   _cpuType;
             uint32_t   _cpuSubType;
             uint32_t   _type;
+            uint32_t   _flags;
+            uint32_t   _reserved;
     };
 
     File::File( const std::string & path ):
@@ -105,6 +107,11 @@ namespace MachO
         return this->impl->_type;
     }
     
+    uint32_t File::flags() const
+    {
+        return this->impl->_flags;
+    }
+    
     void swap( File & o1, File & o2 )
     {
         using std::swap;
@@ -129,7 +136,9 @@ namespace MachO
         _endianness( o._endianness ),
         _cpuType(    o._cpuType ),
         _cpuSubType( o._cpuSubType ),
-        _type(       o._type )
+        _type(       o._type ),
+        _flags(      o._flags ),
+        _reserved(   o._reserved )
     {}
 
     File::IMPL::~IMPL()
@@ -197,6 +206,17 @@ namespace MachO
         this->_cpuType    = this->readUInt32( stream );
         this->_cpuSubType = this->readUInt32( stream );
         this->_type       = this->readUInt32( stream );
+        
+        {
+            uint32_t ncmd( this->readUInt32( stream ) );
+            uint32_t scmd( this->readUInt32( stream ) );
+            
+            ( void )ncmd;
+            ( void )scmd;
+            
+            this->_flags    = this->readUInt32( stream );
+            this->_reserved = this->readUInt32( stream );
+        }
     }
 }
 

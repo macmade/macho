@@ -66,6 +66,7 @@ namespace MachO
             uint32_t   cpuType()    const;
             uint32_t   cpuSubType() const;
             uint32_t   type()       const;
+            uint32_t   flags()      const;
             
             friend void swap( File & o1, File & o2 );
             

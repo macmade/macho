@@ -65,6 +65,10 @@ void Display::operator()( const MachO::FATFile & file ) const
                   << ToString::cpu( p.second.cpuType(), p.second.cpuSubType() )
                   << " - "
                   << ToString::size( p.first.size() )
+                  << " - "
+                  << ToString::hex( p.first.cpuType() )
+                  << ":"
+                  << ToString::hex( p.first.cpuSubType() )
                   << "\n";
     }
     
@@ -80,7 +84,11 @@ void Display::operator()( const MachO::FATFile & file ) const
 
 void Display::operator()( const MachO::File & file ) const
 {
-    std::cout << ToString::cpu( file.cpuType(), file.cpuSubType() ) << ":\n"
-              << "\n"
+    std::cout << ToString::cpu( file.cpuType(), file.cpuSubType() )
+              << " - "
+              << ToString::hex( file.cpuType() )
+              << ":"
+              << ToString::hex( file.cpuSubType() )
+              << ":\n\n"
               << "    - Type: " << ToString::fileType( file.type() ) << "\n";
 }
