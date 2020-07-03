@@ -42,8 +42,12 @@ namespace MachO
                 IMPL( const IMPL & o );
                 ~IMPL();
                 
-                uint32_t _command;
-                uint32_t _size;
+                uint32_t    _command;
+                uint32_t    _size;
+                std::string _name;
+                uint32_t    _timestamp;
+                uint32_t    _currentVersion;
+                uint32_t    _compatibilityVersion;
         };
 
         LoadDylib::LoadDylib( uint32_t command, uint32_t size, BinaryStream & stream ):
@@ -78,6 +82,26 @@ namespace MachO
             return this->impl->_size;
         }
         
+        std::string LoadDylib::name() const
+        {
+            return this->impl->_name;
+        }
+        
+        uint32_t LoadDylib::timestamp() const
+        {
+            return this->impl->_timestamp;
+        }
+        
+        uint32_t LoadDylib::currentVersion() const
+        {
+            return this->impl->_currentVersion;
+        }
+        
+        uint32_t LoadDylib::compatibilityVersion() const
+        {
+            return this->impl->_compatibilityVersion;
+        }
+        
         void swap( LoadDylib & o1, LoadDylib & o2 )
         {
             using std::swap;
@@ -89,12 +113,24 @@ namespace MachO
             _command( command ),
             _size(    size )
         {
-            ( void )stream;
+            uint32_t offset( stream.readUInt32() );
+            
+            this->_timestamp            = stream.readUInt32();
+            this->_currentVersion       = stream.readUInt32();
+            this->_compatibilityVersion = stream.readUInt32();
+            
+            stream.seek( offset, BinaryStream::SeekDirection::Begin );
+            
+            this->_name = stream.readNULLTerminatedString();
         }
         
         LoadDylib::IMPL::IMPL( const IMPL & o ):
-            _command( o._command ),
-            _size(    o._size )
+            _command(              o._command ),
+            _size(                 o._size ),
+            _name(                 o._name ),
+            _timestamp(            o._timestamp ),
+            _currentVersion(       o._currentVersion ),
+            _compatibilityVersion( o._compatibilityVersion )
         {}
 
         LoadDylib::IMPL::~IMPL()

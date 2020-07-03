@@ -51,6 +51,11 @@ namespace MachO
                 uint32_t command() const override;
                 uint32_t size()    const override;
                 
+                std::string name()                 const;
+                uint32_t    timestamp()            const;
+                uint32_t    currentVersion()       const;
+                uint32_t    compatibilityVersion() const;
+                
                 friend void swap( LoadDylib & o1, LoadDylib & o2 );
                 
             private:

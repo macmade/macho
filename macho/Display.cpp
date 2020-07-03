@@ -135,7 +135,7 @@ void Display::operator()( const MachO::File & file ) const
             
             for( const auto & dylib: dylibs )
             {
-                std::cout << "        - \n";
+                std::cout << "        - " << dylib.name() << "\n";
                 
                 ( void )dylib;
             }

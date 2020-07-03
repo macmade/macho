@@ -230,10 +230,13 @@ namespace MachO
                 throw std::runtime_error( "Invalid load command size" );
             }
             
+            stream.seek( -8, BinaryStream::SeekDirection::Current );
+            
             {
-                BinaryDataStream data( stream.read( size - 8 ) );
+                BinaryDataStream data( stream.read( size ) );
                 std::shared_ptr< LoadCommand > cmd;
                 
+                data.seek( 8, BinaryStream::SeekDirection::Begin );
                 data.setPreferredEndianness( stream.preferredEndianness() );
                 
                 switch( command )
