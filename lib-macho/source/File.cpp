@@ -32,6 +32,7 @@
 #include <MachO/BinaryDataStream.hpp>
 #include <MachO/InfoObject.hpp>
 #include <MachO/ToString.hpp>
+#include <MachO/Casts.hpp>
 
 #include <MachO/LoadCommands/BuildVersion.hpp>
 #include <MachO/LoadCommands/DyldInfo.hpp>
@@ -263,7 +264,8 @@ namespace MachO
         
         {
             uint32_t ncmd( stream.readUInt32() );
-            uint32_t scmd( stream.readUInt32() );
+            
+            stream.readUInt32();
             
             this->_flags = stream.readUInt32();
             
@@ -272,12 +274,7 @@ namespace MachO
                 stream.readUInt32();
             }
             
-            {
-                BinaryDataStream data( stream.read( scmd ) );
-                
-                data.setPreferredEndianness( stream.preferredEndianness() );
-                this->parseLoadCommands( ncmd, data );
-            }
+            this->parseLoadCommands( ncmd, stream );
         }
     }
     
@@ -285,6 +282,7 @@ namespace MachO
     {
         for( uint32_t i = 0; i < count; i++ )
         {
+            size_t   pos(     stream.tell() );
             uint32_t command( stream.readUInt32() );
             uint32_t size(    stream.readUInt32() );
             
@@ -293,76 +291,72 @@ namespace MachO
                 throw std::runtime_error( "Invalid load command size" );
             }
             
-            stream.seek( -8, BinaryStream::SeekDirection::Current );
-            
             {
-                BinaryDataStream data( stream.read( size ) );
                 std::shared_ptr< LoadCommand > cmd;
-                
-                data.seek( 8, BinaryStream::SeekDirection::Begin );
-                data.setPreferredEndianness( stream.preferredEndianness() );
                 
                 switch( command )
                 {
-                    case 0x01: this->_loadCommands.push_back( std::make_shared< LoadCommands::Segment          >( command, size, data ) ); break;
-                    case 0x02: this->_loadCommands.push_back( std::make_shared< LoadCommands::SymTab           >( command, size, data ) ); break;
-                    case 0x03: this->_loadCommands.push_back( std::make_shared< LoadCommands::SymSeg           >( command, size, data ) ); break;
-                    case 0x04: this->_loadCommands.push_back( std::make_shared< LoadCommands::Thread           >( command, size, data ) ); break;
-                    case 0x05: this->_loadCommands.push_back( std::make_shared< LoadCommands::Thread           >( command, size, data ) ); break;
-                    case 0x06: this->_loadCommands.push_back( std::make_shared< LoadCommands::FVMLib           >( command, size, data ) ); break;
-                    case 0x07: this->_loadCommands.push_back( std::make_shared< LoadCommands::FVMLib           >( command, size, data ) ); break;
-                    case 0x08: this->_loadCommands.push_back( std::make_shared< LoadCommands::Ident            >( command, size, data ) ); break;
-                    case 0x09: this->_loadCommands.push_back( std::make_shared< LoadCommands::FVMFile          >( command, size, data ) ); break;
-                    case 0x0A: this->_loadCommands.push_back( std::make_shared< LoadCommands::PrePage          >( command, size, data ) ); break;
-                    case 0x0B: this->_loadCommands.push_back( std::make_shared< LoadCommands::DysymTab         >( command, size, data ) ); break;
-                    case 0x0C: this->_loadCommands.push_back( std::make_shared< LoadCommands::Dylib            >( command, size, data ) ); break;
-                    case 0x0D: this->_loadCommands.push_back( std::make_shared< LoadCommands::Dylib            >( command, size, data ) ); break;
-                    case 0x0E: this->_loadCommands.push_back( std::make_shared< LoadCommands::Dylinker         >( command, size, data ) ); break;
-                    case 0x0F: this->_loadCommands.push_back( std::make_shared< LoadCommands::Dylinker         >( command, size, data ) ); break;
-                    case 0x10: this->_loadCommands.push_back( std::make_shared< LoadCommands::PreboundDylib    >( command, size, data ) ); break;
-                    case 0x11: this->_loadCommands.push_back( std::make_shared< LoadCommands::Routines         >( command, size, data ) ); break;
-                    case 0x12: this->_loadCommands.push_back( std::make_shared< LoadCommands::SubFramework     >( command, size, data ) ); break;
-                    case 0x13: this->_loadCommands.push_back( std::make_shared< LoadCommands::SubUmbrella      >( command, size, data ) ); break;
-                    case 0x14: this->_loadCommands.push_back( std::make_shared< LoadCommands::SubClient        >( command, size, data ) ); break;
-                    case 0x15: this->_loadCommands.push_back( std::make_shared< LoadCommands::SubLibrary       >( command, size, data ) ); break;
-                    case 0x16: this->_loadCommands.push_back( std::make_shared< LoadCommands::TwoLevelHints    >( command, size, data ) ); break;
-                    case 0x17: this->_loadCommands.push_back( std::make_shared< LoadCommands::PrebindChecksum  >( command, size, data ) ); break;
-                    case 0x19: this->_loadCommands.push_back( std::make_shared< LoadCommands::Segment64        >( command, size, data ) ); break;
-                    case 0x1A: this->_loadCommands.push_back( std::make_shared< LoadCommands::Routines64       >( command, size, data ) ); break;
-                    case 0x1B: this->_loadCommands.push_back( std::make_shared< LoadCommands::UUID             >( command, size, data ) ); break;
-                    case 0x1D: this->_loadCommands.push_back( std::make_shared< LoadCommands::LinkEditData     >( command, size, data ) ); break;
-                    case 0x1E: this->_loadCommands.push_back( std::make_shared< LoadCommands::LinkEditData     >( command, size, data ) ); break;
-                    case 0x20: this->_loadCommands.push_back( std::make_shared< LoadCommands::Dylib            >( command, size, data ) ); break;
-                    case 0x21: this->_loadCommands.push_back( std::make_shared< LoadCommands::EncryptionInfo   >( command, size, data ) ); break;
-                    case 0x22: this->_loadCommands.push_back( std::make_shared< LoadCommands::DyldInfo         >( command, size, data ) ); break;
-                    case 0x24: this->_loadCommands.push_back( std::make_shared< LoadCommands::VersionMin       >( command, size, data ) ); break;
-                    case 0x25: this->_loadCommands.push_back( std::make_shared< LoadCommands::VersionMin       >( command, size, data ) ); break;
-                    case 0x26: this->_loadCommands.push_back( std::make_shared< LoadCommands::LinkEditData     >( command, size, data ) ); break;
-                    case 0x27: this->_loadCommands.push_back( std::make_shared< LoadCommands::Dylinker         >( command, size, data ) ); break;
-                    case 0x29: this->_loadCommands.push_back( std::make_shared< LoadCommands::LinkEditData     >( command, size, data ) ); break;
-                    case 0x2A: this->_loadCommands.push_back( std::make_shared< LoadCommands::SourceVersion    >( command, size, data ) ); break;
-                    case 0x2B: this->_loadCommands.push_back( std::make_shared< LoadCommands::LinkEditData     >( command, size, data ) ); break;
-                    case 0x2C: this->_loadCommands.push_back( std::make_shared< LoadCommands::EncryptionInfo64 >( command, size, data ) ); break;
-                    case 0x2D: this->_loadCommands.push_back( std::make_shared< LoadCommands::LinkerOption     >( command, size, data ) ); break;
-                    case 0x2E: this->_loadCommands.push_back( std::make_shared< LoadCommands::LinkEditData     >( command, size, data ) ); break;
-                    case 0x2F: this->_loadCommands.push_back( std::make_shared< LoadCommands::VersionMin       >( command, size, data ) ); break;
-                    case 0x30: this->_loadCommands.push_back( std::make_shared< LoadCommands::VersionMin       >( command, size, data ) ); break;
-                    case 0x31: this->_loadCommands.push_back( std::make_shared< LoadCommands::Note             >( command, size, data ) ); break;
-                    case 0x32: this->_loadCommands.push_back( std::make_shared< LoadCommands::BuildVersion     >( command, size, data ) ); break;
+                    case 0x01: this->_loadCommands.push_back( std::make_shared< LoadCommands::Segment          >( command, size, stream ) ); break;
+                    case 0x02: this->_loadCommands.push_back( std::make_shared< LoadCommands::SymTab           >( command, size, stream ) ); break;
+                    case 0x03: this->_loadCommands.push_back( std::make_shared< LoadCommands::SymSeg           >( command, size, stream ) ); break;
+                    case 0x04: this->_loadCommands.push_back( std::make_shared< LoadCommands::Thread           >( command, size, stream ) ); break;
+                    case 0x05: this->_loadCommands.push_back( std::make_shared< LoadCommands::Thread           >( command, size, stream ) ); break;
+                    case 0x06: this->_loadCommands.push_back( std::make_shared< LoadCommands::FVMLib           >( command, size, stream ) ); break;
+                    case 0x07: this->_loadCommands.push_back( std::make_shared< LoadCommands::FVMLib           >( command, size, stream ) ); break;
+                    case 0x08: this->_loadCommands.push_back( std::make_shared< LoadCommands::Ident            >( command, size, stream ) ); break;
+                    case 0x09: this->_loadCommands.push_back( std::make_shared< LoadCommands::FVMFile          >( command, size, stream ) ); break;
+                    case 0x0A: this->_loadCommands.push_back( std::make_shared< LoadCommands::PrePage          >( command, size, stream ) ); break;
+                    case 0x0B: this->_loadCommands.push_back( std::make_shared< LoadCommands::DysymTab         >( command, size, stream ) ); break;
+                    case 0x0C: this->_loadCommands.push_back( std::make_shared< LoadCommands::Dylib            >( command, size, stream ) ); break;
+                    case 0x0D: this->_loadCommands.push_back( std::make_shared< LoadCommands::Dylib            >( command, size, stream ) ); break;
+                    case 0x0E: this->_loadCommands.push_back( std::make_shared< LoadCommands::Dylinker         >( command, size, stream ) ); break;
+                    case 0x0F: this->_loadCommands.push_back( std::make_shared< LoadCommands::Dylinker         >( command, size, stream ) ); break;
+                    case 0x10: this->_loadCommands.push_back( std::make_shared< LoadCommands::PreboundDylib    >( command, size, stream ) ); break;
+                    case 0x11: this->_loadCommands.push_back( std::make_shared< LoadCommands::Routines         >( command, size, stream ) ); break;
+                    case 0x12: this->_loadCommands.push_back( std::make_shared< LoadCommands::SubFramework     >( command, size, stream ) ); break;
+                    case 0x13: this->_loadCommands.push_back( std::make_shared< LoadCommands::SubUmbrella      >( command, size, stream ) ); break;
+                    case 0x14: this->_loadCommands.push_back( std::make_shared< LoadCommands::SubClient        >( command, size, stream ) ); break;
+                    case 0x15: this->_loadCommands.push_back( std::make_shared< LoadCommands::SubLibrary       >( command, size, stream ) ); break;
+                    case 0x16: this->_loadCommands.push_back( std::make_shared< LoadCommands::TwoLevelHints    >( command, size, stream ) ); break;
+                    case 0x17: this->_loadCommands.push_back( std::make_shared< LoadCommands::PrebindChecksum  >( command, size, stream ) ); break;
+                    case 0x19: this->_loadCommands.push_back( std::make_shared< LoadCommands::Segment64        >( command, size, stream ) ); break;
+                    case 0x1A: this->_loadCommands.push_back( std::make_shared< LoadCommands::Routines64       >( command, size, stream ) ); break;
+                    case 0x1B: this->_loadCommands.push_back( std::make_shared< LoadCommands::UUID             >( command, size, stream ) ); break;
+                    case 0x1D: this->_loadCommands.push_back( std::make_shared< LoadCommands::LinkEditData     >( command, size, stream ) ); break;
+                    case 0x1E: this->_loadCommands.push_back( std::make_shared< LoadCommands::LinkEditData     >( command, size, stream ) ); break;
+                    case 0x20: this->_loadCommands.push_back( std::make_shared< LoadCommands::Dylib            >( command, size, stream ) ); break;
+                    case 0x21: this->_loadCommands.push_back( std::make_shared< LoadCommands::EncryptionInfo   >( command, size, stream ) ); break;
+                    case 0x22: this->_loadCommands.push_back( std::make_shared< LoadCommands::DyldInfo         >( command, size, stream ) ); break;
+                    case 0x24: this->_loadCommands.push_back( std::make_shared< LoadCommands::VersionMin       >( command, size, stream ) ); break;
+                    case 0x25: this->_loadCommands.push_back( std::make_shared< LoadCommands::VersionMin       >( command, size, stream ) ); break;
+                    case 0x26: this->_loadCommands.push_back( std::make_shared< LoadCommands::LinkEditData     >( command, size, stream ) ); break;
+                    case 0x27: this->_loadCommands.push_back( std::make_shared< LoadCommands::Dylinker         >( command, size, stream ) ); break;
+                    case 0x29: this->_loadCommands.push_back( std::make_shared< LoadCommands::LinkEditData     >( command, size, stream ) ); break;
+                    case 0x2A: this->_loadCommands.push_back( std::make_shared< LoadCommands::SourceVersion    >( command, size, stream ) ); break;
+                    case 0x2B: this->_loadCommands.push_back( std::make_shared< LoadCommands::LinkEditData     >( command, size, stream ) ); break;
+                    case 0x2C: this->_loadCommands.push_back( std::make_shared< LoadCommands::EncryptionInfo64 >( command, size, stream ) ); break;
+                    case 0x2D: this->_loadCommands.push_back( std::make_shared< LoadCommands::LinkerOption     >( command, size, stream ) ); break;
+                    case 0x2E: this->_loadCommands.push_back( std::make_shared< LoadCommands::LinkEditData     >( command, size, stream ) ); break;
+                    case 0x2F: this->_loadCommands.push_back( std::make_shared< LoadCommands::VersionMin       >( command, size, stream ) ); break;
+                    case 0x30: this->_loadCommands.push_back( std::make_shared< LoadCommands::VersionMin       >( command, size, stream ) ); break;
+                    case 0x31: this->_loadCommands.push_back( std::make_shared< LoadCommands::Note             >( command, size, stream ) ); break;
+                    case 0x32: this->_loadCommands.push_back( std::make_shared< LoadCommands::BuildVersion     >( command, size, stream ) ); break;
                     
-                    case 0x18 | 0x80000000: this->_loadCommands.push_back( std::make_shared< LoadCommands::Dylib        >( command, size, data ) ); break;
-                    case 0x1C | 0x80000000: this->_loadCommands.push_back( std::make_shared< LoadCommands::RPath        >( command, size, data ) ); break;
-                    case 0x1F | 0x80000000: this->_loadCommands.push_back( std::make_shared< LoadCommands::Dylib        >( command, size, data ) ); break;
-                    case 0x22 | 0x80000000: this->_loadCommands.push_back( std::make_shared< LoadCommands::DyldInfo     >( command, size, data ) ); break;
-                    case 0x23 | 0x80000000: this->_loadCommands.push_back( std::make_shared< LoadCommands::Dylib        > ( command, size, data ) ); break;
-                    case 0x28 | 0x80000000: this->_loadCommands.push_back( std::make_shared< LoadCommands::EntryPoint   >( command, size, data ) ); break;
-                    case 0x33 | 0x80000000: this->_loadCommands.push_back( std::make_shared< LoadCommands::LinkEditData >( command, size, data ) ); break;
-                    case 0x34 | 0x80000000: this->_loadCommands.push_back( std::make_shared< LoadCommands::LinkEditData >( command, size, data ) ); break;
-                    case 0x35 | 0x80000000: this->_loadCommands.push_back( std::make_shared< LoadCommands::FilesetEntry >( command, size, data ) ); break;
+                    case 0x18 | 0x80000000: this->_loadCommands.push_back( std::make_shared< LoadCommands::Dylib        >( command, size, stream ) ); break;
+                    case 0x1C | 0x80000000: this->_loadCommands.push_back( std::make_shared< LoadCommands::RPath        >( command, size, stream ) ); break;
+                    case 0x1F | 0x80000000: this->_loadCommands.push_back( std::make_shared< LoadCommands::Dylib        >( command, size, stream ) ); break;
+                    case 0x22 | 0x80000000: this->_loadCommands.push_back( std::make_shared< LoadCommands::DyldInfo     >( command, size, stream ) ); break;
+                    case 0x23 | 0x80000000: this->_loadCommands.push_back( std::make_shared< LoadCommands::Dylib        >( command, size, stream ) ); break;
+                    case 0x28 | 0x80000000: this->_loadCommands.push_back( std::make_shared< LoadCommands::EntryPoint   >( command, size, stream ) ); break;
+                    case 0x33 | 0x80000000: this->_loadCommands.push_back( std::make_shared< LoadCommands::LinkEditData >( command, size, stream ) ); break;
+                    case 0x34 | 0x80000000: this->_loadCommands.push_back( std::make_shared< LoadCommands::LinkEditData >( command, size, stream ) ); break;
+                    case 0x35 | 0x80000000: this->_loadCommands.push_back( std::make_shared< LoadCommands::FilesetEntry >( command, size, stream ) ); break;
                     
-                    default: this->_loadCommands.push_back( std::make_shared< LoadCommands::Unknown >( command, size, data ) ); break;
+                    default: this->_loadCommands.push_back( std::make_shared< LoadCommands::Unknown >( command, size, stream ) ); break;
                 }
             }
+            
+            stream.seek( numeric_cast< ssize_t >( pos + size ), BinaryStream::SeekDirection::Begin );
         }
     }
 }

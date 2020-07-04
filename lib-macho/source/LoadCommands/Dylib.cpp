@@ -119,13 +119,14 @@ namespace MachO
             _command( command ),
             _size(    size )
         {
+            size_t   begin(  stream.tell() - 8 );
             uint32_t offset( stream.readUInt32() );
             
             this->_timestamp            = stream.readUInt32();
             this->_currentVersion       = stream.readUInt32();
             this->_compatibilityVersion = stream.readUInt32();
             
-            stream.seek( offset, BinaryStream::SeekDirection::Begin );
+            stream.seek( numeric_cast< ssize_t >( begin + offset ), BinaryStream::SeekDirection::Begin );
             
             this->_name = stream.readNULLTerminatedString();
         }
