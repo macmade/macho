@@ -122,18 +122,33 @@ namespace MachO
     {
         Info i(        "Mach-O file" );
         Info commands( "Commands" );
+        Info libs(     "Libraries" );
         
         commands.value( std::to_string( this->loadCommands().size() ) );
         
         for( const auto & command: this->loadCommands() )
         {
             commands.addChild( command.get() );
+            
+            try
+            {
+                auto lib( dynamic_cast< const LoadCommands::Dylib & >( command.get() ) );
+                
+                libs.addChild( lib.name() );
+            }
+            catch( ... )
+            {}
         }
         
         i.addChild( this->cpu() );
         i.addChild( this->type() );
         i.addChild( this->flags() );
         i.addChild( commands );
+        
+        if( libs.children().size() > 0 )
+        {
+            i.addChild( libs );
+        }
         
         return i;
     }
