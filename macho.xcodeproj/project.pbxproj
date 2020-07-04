@@ -106,6 +106,11 @@
 		05C8C41824AFEF6E0095E313 /* ToString.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 05C8C41624AFEF6E0095E313 /* ToString.hpp */; };
 		05C8C41B24AFF5C10095E313 /* CPU.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05C8C41924AFF5C10095E313 /* CPU.cpp */; };
 		05C8C41C24AFF5C10095E313 /* CPU.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 05C8C41A24AFF5C10095E313 /* CPU.hpp */; };
+		05C8C41E24B0C3110095E313 /* IntegerWrapper.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 05C8C41D24B0C3110095E313 /* IntegerWrapper.hpp */; };
+		05C8C42124B0C4520095E313 /* FileFlags.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 05C8C41F24B0C4510095E313 /* FileFlags.hpp */; };
+		05C8C42224B0C4520095E313 /* FileType.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 05C8C42024B0C4510095E313 /* FileType.hpp */; };
+		05C8C42524B0C4580095E313 /* FileFlags.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05C8C42324B0C4580095E313 /* FileFlags.cpp */; };
+		05C8C42824B0C4C20095E313 /* FileType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05C8C42724B0C4C20095E313 /* FileType.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -277,6 +282,11 @@
 		05C8C41624AFEF6E0095E313 /* ToString.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ToString.hpp; sourceTree = "<group>"; };
 		05C8C41924AFF5C10095E313 /* CPU.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CPU.cpp; sourceTree = "<group>"; };
 		05C8C41A24AFF5C10095E313 /* CPU.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CPU.hpp; sourceTree = "<group>"; };
+		05C8C41D24B0C3110095E313 /* IntegerWrapper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = IntegerWrapper.hpp; sourceTree = "<group>"; };
+		05C8C41F24B0C4510095E313 /* FileFlags.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FileFlags.hpp; sourceTree = "<group>"; };
+		05C8C42024B0C4510095E313 /* FileType.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FileType.hpp; sourceTree = "<group>"; };
+		05C8C42324B0C4580095E313 /* FileFlags.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileFlags.cpp; sourceTree = "<group>"; };
+		05C8C42724B0C4C20095E313 /* FileType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileType.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -481,6 +491,8 @@
 				05C8C33E24AE49D10095E313 /* FATArch.cpp */,
 				05C8C33624AE2D050095E313 /* FATFile.cpp */,
 				05C8C32224AE1BE90095E313 /* File.cpp */,
+				05C8C42324B0C4580095E313 /* FileFlags.cpp */,
+				05C8C42724B0C4C20095E313 /* FileType.cpp */,
 				05C8C33A24AE2D400095E313 /* Functions.cpp */,
 				05C8C40F24AFECCC0095E313 /* Info.cpp */,
 				05C8C41324AFED710095E313 /* InfoObject.cpp */,
@@ -501,9 +513,12 @@
 				05C8C33F24AE49D10095E313 /* FATArch.hpp */,
 				05C8C33724AE2D050095E313 /* FATFile.hpp */,
 				05C8C32324AE1BE90095E313 /* File.hpp */,
+				05C8C41F24B0C4510095E313 /* FileFlags.hpp */,
+				05C8C42024B0C4510095E313 /* FileType.hpp */,
 				05C8C33B24AE2D400095E313 /* Functions.hpp */,
 				05C8C41024AFECCC0095E313 /* Info.hpp */,
 				05C8C40C24AFECC00095E313 /* InfoObject.hpp */,
+				05C8C41D24B0C3110095E313 /* IntegerWrapper.hpp */,
 				05C8C36424AF7A530095E313 /* LoadCommand.hpp */,
 				05C8C36724AF7CC50095E313 /* LoadCommands */,
 				05C8C41624AFEF6E0095E313 /* ToString.hpp */,
@@ -638,6 +653,7 @@
 				05C8C33224AE24460095E313 /* BinaryStream.hpp in Headers */,
 				05C8C33924AE2D050095E313 /* FATFile.hpp in Headers */,
 				05C8C3DA24AFE9440095E313 /* PrebindChecksum.hpp in Headers */,
+				05C8C42224B0C4520095E313 /* FileType.hpp in Headers */,
 				05C8C39C24AFDDEE0095E313 /* PreboundDylib.hpp in Headers */,
 				05C8C3DB24AFE9440095E313 /* PrePage.hpp in Headers */,
 				05C8C33524AE24B10095E313 /* Casts.hpp in Headers */,
@@ -649,6 +665,8 @@
 				05C8C38E24AFDDEE0095E313 /* Routines.hpp in Headers */,
 				05C8C41824AFEF6E0095E313 /* ToString.hpp in Headers */,
 				05C8C3CF24AFE9440095E313 /* EncryptionInfo.hpp in Headers */,
+				05C8C41E24B0C3110095E313 /* IntegerWrapper.hpp in Headers */,
+				05C8C42124B0C4520095E313 /* FileFlags.hpp in Headers */,
 				05C8C38F24AFDDEE0095E313 /* Dylib.hpp in Headers */,
 				05C8C39024AFDDEE0095E313 /* DysymTab.hpp in Headers */,
 			);
@@ -774,9 +792,11 @@
 				05C8C40424AFE94F0095E313 /* PrebindChecksum.cpp in Sources */,
 				05C8C3F624AFE94F0095E313 /* RPath.cpp in Sources */,
 				05C8C3FE24AFE94F0095E313 /* Note.cpp in Sources */,
+				05C8C42824B0C4C20095E313 /* FileType.cpp in Sources */,
 				05C8C33C24AE2D400095E313 /* Functions.cpp in Sources */,
 				05C8C41124AFECCC0095E313 /* Info.cpp in Sources */,
 				05C8C3B624AFDDF60095E313 /* Dylinker.cpp in Sources */,
+				05C8C42524B0C4580095E313 /* FileFlags.cpp in Sources */,
 				05C8C3B424AFDDF60095E313 /* DysymTab.cpp in Sources */,
 				05C8C3FF24AFE94F0095E313 /* FilesetEntry.cpp in Sources */,
 				05C8C32D24AE243F0095E313 /* BinaryStream.cpp in Sources */,

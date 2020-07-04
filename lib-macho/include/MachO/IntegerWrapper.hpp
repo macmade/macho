@@ -23,68 +23,73 @@
  ******************************************************************************/
 
 /*!
- * @header      File.hpp
+ * @header      IntegerWrapper.hpp
  * @copyright   (c) 2020, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef MACHO_FILE_HPP
-#define MACHO_FILE_HPP
+#ifndef MACHO_INTEGER_WRAPPER_HPP
+#define MACHO_INTEGER_WRAPPER_HPP
 
-#include <memory>
-#include <algorithm>
-#include <string>
-#include <vector>
-#include <MachO/BinaryStream.hpp>
-#include <MachO/LoadCommand.hpp>
-#include <MachO/InfoObject.hpp>
-#include <MachO/FileFlags.hpp>
-#include <MachO/FileType.hpp>
-#include <MachO/CPU.hpp>
+#include <type_traits>
+#include <cstdint>
 
 namespace MachO
 {
-    class File: public InfoObject
+    template< typename T >
+    class IntegerWrapper
     {
         public:
             
-            enum class Kind
+            IntegerWrapper( T value = 0 ):
+                _value( value )
+            {}
+            
+            IntegerWrapper( const IntegerWrapper & o ):
+                _value( o._value )
+            {}
+            
+            IntegerWrapper( IntegerWrapper && o ) noexcept:
+                _value( o._value )
+            {}
+            
+            virtual ~IntegerWrapper()
+            {}
+            
+            IntegerWrapper & operator =( IntegerWrapper o )
             {
-                MachO32,
-                MachO64
-            };
+                swap( *( this ), o );
+                
+                return *( this );
+            }
             
-            enum class Endianness
+            IntegerWrapper & operator =( T value )
             {
-                LittleEndian,
-                BigEndian
-            };
+                this->_value = value;
+                
+                return *( this );
+            }
             
-            File( const std::string & path );
-            File( BinaryStream & stream );
-            File( const File & o );
-            File( File && o ) noexcept;
-            ~File() override;
+            operator T() const
+            {
+                return this->_value;
+            }
             
-            File & operator =( File o );
+            T value() const
+            {
+                return this->_value;
+            }
             
-            Info getInfo() const override;
-            
-            Kind       kind()       const;
-            Endianness endianness() const;
-            CPU        cpu()        const;
-            FileType   type()       const;
-            FileFlags  flags()      const;
-            
-            std::vector< std::reference_wrapper< LoadCommand > > loadCommands() const;
-            
-            friend void swap( File & o1, File & o2 );
+            friend void swap( IntegerWrapper & o1, IntegerWrapper & o2 )
+            {
+                using std::swap;
+                
+                swap( o1._value, o2._value );
+            }
             
         private:
             
-            class IMPL;
-            
-            std::unique_ptr< IMPL > impl;
+            T _value;
     };
 }
 
-#endif /* MACHO_FILE_HPP */
+#endif /* MACHO_CPU_HPP */

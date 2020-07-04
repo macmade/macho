@@ -37,9 +37,12 @@
 #include <MachO/FATArch.hpp>
 #include <MachO/FATFile.hpp>
 #include <MachO/File.hpp>
+#include <MachO/FileFlags.hpp>
+#include <MachO/FileType.hpp>
 #include <MachO/Functions.hpp>
 #include <MachO/Info.hpp>
 #include <MachO/InfoObject.hpp>
+#include <MachO/IntegerWrapper.hpp>
 #include <MachO/LoadCommand.hpp>
 #include <MachO/ToString.hpp>
 

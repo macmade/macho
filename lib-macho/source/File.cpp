@@ -86,8 +86,8 @@ namespace MachO
             Kind       _kind;
             Endianness _endianness;
             CPU        _cpu;
-            uint32_t   _type;
-            uint32_t   _flags;
+            FileType   _type;
+            FileFlags  _flags;
             
             std::vector< std::shared_ptr< LoadCommand > > _loadCommands;
     };
@@ -121,7 +121,6 @@ namespace MachO
     Info File::getInfo() const
     {
         Info i(        "Mach-O file" );
-        Info flags(    "Flags" );
         Info commands( "Commands" );
         
         for( const auto & command: this->loadCommands() )
@@ -131,9 +130,9 @@ namespace MachO
             commands.addChild( { "Command" } );
         }
         
-        i.addChild( { "CPU",  this->cpu().description() } );
-        i.addChild( { "Type", "XXX" } );
-        i.addChild( flags );
+        i.addChild( this->cpu() );
+        i.addChild( this->type() );
+        i.addChild( this->flags() );
         i.addChild( commands );
         
         return i;
@@ -154,12 +153,12 @@ namespace MachO
         return this->impl->_cpu;
     }
     
-    uint32_t File::type() const
+    FileType File::type() const
     {
         return this->impl->_type;
     }
     
-    uint32_t File::flags() const
+    FileFlags File::flags() const
     {
         return this->impl->_flags;
     }

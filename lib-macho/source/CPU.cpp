@@ -69,6 +69,11 @@ namespace MachO
         return *( this );
     }
     
+    Info CPU::getInfo() const
+    {
+        return { "CPU", this->description() };
+    }
+    
     uint32_t CPU::type() const
     {
         return this->impl->_type;

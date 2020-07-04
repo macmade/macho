@@ -34,10 +34,11 @@
 #include <algorithm>
 #include <string>
 #include <MachO/BinaryStream.hpp>
+#include <MachO/InfoObject.hpp>
 
 namespace MachO
 {
-    class CPU
+    class CPU: public InfoObject
     {
         public:
             
@@ -45,9 +46,11 @@ namespace MachO
             CPU( uint32_t type, uint32_t subType );
             CPU( const CPU & o );
             CPU( CPU && o ) noexcept;
-            ~CPU();
+            ~CPU() override;
             
             CPU & operator =( CPU o );
+            
+            Info getInfo() const override;
             
             uint32_t    type()          const;
             uint32_t    subType()       const;

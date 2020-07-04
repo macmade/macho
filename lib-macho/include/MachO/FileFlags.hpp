@@ -23,68 +23,31 @@
  ******************************************************************************/
 
 /*!
- * @header      File.hpp
+ * @header      FileFlags.hpp
  * @copyright   (c) 2020, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef MACHO_FILE_HPP
-#define MACHO_FILE_HPP
+#ifndef MACHO_FILE_FLAGS_HPP
+#define MACHO_FILE_FLAGS_HPP
 
-#include <memory>
-#include <algorithm>
+#include <MachO/IntegerWrapper.hpp>
+#include <MachO/InfoObject.hpp>
 #include <string>
 #include <vector>
-#include <MachO/BinaryStream.hpp>
-#include <MachO/LoadCommand.hpp>
-#include <MachO/InfoObject.hpp>
-#include <MachO/FileFlags.hpp>
-#include <MachO/FileType.hpp>
-#include <MachO/CPU.hpp>
+#include <utility>
 
 namespace MachO
 {
-    class File: public InfoObject
+    class FileFlags: public IntegerWrapper< uint32_t >, public InfoObject
     {
         public:
             
-            enum class Kind
-            {
-                MachO32,
-                MachO64
-            };
-            
-            enum class Endianness
-            {
-                LittleEndian,
-                BigEndian
-            };
-            
-            File( const std::string & path );
-            File( BinaryStream & stream );
-            File( const File & o );
-            File( File && o ) noexcept;
-            ~File() override;
-            
-            File & operator =( File o );
+            using IntegerWrapper::IntegerWrapper;
             
             Info getInfo() const override;
             
-            Kind       kind()       const;
-            Endianness endianness() const;
-            CPU        cpu()        const;
-            FileType   type()       const;
-            FileFlags  flags()      const;
-            
-            std::vector< std::reference_wrapper< LoadCommand > > loadCommands() const;
-            
-            friend void swap( File & o1, File & o2 );
-            
-        private:
-            
-            class IMPL;
-            
-            std::unique_ptr< IMPL > impl;
+            std::vector< std::pair< std::string, std::string > > flags() const;
     };
 }
 
-#endif /* MACHO_FILE_HPP */
+#endif /* MACHO_FILE_FLAGS_HPP */
