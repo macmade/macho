@@ -34,12 +34,12 @@
 
 namespace MachO
 {
-    bool BinaryStream::hasBytesAvailable( void )
+    bool BinaryStream::hasBytesAvailable()
     {
         return this->availableBytes() > 0;
     }
     
-    size_t BinaryStream::availableBytes( void )
+    size_t BinaryStream::availableBytes()
     {
         size_t cur( this->tell() );
         size_t pos;
@@ -67,12 +67,12 @@ namespace MachO
         return data;
     }
     
-    std::vector< uint8_t > BinaryStream::readAll( void )
+    std::vector< uint8_t > BinaryStream::readAll()
     {
         return this->read( this->availableBytes() );
     }
     
-    uint8_t BinaryStream::readUInt8( void )
+    uint8_t BinaryStream::readUInt8()
     {
         uint8_t n;
         
@@ -83,7 +83,7 @@ namespace MachO
         return n;
     }
     
-    int8_t BinaryStream::readInt8( void )
+    int8_t BinaryStream::readInt8()
     {
         int8_t n;
         
@@ -94,7 +94,7 @@ namespace MachO
         return n;
     }
     
-    uint16_t BinaryStream::readUInt16( void )
+    uint16_t BinaryStream::readUInt16()
     {
         if( this->preferredEndianness() == Endianness::LittleEndian )
         {
@@ -116,7 +116,7 @@ namespace MachO
         }
     }
     
-    uint16_t BinaryStream::readBigEndianUInt16( void )
+    uint16_t BinaryStream::readBigEndianUInt16()
     {
         uint8_t  c[ 2 ];
         uint16_t n;
@@ -137,7 +137,7 @@ namespace MachO
         return n;
     }
     
-    uint16_t BinaryStream::readLittleEndianUInt16( void )
+    uint16_t BinaryStream::readLittleEndianUInt16()
     {
         uint8_t  c[ 2 ];
         uint16_t n;
@@ -158,7 +158,7 @@ namespace MachO
         return n;
     }
     
-    uint32_t BinaryStream::readUInt32( void )
+    uint32_t BinaryStream::readUInt32()
     {
         if( this->preferredEndianness() == Endianness::LittleEndian )
         {
@@ -180,7 +180,7 @@ namespace MachO
         }
     }
     
-    uint32_t BinaryStream::readBigEndianUInt32( void )
+    uint32_t BinaryStream::readBigEndianUInt32()
     {
         uint8_t  c[ 4 ];
         uint32_t n;
@@ -209,7 +209,7 @@ namespace MachO
         return n;
     }
     
-    uint32_t BinaryStream::readLittleEndianUInt32( void )
+    uint32_t BinaryStream::readLittleEndianUInt32()
     {
         uint8_t  c[ 4 ];
         uint32_t n;
@@ -238,7 +238,7 @@ namespace MachO
         return n;
     }
     
-    uint64_t BinaryStream::readUInt64( void )
+    uint64_t BinaryStream::readUInt64()
     {
         if( this->preferredEndianness() == Endianness::LittleEndian )
         {
@@ -260,7 +260,7 @@ namespace MachO
         }
     }
     
-    uint64_t BinaryStream::readBigEndianUInt64( void )
+    uint64_t BinaryStream::readBigEndianUInt64()
     {
         uint8_t  c[ 8 ];
         uint64_t n;
@@ -305,7 +305,7 @@ namespace MachO
         return n;
     }
     
-    uint64_t BinaryStream::readLittleEndianUInt64( void )
+    uint64_t BinaryStream::readLittleEndianUInt64()
     {
         uint8_t  c[ 8 ];
         uint64_t n;
@@ -396,7 +396,7 @@ namespace MachO
         return integer + fractional;
     }
     
-    std::string BinaryStream::readNULLTerminatedString( void )
+    std::string BinaryStream::readNULLTerminatedString()
     {
         char        c;
         std::string s;
@@ -418,7 +418,7 @@ namespace MachO
         return s;
     }
     
-    std::string BinaryStream::readPascalString( void )
+    std::string BinaryStream::readPascalString()
     {
         uint8_t     length;
         std::string ret;

@@ -45,7 +45,7 @@ namespace MachO
             
             BinaryFileStream( std::string path );
             
-            virtual ~BinaryFileStream( void ) override;
+            virtual ~BinaryFileStream() override;
             
             BinaryFileStream( const BinaryFileStream & o )              = delete;
             BinaryFileStream( BinaryFileStream && o )                   = delete;
@@ -59,7 +59,7 @@ namespace MachO
             
             void   read( uint8_t * buf, size_t size )        override;
             void   seek( ssize_t offset, SeekDirection dir ) override;
-            size_t tell( void )                        const override;
+            size_t tell()                              const override;
             
         private:
             

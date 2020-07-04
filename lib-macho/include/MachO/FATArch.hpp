@@ -34,22 +34,25 @@
 #include <algorithm>
 #include <string>
 #include <MachO/BinaryStream.hpp>
+#include <MachO/InfoObject.hpp>
+#include <MachO/CPU.hpp>
 
 namespace MachO
 {
-    class FATArch
+    class FATArch: public InfoObject
     {
         public:
             
             FATArch( BinaryStream & stream );
             FATArch( const FATArch & o );
             FATArch( FATArch && o ) noexcept;
-            ~FATArch();
+            ~FATArch() override;
             
             FATArch & operator =( FATArch o );
             
-            uint32_t cpuType()    const;
-            uint32_t cpuSubType() const;
+            Info getInfo() const override;
+            
+            CPU      cpu()        const;
             uint32_t offset()     const;
             uint32_t size()       const;
             uint32_t align()      const;

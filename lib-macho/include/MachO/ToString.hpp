@@ -27,26 +27,46 @@
  * @copyright   (c) 2020, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef TO_STRING_HPP
-#define TO_STRING_HPP
+#ifndef MACHO_TO_STRING_HPP
+#define MACHO_TO_STRING_HPP
 
-#include <cstdint>
+#include <type_traits>
+#include <ios>
+#include <sstream>
+#include <iomanip>
 #include <string>
 #include <vector>
 
-class ToString
+namespace MachO
 {
-    public:
+    namespace ToString
+    {
+        std::string Size( uint64_t size );
         
-        static std::string hex( uint8_t u );
-        static std::string hex( uint16_t u );
-        static std::string hex( uint32_t u );
-        static std::string hex( uint64_t u );
-        static std::string size( uint64_t size );
-        static std::string cpu( uint32_t type, uint32_t subType );
-        static std::string fileType( uint32_t type );
-        static std::string loadCommand( uint32_t command );
-        static std::vector< std::string > flags( uint32_t value );
-};
+        template
+        <
+            typename _T_,
+            typename std::enable_if
+            <
+                   std::is_integral< _T_ >::value
+                && std::is_unsigned< _T_ >::value
+            >
+            ::type * = nullptr
+        >
+        std::string Hex( _T_ value )
+        {
+            std::stringstream ss;
+            
+            ss << "0x"
+               << std::setfill( '0' )
+               << std::setw( sizeof( _T_ ) * 2 )
+               << std::hex
+               << std::uppercase
+               << value;
+            
+            return ss.str();
+        }
+    }
+}
 
-#endif /* TO_STRING_HPP */
+#endif /* MACHO_TO_STRING_HPP */

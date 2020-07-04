@@ -48,7 +48,7 @@ namespace MachO
             Info( const Info & o );
             Info( Info && o ) noexcept;
             
-            virtual ~Info( void );
+            virtual ~Info();
             
             Info & operator  =( Info o );
             Info & operator +=( const Info & child );
@@ -59,8 +59,8 @@ namespace MachO
             void value( const std::string & value );
             void value( const std::vector< Info > & children );
             
-            std::string                                      label( void ) const;
-            std::variant< std::string, std::vector< Info > > value( void ) const;
+            std::string                                      label() const;
+            std::variant< std::string, std::vector< Info > > value() const;
             
             std::string toString( size_t level = 0, size_t align = 0 ) const;
             

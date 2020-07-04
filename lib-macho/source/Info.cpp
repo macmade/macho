@@ -65,7 +65,7 @@ namespace MachO
         impl( std::move( o.impl ) )
     {}
     
-    Info::~Info( void )
+    Info::~Info()
     {}
     
     Info & Info::operator =( Info o )
@@ -113,12 +113,12 @@ namespace MachO
         this->impl->_value = children;
     }
     
-    std::string Info::label( void ) const
+    std::string Info::label() const
     {
         return this->impl->_label;
     }
     
-    std::variant< std::string, std::vector< Info > > Info::value( void ) const
+    std::variant< std::string, std::vector< Info > > Info::value() const
     {
         return this->impl->_value;
     }

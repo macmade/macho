@@ -40,7 +40,7 @@ namespace MachO
         public:
             
             IMPL( const std::string & path );
-            ~IMPL( void );
+            ~IMPL();
             
             std::ifstream _stream;
             std::string   _path;
@@ -53,7 +53,7 @@ namespace MachO
         impl( std::make_unique< IMPL >( path ) )
     {}
     
-    BinaryFileStream::~BinaryFileStream( void )
+    BinaryFileStream::~BinaryFileStream()
     {}
     
     BinaryStream::Endianness BinaryFileStream::preferredEndianness() const
@@ -124,7 +124,7 @@ namespace MachO
         this->impl->_stream.seekg( numeric_cast< std::streamsize >( pos ), std::ios_base::beg );
     }
     
-    size_t BinaryFileStream::tell( void ) const
+    size_t BinaryFileStream::tell() const
     {
         if( this->impl->_stream.is_open() == false )
         {
@@ -155,7 +155,7 @@ namespace MachO
         }
     }
     
-    BinaryFileStream::IMPL::~IMPL( void )
+    BinaryFileStream::IMPL::~IMPL()
     {
         if( this->_stream.is_open() )
         {

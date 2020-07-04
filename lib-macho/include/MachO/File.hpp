@@ -36,10 +36,12 @@
 #include <vector>
 #include <MachO/BinaryStream.hpp>
 #include <MachO/LoadCommand.hpp>
+#include <MachO/InfoObject.hpp>
+#include <MachO/CPU.hpp>
 
 namespace MachO
 {
-    class File
+    class File: public InfoObject
     {
         public:
             
@@ -59,14 +61,15 @@ namespace MachO
             File( BinaryStream & stream );
             File( const File & o );
             File( File && o ) noexcept;
-            ~File();
+            ~File() override;
             
             File & operator =( File o );
             
+            Info getInfo() const override;
+            
             Kind       kind()       const;
             Endianness endianness() const;
-            uint32_t   cpuType()    const;
-            uint32_t   cpuSubType() const;
+            CPU        cpu()        const;
             uint32_t   type()       const;
             uint32_t   flags()      const;
             

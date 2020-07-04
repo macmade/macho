@@ -54,43 +54,43 @@ namespace MachO
                 BigEndian
             };
             
-            virtual ~BinaryStream( void ) = default;
+            virtual ~BinaryStream() = default;
             
             virtual Endianness preferredEndianness()                const = 0;
             virtual void       setPreferredEndianness( Endianness value ) = 0;
             
             virtual void   read( uint8_t * buf, size_t size )        = 0;
             virtual void   seek( ssize_t offset, SeekDirection dir ) = 0;
-            virtual size_t tell( void )                        const = 0;
+            virtual size_t tell()                              const = 0;
             
-            bool   hasBytesAvailable( void );
-            size_t availableBytes( void );
+            bool   hasBytesAvailable();
+            size_t availableBytes();
             
             void seek( ssize_t offset );
             
             std::vector< uint8_t > read( size_t size );
-            std::vector< uint8_t > readAll( void );
+            std::vector< uint8_t > readAll();
             
-            uint8_t readUInt8( void );
-            int8_t  readInt8( void );
+            uint8_t readUInt8();
+            int8_t  readInt8();
             
-            uint16_t readUInt16( void );
-            uint16_t readBigEndianUInt16( void );
-            uint16_t readLittleEndianUInt16( void );
+            uint16_t readUInt16();
+            uint16_t readBigEndianUInt16();
+            uint16_t readLittleEndianUInt16();
             
-            uint32_t readUInt32( void );
-            uint32_t readBigEndianUInt32( void );
-            uint32_t readLittleEndianUInt32( void );
+            uint32_t readUInt32();
+            uint32_t readBigEndianUInt32();
+            uint32_t readLittleEndianUInt32();
             
-            uint64_t readUInt64( void );
-            uint64_t readBigEndianUInt64( void );
-            uint64_t readLittleEndianUInt64( void );
+            uint64_t readUInt64();
+            uint64_t readBigEndianUInt64();
+            uint64_t readLittleEndianUInt64();
             
             float readBigEndianFixedPoint( unsigned int integerLength, unsigned int fractionalLength );
             float readLittleEndianFixedPoint( unsigned int integerLength, unsigned int fractionalLength );
             
-            std::string readNULLTerminatedString( void );
-            std::string readPascalString( void );
+            std::string readNULLTerminatedString();
+            std::string readPascalString();
             std::string readString( size_t length );
     };
 }

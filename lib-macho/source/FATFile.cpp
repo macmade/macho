@@ -73,6 +73,26 @@ namespace MachO
         
         return *( this );
     }
+            
+    Info FATFile::getInfo() const
+    {
+        Info i( "FAT Mach-O file" );
+        Info archs( "Architectures" );
+        
+        for( const auto & p: this->impl->_archs )
+        {
+            archs.addChild( p.first );
+        }
+        
+        i.addChild( archs );
+        
+        for( const auto & p: this->impl->_archs )
+        {
+            i.addChild( p.second );
+        }
+        
+        return i;
+    }
 
     std::vector< std::pair< FATArch, File > > FATFile::architectures() const
     {

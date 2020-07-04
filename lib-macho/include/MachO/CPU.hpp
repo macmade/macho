@@ -1,7 +1,7 @@
 /*******************************************************************************
  * The MIT License (MIT)
  * 
- * Copyright (c) 2019 Jean-David Gadina - www.xs-labs.com
+ * Copyright (c) 2020 Jean-David Gadina - www.xs-labs.com
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,51 +23,39 @@
  ******************************************************************************/
 
 /*!
- * @header      BinaryDataStream.hpp
+ * @header      CPU.hpp
  * @copyright   (c) 2020, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef MACHO_BINARY_DATA_STREAM_HPP
-#define MACHO_BINARY_DATA_STREAM_HPP
+#ifndef MACHO_CPU_HPP
+#define MACHO_CPU_HPP
 
-#include <MachO/BinaryStream.hpp>
-#include <string>
-#include <iostream>
-#include <cstdint>
 #include <memory>
 #include <algorithm>
+#include <string>
+#include <MachO/BinaryStream.hpp>
 
 namespace MachO
 {
-    class BinaryDataStream: public BinaryStream
+    class CPU
     {
         public:
             
-            BinaryDataStream();
-            BinaryDataStream( const std::vector< uint8_t > & data );
-            BinaryDataStream( const BinaryDataStream & o );
-            BinaryDataStream( BinaryDataStream && o ) noexcept;
+            CPU();
+            CPU( uint32_t type, uint32_t subType );
+            CPU( const CPU & o );
+            CPU( CPU && o ) noexcept;
+            ~CPU();
             
-            virtual ~BinaryDataStream() override;
+            CPU & operator =( CPU o );
             
-            BinaryDataStream & operator =( BinaryDataStream o );
+            uint32_t    type()          const;
+            uint32_t    subType()       const;
+            std::string typeString()    const;
+            std::string subTypeString() const;
+            std::string description()   const;
             
-            using BinaryStream::read;
-            
-            Endianness preferredEndianness()                const override;
-            void       setPreferredEndianness( Endianness value ) override;
-            
-            void   read( uint8_t * buf, size_t size )        override;
-            void   seek( ssize_t offset, SeekDirection dir ) override;
-            size_t tell()                              const override;
-            
-            BinaryDataStream & operator +=( const BinaryDataStream & stream );
-            BinaryDataStream & operator +=( const std::vector< uint8_t > & data );
-            
-            void append( const BinaryDataStream & stream );
-            void append( const std::vector< uint8_t > & data );
-            
-            friend void swap( BinaryDataStream & o1, BinaryDataStream & o2 );
+            friend void swap( CPU & o1, CPU & o2 );
             
         private:
             
@@ -77,4 +65,4 @@ namespace MachO
     };
 }
 
-#endif /* MACHO_BINARY_DATA_STREAM_HPP */
+#endif /* MACHO_CPU_HPP */

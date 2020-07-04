@@ -23,38 +23,47 @@
  ******************************************************************************/
 
 /*!
- * @file        Display.cpp
+ * @file        ToString.cpp
  * @copyright   (c) 2020, Jean-David Gadina - www.xs-labs.com
  */
 
-#include "Display.hpp"
-#include "ToString.hpp"
-#include <MachO.hpp>
-#include <iostream>
-#include <sstream>
-#include <iomanip>
+#include <MachO/ToString.hpp>
 
-void Display::error( const std::exception & e )
+namespace MachO
 {
-    std::cerr << "Error: " << e.what() << std::endl;
-}
-
-void Display::help()
-{
-    std::cout << "Usage: macho [OPTIONS] [PATH]\n"
-                 "\n"
-                 "Options:\n"
-                 "\n"
-                 "    --help    Shows this help dialog."
-              << std::endl;
-}
-
-void Display::operator()( const MachO::FATFile & file ) const
-{
-    std::cout << file << std::endl;
-}
-
-void Display::operator()( const MachO::File & file ) const
-{
-    std::cout << file << std::endl;
+    namespace ToString
+    {
+        std::string Size( uint64_t size )
+        {
+            if( size < 1000 )
+            {
+                return std::to_string( size ) + " bytes";
+            }
+            else
+            {
+                double            s( static_cast< double >( size ) );
+                std::stringstream ss;
+                
+                ss << std::fixed << std::setprecision( 2 );
+                
+                if( size < 1000 * 1000 )
+                {
+                    ss << s / 1000.0;
+                    ss << " KB";
+                }
+                else if( size < 1000 * 1000 * 1000 )
+                {
+                    ss << ( s / 1000.0 ) / 1000.0;
+                    ss << " MB";
+                }
+                else
+                {
+                    ss << ( ( s / 1000.0 ) / 1000.0 ) / 1000.0;
+                    ss << " GB";
+                }
+                
+                return ss.str();
+            }
+        }
+    }
 }

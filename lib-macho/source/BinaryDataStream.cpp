@@ -39,17 +39,17 @@ namespace MachO
     {
         public:
             
-            IMPL( void );
+            IMPL();
             IMPL( const std::vector< uint8_t > & data );
             IMPL( const IMPL & o );
-            ~IMPL( void );
+            ~IMPL();
             
             std::vector< uint8_t > _data;
             size_t                 _pos;
             Endianness             _endianness;
     };
     
-    BinaryDataStream::BinaryDataStream( void ):
+    BinaryDataStream::BinaryDataStream():
         impl( std::make_unique< IMPL >() )
     {}
     
@@ -65,7 +65,7 @@ namespace MachO
         impl( std::move( o.impl ) )
     {}
     
-    BinaryDataStream::~BinaryDataStream( void )
+    BinaryDataStream::~BinaryDataStream()
     {}
     
     BinaryDataStream & BinaryDataStream::operator =( BinaryDataStream o )
@@ -136,7 +136,7 @@ namespace MachO
         this->impl->_pos = pos;
     }
     
-    size_t BinaryDataStream::tell( void ) const
+    size_t BinaryDataStream::tell() const
     {
         return this->impl->_pos;
     }
@@ -184,7 +184,7 @@ namespace MachO
         swap( o1.impl, o2.impl );
     }
     
-    BinaryDataStream::IMPL::IMPL( void ):
+    BinaryDataStream::IMPL::IMPL():
         _pos(        0 ),
         _endianness( Endianness::Default )
     {}
@@ -201,6 +201,6 @@ namespace MachO
         _endianness( o._endianness )
     {}
     
-    BinaryDataStream::IMPL::~IMPL( void )
+    BinaryDataStream::IMPL::~IMPL()
     {}
 }

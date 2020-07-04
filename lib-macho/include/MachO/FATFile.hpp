@@ -37,10 +37,11 @@
 #include <MachO/BinaryStream.hpp>
 #include <MachO/FATArch.hpp>
 #include <MachO/File.hpp>
+#include <MachO/InfoObject.hpp>
 
 namespace MachO
 {
-    class FATFile
+    class FATFile: public InfoObject
     {
         public:
             
@@ -48,9 +49,11 @@ namespace MachO
             FATFile( BinaryStream & stream );
             FATFile( const FATFile & o );
             FATFile( FATFile && o ) noexcept;
-            ~FATFile();
+            ~FATFile() override;
             
             FATFile & operator =( FATFile o );
+            
+            Info getInfo() const override;
             
             std::vector< std::pair< FATArch, File > > architectures() const;
             

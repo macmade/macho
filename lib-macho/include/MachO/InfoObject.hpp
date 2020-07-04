@@ -38,8 +38,8 @@ namespace MachO
     {
         public:
             
-            virtual      ~InfoObject( void )   = default;
-            virtual Info getInfo( void ) const = 0;
+            virtual      ~InfoObject()   = default;
+            virtual Info getInfo() const = 0;
             
             operator Info() const;
             

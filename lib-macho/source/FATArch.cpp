@@ -28,6 +28,7 @@
  */
 
 #include <MachO/FATArch.hpp>
+#include <MachO/ToString.hpp>
 
 namespace MachO
 {
@@ -39,8 +40,7 @@ namespace MachO
             IMPL( const IMPL & o );
             ~IMPL();
             
-            uint32_t _cpuType;
-            uint32_t _cpuSubType;
+            CPU      _cpu;
             uint32_t _offset;
             uint32_t _size;
             uint32_t _align;
@@ -68,14 +68,14 @@ namespace MachO
         return *( this );
     }
     
-    uint32_t FATArch::cpuType() const
+    Info FATArch::getInfo() const
     {
-        return this->impl->_cpuType;
+        return { this->cpu().description(), ToString::Size( this->size() ) };
     }
     
-    uint32_t FATArch::cpuSubType() const
+    CPU FATArch::cpu() const
     {
-        return this->impl->_cpuSubType;
+        return this->impl->_cpu;
     }
     
     uint32_t FATArch::offset() const
@@ -101,19 +101,17 @@ namespace MachO
     }
     
     FATArch::IMPL::IMPL( BinaryStream & stream ):
-        _cpuType(    stream.readBigEndianUInt32() ),
-        _cpuSubType( stream.readBigEndianUInt32() ),
-        _offset(     stream.readBigEndianUInt32() ),
-        _size(       stream.readBigEndianUInt32() ),
-        _align(      stream.readBigEndianUInt32() )
+        _cpu(    stream.readBigEndianUInt32(), stream.readBigEndianUInt32() ),
+        _offset( stream.readBigEndianUInt32() ),
+        _size(   stream.readBigEndianUInt32() ),
+        _align(  stream.readBigEndianUInt32() )
     {}
     
     FATArch::IMPL::IMPL( const IMPL & o ):
-        _cpuType(    o._cpuType ),
-        _cpuSubType( o._cpuSubType ),
-        _offset(     o._offset ),
-        _size(       o._size ),
-        _align(      o._align )
+        _cpu(    o._cpu ),
+        _offset( o._offset ),
+        _size(   o._size ),
+        _align(  o._align )
     {}
     
     FATArch::IMPL::~IMPL()

@@ -41,6 +41,7 @@
 #include <MachO/Info.hpp>
 #include <MachO/InfoObject.hpp>
 #include <MachO/LoadCommand.hpp>
+#include <MachO/ToString.hpp>
 
 #include <MachO/LoadCommands/BuildVersion.hpp>
 #include <MachO/LoadCommands/DyldInfo.hpp>

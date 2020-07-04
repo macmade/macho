@@ -30,6 +30,8 @@
 #include <MachO/File.hpp>
 #include <MachO/BinaryFileStream.hpp>
 #include <MachO/BinaryDataStream.hpp>
+#include <MachO/InfoObject.hpp>
+#include <MachO/ToString.hpp>
 
 #include <MachO/LoadCommands/BuildVersion.hpp>
 #include <MachO/LoadCommands/DyldInfo.hpp>
@@ -83,8 +85,7 @@ namespace MachO
             
             Kind       _kind;
             Endianness _endianness;
-            uint32_t   _cpuType;
-            uint32_t   _cpuSubType;
+            CPU        _cpu;
             uint32_t   _type;
             uint32_t   _flags;
             
@@ -116,6 +117,27 @@ namespace MachO
         
         return *( this );
     }
+            
+    Info File::getInfo() const
+    {
+        Info i(        "Mach-O file" );
+        Info flags(    "Flags" );
+        Info commands( "Commands" );
+        
+        for( const auto & command: this->loadCommands() )
+        {
+            ( void )command;
+            
+            commands.addChild( { "Command" } );
+        }
+        
+        i.addChild( { "CPU",  this->cpu().description() } );
+        i.addChild( { "Type", "XXX" } );
+        i.addChild( flags );
+        i.addChild( commands );
+        
+        return i;
+    }
     
     File::Kind File::kind() const
     {
@@ -127,14 +149,9 @@ namespace MachO
         return this->impl->_endianness;
     }
     
-    uint32_t File::cpuType() const
+    CPU File::cpu() const
     {
-        return this->impl->_cpuType;
-    }
-    
-    uint32_t File::cpuSubType() const
-    {
-        return this->impl->_cpuSubType;
+        return this->impl->_cpu;
     }
     
     uint32_t File::type() const
@@ -181,8 +198,7 @@ namespace MachO
     File::IMPL::IMPL( const IMPL & o ):
         _kind(         o._kind ),
         _endianness(   o._endianness ),
-        _cpuType(      o._cpuType ),
-        _cpuSubType(   o._cpuSubType ),
+        _cpu(          o._cpu ),
         _type(         o._type ),
         _flags(        o._flags ),
         _loadCommands( o._loadCommands )
@@ -228,9 +244,8 @@ namespace MachO
             throw std::runtime_error( "Invalid Mach-O signature" );
         }
         
-        this->_cpuType    = stream.readUInt32();
-        this->_cpuSubType = stream.readUInt32();
-        this->_type       = stream.readUInt32();
+        this->_cpu  = { stream.readUInt32(), stream.readUInt32() };
+        this->_type = stream.readUInt32();
         
         {
             uint32_t ncmd( stream.readUInt32() );
