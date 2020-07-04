@@ -48,6 +48,8 @@ namespace MachO
                 
                 Dylib & operator =( Dylib o );
                 
+                std::string description() const override;
+                
                 uint32_t command() const override;
                 uint32_t size()    const override;
                 

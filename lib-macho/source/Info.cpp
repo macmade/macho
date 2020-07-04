@@ -131,12 +131,19 @@ namespace MachO
             align++;
         }
         
-        if( label.length() < align )
+        if( this->impl->_value.length() > 0 )
         {
-            label += std::string( align - label.length(), ' ' );
+            label += " ";
+            
+            align++;
+            
+            if( label.length() < align )
+            {
+                label += std::string( align - label.length(), ' ' );
+            }
         }
         
-        ss << indent << label << " " << this->impl->_value;
+        ss << indent << label << this->impl->_value;
         
         if( this->impl->_children.size() > 0 )
         {

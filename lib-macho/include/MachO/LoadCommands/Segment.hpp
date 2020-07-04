@@ -48,6 +48,8 @@ namespace MachO
                 
                 Segment & operator =( Segment o );
                 
+                Info getInfo() const override;
+                
                 uint32_t command() const override;
                 uint32_t size()    const override;
                 

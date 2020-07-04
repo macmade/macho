@@ -65,5 +65,17 @@ namespace MachO
                 return ss.str();
             }
         }
+        
+        std::string Filename( const std::string & path )
+        {
+            size_t pos( path.rfind( '/' ) );
+            
+            if( pos == std::string::npos )
+            {
+                return path;
+            }
+            
+            return path.substr( pos + 1 );
+        }
     }
 }

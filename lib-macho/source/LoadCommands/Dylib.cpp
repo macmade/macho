@@ -29,6 +29,7 @@
 
 #include <MachO/LoadCommands/Dylib.hpp>
 #include <MachO/Casts.hpp>
+#include <MachO/ToString.hpp>
 
 namespace MachO
 {
@@ -70,6 +71,11 @@ namespace MachO
             swap( *( this ), o );
             
             return *( this );
+        }
+        
+        std::string Dylib::description() const
+        {
+            return ToString::Filename( this->name() );
         }
         
         uint32_t Dylib::command() const

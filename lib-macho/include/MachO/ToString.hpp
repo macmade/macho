@@ -42,6 +42,7 @@ namespace MachO
     namespace ToString
     {
         std::string Size( uint64_t size );
+        std::string Filename( const std::string & path );
         
         template
         <

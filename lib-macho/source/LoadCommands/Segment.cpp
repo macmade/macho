@@ -29,6 +29,7 @@
 
 #include <MachO/LoadCommands/Segment.hpp>
 #include <MachO/Casts.hpp>
+#include <MachO/ToString.hpp>
 
 namespace MachO
 {
@@ -75,6 +76,23 @@ namespace MachO
             swap( *( this ), o );
             
             return *( this );
+        }
+        
+        Info Segment::getInfo() const
+        {
+            Info i( LoadCommand::getInfo() );
+            
+            i.addChild( { "Name",        this->name() } );
+            i.addChild( { "VM address",  ToString::Hex(  this->vmAddress() ) } );
+            i.addChild( { "VM size",     ToString::Size( this->vmSize() ) } );
+            i.addChild( { "File offset", ToString::Hex(  this->fileOffset() ) } );
+            i.addChild( { "File size",   ToString::Size( this->fileSize() ) } );
+            i.addChild( { "Max prot",    ToString::Hex(  this->maxProtection() ) } );
+            i.addChild( { "Init prot",   ToString::Hex(  this->initProtection() ) } );
+            i.addChild( { "Sections",    std::to_string( this->numberOfSections() ) } );
+            i.addChild( { "Flags",       ToString::Hex(  this->flags() ) } );
+            
+            return i;
         }
         
         uint32_t Segment::command() const

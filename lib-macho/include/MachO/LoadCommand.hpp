@@ -42,9 +42,9 @@ namespace MachO
             virtual uint32_t command() const = 0;
             virtual uint32_t size()    const = 0;
             
-            Info getInfo() const override;
+            virtual std::string description() const;
             
-            virtual std::pair< std::string, std::string > description() const;
+            Info getInfo() const override;
     };
 }
 
