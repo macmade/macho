@@ -77,5 +77,26 @@ namespace MachO
             
             return path.substr( pos + 1 );
         }
+        
+        std::string UUID( const uint8_t * bytes )
+        {
+            std::stringstream ss;
+            
+            for( int i = 0; i < 16; i++ )
+            {
+                if( i == 4 || i == 6 || i == 8 || i == 10 )
+                {
+                    ss << "-";
+                }
+                
+                ss << std::hex
+                   << std::uppercase
+                   << std::setfill( '0' )
+                   << std::setw( 0 )
+                   << static_cast< int >( bytes[ i ] );
+            }
+            
+            return ss.str();
+        }
     }
 }

@@ -48,8 +48,11 @@ namespace MachO
                 
                 UUID & operator =( UUID o );
                 
-                uint32_t command() const override;
-                uint32_t size()    const override;
+                std::string description() const override;
+                
+                uint32_t    command() const override;
+                uint32_t    size()    const override;
+                std::string uuid()    const;
                 
                 friend void swap( UUID & o1, UUID & o2 );
                 

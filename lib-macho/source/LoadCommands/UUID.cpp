@@ -29,6 +29,7 @@
 
 #include <MachO/LoadCommands/UUID.hpp>
 #include <MachO/Casts.hpp>
+#include <MachO/ToString.hpp>
 
 namespace MachO
 {
@@ -44,6 +45,7 @@ namespace MachO
                 
                 uint32_t _command;
                 uint32_t _size;
+                uint8_t  _uuid[ 16 ];
         };
 
         UUID::UUID( uint32_t command, uint32_t size, BinaryStream & stream ):
@@ -67,6 +69,16 @@ namespace MachO
             
             return *( this );
         }
+                
+        std::string UUID::description() const
+        {
+            return this->uuid();
+        }
+        
+        std::string UUID::uuid() const
+        {
+            return ToString::UUID( this->impl->_uuid );
+        }
         
         uint32_t UUID::command() const
         {
@@ -89,13 +101,15 @@ namespace MachO
             _command( command ),
             _size(    size )
         {
-            ( void )stream;
+            stream.read( this->_uuid, 16 );
         }
         
         UUID::IMPL::IMPL( const IMPL & o ):
             _command( o._command ),
             _size(    o._size )
-        {}
+        {
+            memcpy( this->_uuid, o._uuid, 16 );
+        }
 
         UUID::IMPL::~IMPL()
         {}

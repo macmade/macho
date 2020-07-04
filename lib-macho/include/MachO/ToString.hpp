@@ -43,6 +43,7 @@ namespace MachO
     {
         std::string Size( uint64_t size );
         std::string Filename( const std::string & path );
+        std::string UUID( const uint8_t * bytes );
         
         template
         <
