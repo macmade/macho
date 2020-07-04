@@ -32,6 +32,7 @@
 
 #include <MachO/LoadCommand.hpp>
 #include <MachO/BinaryStream.hpp>
+#include <MachO/Platform.hpp>
 
 namespace MachO
 {
@@ -48,8 +49,13 @@ namespace MachO
                 
                 BuildVersion & operator =( BuildVersion o );
                 
-                uint32_t command() const override;
-                uint32_t size()    const override;
+                Info getInfo() const override;
+                
+                uint32_t command()  const override;
+                uint32_t size()     const override;
+                Platform platform() const;
+                uint32_t minOS()    const;
+                uint32_t sdk()      const;
                 
                 friend void swap( BuildVersion & o1, BuildVersion & o2 );
                 

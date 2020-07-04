@@ -44,6 +44,7 @@
 #include <MachO/InfoObject.hpp>
 #include <MachO/IntegerWrapper.hpp>
 #include <MachO/LoadCommand.hpp>
+#include <MachO/Platform.hpp>
 #include <MachO/ToString.hpp>
 
 #include <MachO/LoadCommands/BuildVersion.hpp>

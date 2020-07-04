@@ -48,8 +48,11 @@ namespace MachO
                 
                 SourceVersion & operator =( SourceVersion o );
                 
+                std::string description() const override;
+                
                 uint32_t command() const override;
                 uint32_t size()    const override;
+                uint64_t version() const;
                 
                 friend void swap( SourceVersion & o1, SourceVersion & o2 );
                 

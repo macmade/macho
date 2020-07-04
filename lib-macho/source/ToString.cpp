@@ -98,5 +98,39 @@ namespace MachO
             
             return ss.str();
         }
+        
+        std::string Version( const uint32_t value )
+        {
+            uint32_t a =   value >> 16;
+            uint32_t b = ( value >>  8 ) & 0xFF;
+            uint32_t c =   value         & 0xFF;
+            
+            return std::to_string( a )
+                 + "."
+                 + std::to_string( b )
+                 + "."
+                 + std::to_string( c );
+        }
+        
+        std::string Version( const uint64_t value )
+        {
+            ( void )value;
+            
+            uint64_t a =   value >> 40;
+            uint64_t b = ( value >> 30 ) & 0x3FF;
+            uint64_t c = ( value >> 20 ) & 0x3FF;
+            uint64_t d = ( value >> 10 ) & 0x3FF;
+            uint64_t e = ( value       ) & 0x3FF;
+            
+            return std::to_string( a )
+                 + "."
+                 + std::to_string( b )
+                 + "."
+                 + std::to_string( c )
+                 + "."
+                 + std::to_string( d )
+                 + "."
+                 + std::to_string( e );
+        }
     }
 }

@@ -23,54 +23,33 @@
  ******************************************************************************/
 
 /*!
- * @header      ToString.hpp
+ * @file        Platform.cpp
  * @copyright   (c) 2020, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef MACHO_TO_STRING_HPP
-#define MACHO_TO_STRING_HPP
-
-#include <type_traits>
-#include <ios>
-#include <sstream>
-#include <iomanip>
-#include <string>
-#include <vector>
+#include <MachO/Platform.hpp>
 
 namespace MachO
 {
-    namespace ToString
+    Info Platform::getInfo() const
     {
-        std::string Size( uint64_t size );
-        std::string Filename( const std::string & path );
-        std::string UUID( const uint8_t * bytes );
-        std::string Version( const uint32_t value );
-        std::string Version( const uint64_t value );
+        std::string platform;
         
-        template
-        <
-            typename _T_,
-            typename std::enable_if
-            <
-                   std::is_integral< _T_ >::value
-                && std::is_unsigned< _T_ >::value
-            >
-            ::type * = nullptr
-        >
-        std::string Hex( _T_ value )
+        switch( this->value() )
         {
-            std::stringstream ss;
-            
-            ss << "0x"
-               << std::setfill( '0' )
-               << std::setw( sizeof( _T_ ) * 2 )
-               << std::hex
-               << std::uppercase
-               << value;
-            
-            return ss.str();
+            case  1: platform = "macOS";             break;
+            case  2: platform = "iOS";               break;
+            case  3: platform = "tvOS";              break;
+            case  4: platform = "watchOS";           break;
+            case  5: platform = "BridgeOS";          break;
+            case  6: platform = "Mac Catalyst";      break;
+            case  7: platform = "iOS Simulator";     break;
+            case  8: platform = "tvOS Simulator";    break;
+            case  9: platform = "watchOS Simulator"; break;
+            case 10: platform = "DriverKit";         break;
+            default: platform = "Unknown";           break;
         }
+        
+        return { "Platform", platform };
     }
 }
-
-#endif /* MACHO_TO_STRING_HPP */

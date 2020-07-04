@@ -112,6 +112,8 @@
 		05C8C42524B0C4580095E313 /* FileFlags.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05C8C42324B0C4580095E313 /* FileFlags.cpp */; };
 		05C8C42824B0C4C20095E313 /* FileType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05C8C42724B0C4C20095E313 /* FileType.cpp */; };
 		05C8C42B24B0D82A0095E313 /* LoadCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05C8C42924B0D82A0095E313 /* LoadCommand.cpp */; };
+		05C8C43324B0F55E0095E313 /* Platform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05C8C43124B0F55E0095E313 /* Platform.cpp */; };
+		05C8C43424B0F55E0095E313 /* Platform.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 05C8C43224B0F55E0095E313 /* Platform.hpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -289,6 +291,8 @@
 		05C8C42324B0C4580095E313 /* FileFlags.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileFlags.cpp; sourceTree = "<group>"; };
 		05C8C42724B0C4C20095E313 /* FileType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileType.cpp; sourceTree = "<group>"; };
 		05C8C42924B0D82A0095E313 /* LoadCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LoadCommand.cpp; sourceTree = "<group>"; };
+		05C8C43124B0F55E0095E313 /* Platform.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Platform.cpp; sourceTree = "<group>"; };
+		05C8C43224B0F55E0095E313 /* Platform.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Platform.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -500,6 +504,7 @@
 				05C8C41324AFED710095E313 /* InfoObject.cpp */,
 				05C8C42924B0D82A0095E313 /* LoadCommand.cpp */,
 				05C8C36824AF7CCE0095E313 /* LoadCommands */,
+				05C8C43124B0F55E0095E313 /* Platform.cpp */,
 				05C8C41524AFEF6E0095E313 /* ToString.cpp */,
 			);
 			path = source;
@@ -524,6 +529,7 @@
 				05C8C41D24B0C3110095E313 /* IntegerWrapper.hpp */,
 				05C8C36424AF7A530095E313 /* LoadCommand.hpp */,
 				05C8C36724AF7CC50095E313 /* LoadCommands */,
+				05C8C43224B0F55E0095E313 /* Platform.hpp */,
 				05C8C41624AFEF6E0095E313 /* ToString.hpp */,
 			);
 			path = MachO;
@@ -643,6 +649,7 @@
 				05C8C3DC24AFE9440095E313 /* EntryPoint.hpp in Headers */,
 				05C8C3D624AFE9440095E313 /* Note.hpp in Headers */,
 				05C8C33324AE24460095E313 /* BinaryDataStream.hpp in Headers */,
+				05C8C43424B0F55E0095E313 /* Platform.hpp in Headers */,
 				05C8C41224AFECCC0095E313 /* Info.hpp in Headers */,
 				05C8C39A24AFDDEE0095E313 /* UUID.hpp in Headers */,
 				05C8C3DD24AFE9440095E313 /* Routines64.hpp in Headers */,
@@ -800,6 +807,7 @@
 				05C8C33C24AE2D400095E313 /* Functions.cpp in Sources */,
 				05C8C41124AFECCC0095E313 /* Info.cpp in Sources */,
 				05C8C3B624AFDDF60095E313 /* Dylinker.cpp in Sources */,
+				05C8C43324B0F55E0095E313 /* Platform.cpp in Sources */,
 				05C8C42524B0C4580095E313 /* FileFlags.cpp in Sources */,
 				05C8C3B424AFDDF60095E313 /* DysymTab.cpp in Sources */,
 				05C8C3FF24AFE94F0095E313 /* FilesetEntry.cpp in Sources */,

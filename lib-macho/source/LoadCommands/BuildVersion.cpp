@@ -29,6 +29,7 @@
 
 #include <MachO/LoadCommands/BuildVersion.hpp>
 #include <MachO/Casts.hpp>
+#include <MachO/ToString.hpp>
 
 namespace MachO
 {
@@ -44,6 +45,9 @@ namespace MachO
                 
                 uint32_t _command;
                 uint32_t _size;
+                Platform _platform;
+                uint32_t _minOS;
+                uint32_t _sdk;
         };
 
         BuildVersion::BuildVersion( uint32_t command, uint32_t size, BinaryStream & stream ):
@@ -68,6 +72,17 @@ namespace MachO
             return *( this );
         }
         
+        Info BuildVersion::getInfo() const
+        {
+            Info i( LoadCommand::getInfo() );
+            
+            i.addChild( this->platform() );
+            i.addChild( { "Min OS", ToString::Version( this->minOS() ) } );
+            i.addChild( { "SDK",    ToString::Version( this->sdk() ) } );
+            
+            return i;
+        }
+        
         uint32_t BuildVersion::command() const
         {
             return this->impl->_command;
@@ -78,6 +93,21 @@ namespace MachO
             return this->impl->_size;
         }
         
+        Platform BuildVersion::platform() const
+        {
+            return this->impl->_platform;
+        }
+        
+        uint32_t BuildVersion::minOS() const
+        {
+            return this->impl->_minOS;
+        }
+        
+        uint32_t BuildVersion::sdk() const
+        {
+            return this->impl->_sdk;
+        }
+        
         void swap( BuildVersion & o1, BuildVersion & o2 )
         {
             using std::swap;
@@ -86,15 +116,19 @@ namespace MachO
         }
         
         BuildVersion::IMPL::IMPL( uint32_t command, uint32_t size, BinaryStream & stream ):
-            _command( command ),
-            _size(    size )
-        {
-            ( void )stream;
-        }
+            _command(  command ),
+            _size(     size ),
+            _platform( stream.readUInt32() ),
+            _minOS(    stream.readUInt32() ),
+            _sdk(      stream.readUInt32() )
+        {}
         
         BuildVersion::IMPL::IMPL( const IMPL & o ):
-            _command( o._command ),
-            _size(    o._size )
+            _command(  o._command ),
+            _size(     o._size ),
+            _platform( o._platform ),
+            _minOS(    o._minOS ),
+            _sdk(      o._sdk )
         {}
 
         BuildVersion::IMPL::~IMPL()

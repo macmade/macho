@@ -29,6 +29,7 @@
 
 #include <MachO/LoadCommands/SourceVersion.hpp>
 #include <MachO/Casts.hpp>
+#include <MachO/ToString.hpp>
 
 namespace MachO
 {
@@ -44,6 +45,7 @@ namespace MachO
                 
                 uint32_t _command;
                 uint32_t _size;
+                uint64_t _version;
         };
 
         SourceVersion::SourceVersion( uint32_t command, uint32_t size, BinaryStream & stream ):
@@ -68,6 +70,11 @@ namespace MachO
             return *( this );
         }
         
+        std::string SourceVersion::description() const
+        {
+            return ToString::Version( this->version() );
+        }
+        
         uint32_t SourceVersion::command() const
         {
             return this->impl->_command;
@@ -76,6 +83,11 @@ namespace MachO
         uint32_t SourceVersion::size() const
         {
             return this->impl->_size;
+        }
+        
+        uint64_t SourceVersion::version() const
+        {
+            return this->impl->_version;
         }
         
         void swap( SourceVersion & o1, SourceVersion & o2 )
@@ -87,14 +99,14 @@ namespace MachO
         
         SourceVersion::IMPL::IMPL( uint32_t command, uint32_t size, BinaryStream & stream ):
             _command( command ),
-            _size(    size )
-        {
-            ( void )stream;
-        }
+            _size(    size ),
+            _version( stream.readUInt64() )
+        {}
         
         SourceVersion::IMPL::IMPL( const IMPL & o ):
             _command( o._command ),
-            _size(    o._size )
+            _size(    o._size ),
+            _version( o._version )
         {}
 
         SourceVersion::IMPL::~IMPL()
