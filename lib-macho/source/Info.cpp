@@ -41,8 +41,9 @@ namespace MachO
             IMPL( const std::string & label, const std::vector< Info > & children );
             IMPL( const IMPL & o );
             
-            std::string                                      _label;
-            std::variant< std::string, std::vector< Info > > _value;
+            std::string         _label;
+            std::string         _value;
+            std::vector< Info > _children;
     };
     
     Info::Info( const std::string & label ):
@@ -84,18 +85,7 @@ namespace MachO
     
     void Info::addChild( const Info & child )
     {
-        std::vector< Info > v;
-        
-        try
-        {
-            v = std::get< 1 >( this->impl->_value );
-        }
-        catch( ... )
-        {}
-        
-        v.push_back( child );
-        
-        this->impl->_value = v;
+        this->impl->_children.push_back( child );
     }
     
     void Info::label( const std::string & label )
@@ -110,7 +100,7 @@ namespace MachO
     
     void Info::value( const std::vector< Info > & children )
     {
-        this->impl->_value = children;
+        this->impl->_children = children;
     }
     
     std::string Info::label() const
@@ -118,62 +108,53 @@ namespace MachO
         return this->impl->_label;
     }
     
-    std::variant< std::string, std::vector< Info > > Info::value() const
+    std::string Info::value() const
     {
         return this->impl->_value;
+    }
+    
+    std::vector< Info > Info::children() const
+    {
+        return this->impl->_children;
     }
     
     std::string Info::toString( size_t level, size_t align ) const
     {
         std::stringstream ss;
         std::string       indent( 4 * level, ' ' );
+        std::string       label( this->impl->_label );
         
-        try
+        if( this->impl->_value.length() > 0 || this->impl->_children.size() > 0 )
         {
-            std::string v( std::get< 0 >( this->impl->_value ) );
-            std::string l( this->impl->_label );
-            
-            l += ":";
+            label += ":";
             
             align++;
-            
-            if( l.length() < align )
-            {
-                l += std::string( align - l.length(), ' ' );
-            }
-            
-            ss << indent << l << " " << v;
         }
-        catch( ... )
+        
+        if( label.length() < align )
         {
-            try
+            label += std::string( align - label.length(), ' ' );
+        }
+        
+        ss << indent << label << " " << this->impl->_value;
+        
+        if( this->impl->_children.size() > 0 )
+        {
+            ss << std::endl << indent << "{" << std::endl;
+            
+            align = 0;
+            
+            for( const auto & child: this->impl->_children )
             {
-                std::vector< Info > v( std::get< 1 >( this->impl->_value ) );
-                
-                ss << indent << this->impl->_label << ": " << std::endl
-                   << indent << "{";
-                
-                if( v.size() > 0 )
-                {
-                    ss << std::endl;
-                }
-                
-                align = 0;
-                
-                for( const auto & child: v )
-                {
-                    align = ( align < child.label().length() ) ? child.label().length() : align;
-                }
-                
-                for( const auto & child: v )
-                {
-                    ss << child.toString( level + 1, align ) << std::endl;
-                }
-                
-                ss << indent << "}";
+                align = ( align < child.label().length() ) ? child.label().length() : align;
             }
-            catch( ... )
-            {}
+            
+            for( const auto & child: this->impl->_children )
+            {
+                ss << child.toString( level + 1, align ) << std::endl;
+            }
+            
+            ss << indent << "}";
         }
         
         return ss.str();
@@ -204,11 +185,12 @@ namespace MachO
     
     Info::IMPL::IMPL( const std::string & label, const std::vector< Info > & children ):
         _label( label ),
-        _value( children )
+        _children( children )
     {}
     
     Info::IMPL::IMPL( const IMPL & o ):
-        _label( o._label ),
-        _value( o._value )
+        _label(    o._label ),
+        _value(    o._value ),
+        _children( o._children )
     {}
 }

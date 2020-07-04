@@ -23,29 +23,23 @@
  ******************************************************************************/
 
 /*!
- * @header      LoadCommand.hpp
+ * @file        LoadCommand.cpp
  * @copyright   (c) 2020, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef MACHO_LOAD_COMMAND_HPP
-#define MACHO_LOAD_COMMAND_HPP
-
-#include <cstdint>
-#include <MachO/InfoObject.hpp>
+#include <MachO/LoadCommand.hpp>
 
 namespace MachO
 {
-    class LoadCommand: public InfoObject
+    Info LoadCommand::getInfo() const
     {
-        public:
-            
-            virtual uint32_t command() const = 0;
-            virtual uint32_t size()    const = 0;
-            
-            Info getInfo() const override;
-            
-            virtual std::pair< std::string, std::string > description() const;
-    };
+        auto description( this->description() );
+        
+        return { description.first, description.second };
+    }
+    
+    std::pair< std::string, std::string > LoadCommand::description() const
+    {
+        return { "Unknown", "--" };
+    }
 }
-
-#endif /* MACHO_LOAD_COMMAND_HPP */

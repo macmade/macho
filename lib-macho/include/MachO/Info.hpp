@@ -59,8 +59,9 @@ namespace MachO
             void value( const std::string & value );
             void value( const std::vector< Info > & children );
             
-            std::string                                      label() const;
-            std::variant< std::string, std::vector< Info > > value() const;
+            std::string         label()    const;
+            std::string         value()    const;
+            std::vector< Info > children() const;
             
             std::string toString( size_t level = 0, size_t align = 0 ) const;
             

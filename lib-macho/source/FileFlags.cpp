@@ -28,16 +28,27 @@
  */
 
 #include <MachO/FileFlags.hpp>
+#include <MachO/ToString.hpp>
 
 namespace MachO
 {
     Info FileFlags::getInfo() const
     {
         Info i( "Flags" );
+        auto flags( this->flags() );
         
-        for( const auto & p: this->flags() )
+        if( flags.size() > 0 )
         {
-            i.addChild( { p.first, p.second } );
+            i.value( ToString::Hex( this->value() ) );
+            
+            for( const auto & p: flags )
+            {
+                i.addChild( { p.first, p.second } );
+            }
+        }
+        else
+        {
+            i.value( "--" );
         }
         
         return i;

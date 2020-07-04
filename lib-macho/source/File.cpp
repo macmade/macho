@@ -123,11 +123,11 @@ namespace MachO
         Info i(        "Mach-O file" );
         Info commands( "Commands" );
         
+        commands.value( std::to_string( this->loadCommands().size() ) );
+        
         for( const auto & command: this->loadCommands() )
         {
-            ( void )command;
-            
-            commands.addChild( { "Command" } );
+            commands.addChild( command.get() );
         }
         
         i.addChild( this->cpu() );

@@ -111,6 +111,7 @@
 		05C8C42224B0C4520095E313 /* FileType.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 05C8C42024B0C4510095E313 /* FileType.hpp */; };
 		05C8C42524B0C4580095E313 /* FileFlags.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05C8C42324B0C4580095E313 /* FileFlags.cpp */; };
 		05C8C42824B0C4C20095E313 /* FileType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05C8C42724B0C4C20095E313 /* FileType.cpp */; };
+		05C8C42B24B0D82A0095E313 /* LoadCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05C8C42924B0D82A0095E313 /* LoadCommand.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -287,6 +288,7 @@
 		05C8C42024B0C4510095E313 /* FileType.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FileType.hpp; sourceTree = "<group>"; };
 		05C8C42324B0C4580095E313 /* FileFlags.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileFlags.cpp; sourceTree = "<group>"; };
 		05C8C42724B0C4C20095E313 /* FileType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileType.cpp; sourceTree = "<group>"; };
+		05C8C42924B0D82A0095E313 /* LoadCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LoadCommand.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -496,6 +498,7 @@
 				05C8C33A24AE2D400095E313 /* Functions.cpp */,
 				05C8C40F24AFECCC0095E313 /* Info.cpp */,
 				05C8C41324AFED710095E313 /* InfoObject.cpp */,
+				05C8C42924B0D82A0095E313 /* LoadCommand.cpp */,
 				05C8C36824AF7CCE0095E313 /* LoadCommands */,
 				05C8C41524AFEF6E0095E313 /* ToString.cpp */,
 			);
@@ -769,6 +772,7 @@
 				05C8C3F824AFE94F0095E313 /* FVMLib.cpp in Sources */,
 				05C8C3B224AFDDF60095E313 /* SubUmbrella.cpp in Sources */,
 				05C8C3B124AFDDF60095E313 /* Dylib.cpp in Sources */,
+				05C8C42B24B0D82A0095E313 /* LoadCommand.cpp in Sources */,
 				05C8C34024AE49D10095E313 /* FATArch.cpp in Sources */,
 				05C8C3BC24AFDFEF0095E313 /* PreboundDylib.cpp in Sources */,
 				05C8C3F924AFE94F0095E313 /* EntryPoint.cpp in Sources */,
