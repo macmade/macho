@@ -23,53 +23,44 @@
  ******************************************************************************/
 
 /*!
- * @header      BuildVersion.hpp
+ * @header      Tool.hpp
  * @copyright   (c) 2020, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef MACHO_LOAD_COMMANDS_BUILD_VERSION_HPP
-#define MACHO_LOAD_COMMANDS_BUILD_VERSION_HPP
+#ifndef MACHO_TOOL_HPP
+#define MACHO_TOOL_HPP
 
-#include <MachO/LoadCommand.hpp>
-#include <MachO/BinaryStream.hpp>
-#include <MachO/Platform.hpp>
-#include <MachO/Tool.hpp>
-#include <vector>
+#include <cstdint>
+#include <MachO/InfoObject.hpp>
 
 namespace MachO
 {
-    namespace LoadCommands
+    class Tool: public InfoObject
     {
-        class BuildVersion: public LoadCommand
-        {
-            public:
-                
-                BuildVersion( uint32_t command, uint32_t size, BinaryStream & stream );
-                BuildVersion( const BuildVersion & o );
-                BuildVersion( BuildVersion && o ) noexcept;
-                ~BuildVersion() override;
-                
-                BuildVersion & operator =( BuildVersion o );
-                
-                Info getInfo() const override;
-                
-                uint32_t command()  const override;
-                uint32_t size()     const override;
-                Platform platform() const;
-                uint32_t minOS()    const;
-                uint32_t sdk()      const;
-                
-                std::vector< Tool > tools() const;
-                
-                friend void swap( BuildVersion & o1, BuildVersion & o2 );
-                
-            private:
-                
-                class IMPL;
-                
-                std::unique_ptr< IMPL > impl;
-        };
-    }
+        public:
+            
+            Tool();
+            Tool( uint32_t tool, uint32_t version );
+            Tool( const Tool & o );
+            Tool( Tool && o ) noexcept;
+            ~Tool() override;
+            
+            Tool & operator =( Tool o );
+            
+            Info getInfo() const override;
+            
+            uint32_t    tool()    const;
+            uint32_t    version() const;
+            std::string name()    const;
+            
+            friend void swap( Tool & o1, Tool & o2 );
+            
+        private:
+            
+            class IMPL;
+            
+            std::unique_ptr< IMPL > impl;
+    };
 }
 
-#endif /* MACHO_LOAD_COMMANDS_BUILD_VERSION_HPP */
+#endif /* MACHO_TOOL_HPP */

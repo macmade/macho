@@ -43,11 +43,12 @@ namespace MachO
                 IMPL( const IMPL & o );
                 ~IMPL();
                 
-                uint32_t _command;
-                uint32_t _size;
-                Platform _platform;
-                uint32_t _minOS;
-                uint32_t _sdk;
+                uint32_t            _command;
+                uint32_t            _size;
+                Platform            _platform;
+                uint32_t            _minOS;
+                uint32_t            _sdk;
+                std::vector< Tool > _tools;
         };
 
         BuildVersion::BuildVersion( uint32_t command, uint32_t size, BinaryStream & stream ):
@@ -80,6 +81,18 @@ namespace MachO
             i.addChild( { "Min OS", ToString::Version( this->minOS() ) } );
             i.addChild( { "SDK",    ToString::Version( this->sdk() ) } );
             
+            if( this->impl->_tools.size() > 0 )
+            {
+                Info tools( "Tools" );
+                
+                for( const auto & tool: this->impl->_tools )
+                {
+                    tools.addChild( tool );
+                }
+                
+                i.addChild( tools );
+            }
+            
             return i;
         }
         
@@ -108,6 +121,11 @@ namespace MachO
             return this->impl->_sdk;
         }
         
+        std::vector< Tool > BuildVersion::tools() const
+        {
+            return this->impl->_tools;
+        }
+        
         void swap( BuildVersion & o1, BuildVersion & o2 )
         {
             using std::swap;
@@ -121,14 +139,22 @@ namespace MachO
             _platform( stream.readUInt32() ),
             _minOS(    stream.readUInt32() ),
             _sdk(      stream.readUInt32() )
-        {}
+        {
+            uint32_t n( stream.readUInt32() );
+            
+            for( uint32_t i = 0; i < n; i++ )
+            {
+                this->_tools.push_back( { stream.readUInt32(), stream.readUInt32() } );
+            }
+        }
         
         BuildVersion::IMPL::IMPL( const IMPL & o ):
             _command(  o._command ),
             _size(     o._size ),
             _platform( o._platform ),
             _minOS(    o._minOS ),
-            _sdk(      o._sdk )
+            _sdk(      o._sdk ),
+            _tools(    o._tools )
         {}
 
         BuildVersion::IMPL::~IMPL()
