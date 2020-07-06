@@ -33,6 +33,7 @@
 #include <MachO/LoadCommand.hpp>
 #include <MachO/BinaryStream.hpp>
 #include <MachO/File.hpp>
+#include <string>
 
 namespace MachO
 {
@@ -49,8 +50,11 @@ namespace MachO
                 
                 PreboundDylib & operator =( PreboundDylib o );
                 
-                uint32_t command() const override;
-                uint32_t size()    const override;
+                std::string description() const override;
+                
+                uint32_t    command() const override;
+                uint32_t    size()    const override;
+                std::string name()    const;
                 
                 friend void swap( PreboundDylib & o1, PreboundDylib & o2 );
                 

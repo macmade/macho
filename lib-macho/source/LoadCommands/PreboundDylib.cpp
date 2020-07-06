@@ -42,8 +42,9 @@ namespace MachO
                 IMPL( const IMPL & o );
                 ~IMPL();
                 
-                uint32_t _command;
-                uint32_t _size;
+                uint32_t    _command;
+                uint32_t    _size;
+                std::string _name;
         };
 
         PreboundDylib::PreboundDylib( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
@@ -68,6 +69,11 @@ namespace MachO
             return *( this );
         }
         
+        std::string PreboundDylib::description() const
+        {
+            return this->name();
+        }
+        
         uint32_t PreboundDylib::command() const
         {
             return this->impl->_command;
@@ -76,6 +82,11 @@ namespace MachO
         uint32_t PreboundDylib::size() const
         {
             return this->impl->_size;
+        }
+        
+        std::string PreboundDylib::name() const
+        {
+            return this->impl->_name;
         }
         
         void swap( PreboundDylib & o1, PreboundDylib & o2 )
@@ -89,13 +100,22 @@ namespace MachO
             _command( command ),
             _size(    size )
         {
+            size_t   begin(  stream.tell() - 8 );
+            uint32_t offset( stream.readUInt32() );
+            
             ( void )kind;
-            ( void )stream;
+            
+            stream.seek( numeric_cast< ssize_t >( begin + offset ), BinaryStream::SeekDirection::Begin );
+            
+            this->_name = stream.readNULLTerminatedString();
+            
+            /* Missing linked modules... */
         }
         
         PreboundDylib::IMPL::IMPL( const IMPL & o ):
             _command( o._command ),
-            _size(    o._size )
+            _size(    o._size ),
+            _name(    o._name )
         {}
 
         PreboundDylib::IMPL::~IMPL()
