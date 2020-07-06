@@ -29,6 +29,7 @@
 
 #include <MachO/LoadCommands/Note.hpp>
 #include <MachO/Casts.hpp>
+#include <MachO/ToString.hpp>
 
 namespace MachO
 {
@@ -42,8 +43,11 @@ namespace MachO
                 IMPL( const IMPL & o );
                 ~IMPL();
                 
-                uint32_t _command;
-                uint32_t _size;
+                uint32_t    _command;
+                uint32_t    _size;
+                std::string _dataOwner;
+                uint64_t    _dataOffset;
+                uint64_t    _dataSize;
         };
 
         Note::Note( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  ):
@@ -68,6 +72,17 @@ namespace MachO
             return *( this );
         }
         
+        Info Note::getInfo() const
+        {
+            Info i( LoadCommand::getInfo() );
+            
+            i.addChild( { "Data owner",  this->dataOwner() } );
+            i.addChild( { "Data offset", ToString::Hex( this->dataOffset() ) } );
+            i.addChild( { "Data size",   ToString::Hex( this->dataSize() ) } );
+            
+            return i;
+        }
+        
         uint32_t Note::command() const
         {
             return this->impl->_command;
@@ -78,6 +93,21 @@ namespace MachO
             return this->impl->_size;
         }
         
+        std::string Note::dataOwner() const
+        {
+            return this->impl->_dataOwner;
+        }
+        
+        uint64_t Note::dataOffset() const
+        {
+            return this->impl->_dataOffset;
+        }
+        
+        uint64_t Note::dataSize() const
+        {
+            return this->impl->_dataSize;
+        }
+        
         void swap( Note & o1, Note & o2 )
         {
             using std::swap;
@@ -86,16 +116,21 @@ namespace MachO
         }
         
         Note::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  ):
-            _command( command ),
-            _size(    size )
+            _command(    command ),
+            _size(       size ),
+            _dataOwner(  stream.readString( 16 ) ),
+            _dataOffset( stream.readUInt64() ),
+            _dataSize(   stream.readUInt64() )
         {
             ( void )kind;
-            ( void )stream;
         }
         
         Note::IMPL::IMPL( const IMPL & o ):
-            _command( o._command ),
-            _size(    o._size )
+            _command(    o._command ),
+            _size(       o._size ),
+            _dataOwner(  o._dataOwner ),
+            _dataOffset( o._dataOffset ),
+            _dataSize(   o._dataSize )
         {}
 
         Note::IMPL::~IMPL()

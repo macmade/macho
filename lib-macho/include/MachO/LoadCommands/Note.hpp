@@ -49,8 +49,13 @@ namespace MachO
                 
                 Note & operator =( Note o );
                 
-                uint32_t command() const override;
-                uint32_t size()    const override;
+                Info getInfo() const override;
+                
+                uint32_t command()       const override;
+                uint32_t size()          const override;
+                std::string dataOwner()  const;
+                uint64_t    dataOffset() const;
+                uint64_t    dataSize()   const;
                 
                 friend void swap( Note & o1, Note & o2 );
                 
