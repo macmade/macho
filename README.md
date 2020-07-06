@@ -5,8 +5,11 @@ macho
 [![Coverage Status](https://img.shields.io/coveralls/macmade/macho.svg?branch=master&style=flat)](https://coveralls.io/r/macmade/macho?branch=master)
 [![Issues](http://img.shields.io/github/issues/macmade/macho.svg?style=flat)](https://github.com/macmade/macho/issues)
 ![Status](https://img.shields.io/badge/status-active-brightgreen.svg?style=flat)
-![License](https://img.shields.io/badge/license-proprietary-red.svg?style=flat)
-[![Contact](https://img.shields.io/badge/contact-@DigiDNA-blue.svg?style=flat)](https://twitter.com/DigiDNA)
+![License](https://img.shields.io/badge/license-mit-brightgreen.svg?style=flat)
+[![Contact](https://img.shields.io/badge/contact-@macmade-blue.svg?style=flat)](https://twitter.com/macmade)  
+[![Donate-Patreon](https://img.shields.io/badge/donate-patreon-yellow.svg?style=flat)](https://patreon.com/macmade)
+[![Donate-Gratipay](https://img.shields.io/badge/donate-gratipay-yellow.svg?style=flat)](https://www.gratipay.com/macmade)
+[![Donate-Paypal](https://img.shields.io/badge/donate-paypal-yellow.svg?style=flat)](https://paypal.me/xslabs)
 
 About
 -----
