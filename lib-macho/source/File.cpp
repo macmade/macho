@@ -256,7 +256,7 @@ namespace MachO
         }
         else
         {
-            throw std::runtime_error( "Invalid Mach-O signature" );
+            throw std::runtime_error( "Invalid Mach-O signature: " + ToString::Hex( magic ) );
         }
         
         this->_cpu  = { stream.readUInt32(), stream.readUInt32() };

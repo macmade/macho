@@ -31,6 +31,7 @@
 #include <MachO/BinaryFileStream.hpp>
 #include <MachO/BinaryDataStream.hpp>
 #include <MachO/Casts.hpp>
+#include <MachO/ToString.hpp>
 
 namespace MachO
 {
@@ -127,9 +128,11 @@ namespace MachO
     
     void FATFile::IMPL::parse( BinaryStream & stream )
     {
-        if( stream.readBigEndianUInt32() != 0xCAFEBABE )
+        uint32_t magic( stream.readBigEndianUInt32() );
+        
+        if( magic != 0xCAFEBABE )
         {
-            throw std::runtime_error( "Invalid Mach-O FAT signature" );
+            throw std::runtime_error( "Invalid Mach-O FAT signature: " + ToString::Hex( magic ) );
         }
         
         for( uint32_t i = 0, n = stream.readBigEndianUInt32(); i < n; i++ )
