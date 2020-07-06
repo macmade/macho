@@ -29,6 +29,7 @@
 
 #include <MachO/LoadCommands/Routines.hpp>
 #include <MachO/Casts.hpp>
+#include <MachO/ToString.hpp>
 
 namespace MachO
 {
@@ -44,6 +45,8 @@ namespace MachO
                 
                 uint32_t _command;
                 uint32_t _size;
+                uint32_t _initAddress;
+                uint32_t _initModule;
         };
 
         Routines::Routines( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
@@ -68,6 +71,16 @@ namespace MachO
             return *( this );
         }
         
+        Info Routines::getInfo() const
+        {
+            Info i( LoadCommand::getInfo() );
+            
+            i.addChild( { "Init address", ToString::Hex( this->initAddress() ) } );
+            i.addChild( { "Init module",  ToString::Hex( this->initModule() ) } );
+            
+            return i;
+        }
+        
         uint32_t Routines::command() const
         {
             return this->impl->_command;
@@ -78,6 +91,16 @@ namespace MachO
             return this->impl->_size;
         }
         
+        uint32_t Routines::initAddress() const
+        {
+            return this->impl->_initAddress;
+        }
+        
+        uint32_t Routines::initModule() const
+        {
+            return this->impl->_initModule;
+        }
+        
         void swap( Routines & o1, Routines & o2 )
         {
             using std::swap;
@@ -86,16 +109,26 @@ namespace MachO
         }
         
         Routines::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
-            _command( command ),
-            _size(    size )
+            _command(     command ),
+            _size(        size ),
+            _initAddress( stream.readUInt32() ),
+            _initModule(  stream.readUInt32() )
         {
             ( void )kind;
-            ( void )stream;
+            
+            stream.readUInt32();
+            stream.readUInt32();
+            stream.readUInt32();
+            stream.readUInt32();
+            stream.readUInt32();
+            stream.readUInt32();
         }
         
         Routines::IMPL::IMPL( const IMPL & o ):
-            _command( o._command ),
-            _size(    o._size )
+            _command(     o._command ),
+            _size(        o._size ),
+            _initAddress( o._initAddress ),
+            _initModule(  o._initModule )
         {}
 
         Routines::IMPL::~IMPL()

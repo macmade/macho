@@ -49,8 +49,12 @@ namespace MachO
                 
                 Routines & operator =( Routines o );
                 
-                uint32_t command() const override;
-                uint32_t size()    const override;
+                Info getInfo() const override;
+                
+                uint32_t command()     const override;
+                uint32_t size()        const override;
+                uint32_t initAddress() const;
+                uint32_t initModule()  const;
                 
                 friend void swap( Routines & o1, Routines & o2 );
                 
