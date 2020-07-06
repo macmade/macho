@@ -49,8 +49,12 @@ namespace MachO
                 
                 VersionMin & operator =( VersionMin o );
                 
+                Info getInfo() const override;
+                
                 uint32_t command() const override;
                 uint32_t size()    const override;
+                uint32_t version() const;
+                uint32_t sdk()     const;
                 
                 friend void swap( VersionMin & o1, VersionMin & o2 );
                 

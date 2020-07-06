@@ -29,6 +29,7 @@
 
 #include <MachO/LoadCommands/VersionMin.hpp>
 #include <MachO/Casts.hpp>
+#include <MachO/ToString.hpp>
 
 namespace MachO
 {
@@ -44,6 +45,8 @@ namespace MachO
                 
                 uint32_t _command;
                 uint32_t _size;
+                uint32_t _version;
+                uint32_t _sdk;
         };
 
         VersionMin::VersionMin( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  ):
@@ -68,6 +71,16 @@ namespace MachO
             return *( this );
         }
         
+        Info VersionMin::getInfo() const
+        {
+            Info i( LoadCommand::getInfo() );
+            
+            i.addChild( { "Version", ToString::Version( this->version() ) } );
+            i.addChild( { "SDK",     ToString::Version( this->sdk() ) } );
+            
+            return i;
+        }
+        
         uint32_t VersionMin::command() const
         {
             return this->impl->_command;
@@ -76,6 +89,16 @@ namespace MachO
         uint32_t VersionMin::size() const
         {
             return this->impl->_size;
+        }
+        
+        uint32_t VersionMin::version() const
+        {
+            return this->impl->_version;
+        }
+        
+        uint32_t VersionMin::sdk() const
+        {
+            return this->impl->_sdk;
         }
         
         void swap( VersionMin & o1, VersionMin & o2 )
@@ -87,15 +110,18 @@ namespace MachO
         
         VersionMin::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  ):
             _command( command ),
-            _size(    size )
+            _size(    size ),
+            _version( stream.readUInt32() ),
+            _sdk(     stream.readUInt32() )
         {
             ( void )kind;
-            ( void )stream;
         }
         
         VersionMin::IMPL::IMPL( const IMPL & o ):
             _command( o._command ),
-            _size(    o._size )
+            _size(    o._size ),
+            _version( o._version ),
+            _sdk(     o._sdk )
         {}
 
         VersionMin::IMPL::~IMPL()
