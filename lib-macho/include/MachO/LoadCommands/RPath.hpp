@@ -49,8 +49,11 @@ namespace MachO
                 
                 RPath & operator =( RPath o );
                 
-                uint32_t command() const override;
-                uint32_t size()    const override;
+                std::string description() const override;
+                
+                uint32_t    command() const override;
+                uint32_t    size()    const override;
+                std::string path()    const;
                 
                 friend void swap( RPath & o1, RPath & o2 );
                 
@@ -63,4 +66,4 @@ namespace MachO
     }
 }
 
-#endif /* MACHO_LOAD_COMMANDS_RPATH_HPP */
+#endif /* MACHO_LOAD_COMMANDS_SUB_CLIENT_HPP */
