@@ -49,8 +49,12 @@ namespace MachO
                 
                 TwoLevelHints & operator =( TwoLevelHints o );
                 
+                Info getInfo() const override;
+                
                 uint32_t command() const override;
                 uint32_t size()    const override;
+                uint32_t offset()  const;
+                uint32_t count()   const;
                 
                 friend void swap( TwoLevelHints & o1, TwoLevelHints & o2 );
                 

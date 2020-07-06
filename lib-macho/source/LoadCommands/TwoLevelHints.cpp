@@ -29,6 +29,7 @@
 
 #include <MachO/LoadCommands/TwoLevelHints.hpp>
 #include <MachO/Casts.hpp>
+#include <MachO/ToString.hpp>
 
 namespace MachO
 {
@@ -44,6 +45,8 @@ namespace MachO
                 
                 uint32_t _command;
                 uint32_t _size;
+                uint32_t _offset;
+                uint32_t _count;
         };
 
         TwoLevelHints::TwoLevelHints( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
@@ -68,6 +71,16 @@ namespace MachO
             return *( this );
         }
         
+        Info TwoLevelHints::getInfo() const
+        {
+            Info i( LoadCommand::getInfo() );
+            
+            i.addChild( { "Offset", ToString::Hex( this->offset() ) } );
+            i.addChild( { "Count",  ToString::Hex( this->count() ) } );
+            
+            return i;
+        }
+        
         uint32_t TwoLevelHints::command() const
         {
             return this->impl->_command;
@@ -76,6 +89,16 @@ namespace MachO
         uint32_t TwoLevelHints::size() const
         {
             return this->impl->_size;
+        }
+        
+        uint32_t TwoLevelHints::offset() const
+        {
+            return this->impl->_offset;
+        }
+        
+        uint32_t TwoLevelHints::count() const
+        {
+            return this->impl->_count;
         }
         
         void swap( TwoLevelHints & o1, TwoLevelHints & o2 )
@@ -87,15 +110,18 @@ namespace MachO
         
         TwoLevelHints::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
             _command( command ),
-            _size(    size )
+            _size(    size ),
+            _offset(  stream.readUInt32() ),
+            _count(   stream.readUInt32() )
         {
             ( void )kind;
-            ( void )stream;
         }
         
         TwoLevelHints::IMPL::IMPL( const IMPL & o ):
             _command( o._command ),
-            _size(    o._size )
+            _size(    o._size ),
+            _offset(  o._offset ),
+            _count(   o._count )
         {}
 
         TwoLevelHints::IMPL::~IMPL()
