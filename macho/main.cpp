@@ -45,7 +45,7 @@ int main( int argc, char * argv[] )
     
     try
     {
-        std::visit( Display(), MachO::Parse( args.file() ) );
+        std::visit( Display( args ), MachO::Parse( args.file() ) );
         
         return EXIT_SUCCESS;
     }

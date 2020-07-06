@@ -31,7 +31,10 @@
 #define DISPLAY_HPP
 
 #include <MachO.hpp>
+#include "Arguments.hpp"
 #include <stdexcept>
+#include <memory>
+#include <algorithm>
 
 class Display
 {
@@ -39,9 +42,25 @@ class Display
         
         static void error( const std::exception & e );
         static void help();
+            
+        Display( const Arguments & args );
+        Display( const Display & o );
+        Display( Display && o ) noexcept;
+        
+        virtual ~Display();
+        
+        Display & operator =( Display o );
         
         void operator()( const MachO::FATFile & file ) const;
         void operator()( const MachO::File    & file ) const;
+        
+        friend void swap( Display & o1, Display & o2 );
+            
+        private:
+            
+            class IMPL;
+            
+            std::unique_ptr< IMPL > impl;
 };
 
 #endif /* DISPLAY_HPP */

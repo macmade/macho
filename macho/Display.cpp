@@ -28,11 +28,17 @@
  */
 
 #include "Display.hpp"
-#include "ToString.hpp"
-#include <MachO.hpp>
-#include <iostream>
-#include <sstream>
-#include <iomanip>
+
+class Display::IMPL
+{
+    public:
+        
+        IMPL( const Arguments & args );
+        IMPL( const IMPL & o );
+        ~IMPL();
+        
+        Arguments _args;
+};
 
 void Display::error( const std::exception & e )
 {
@@ -49,6 +55,28 @@ void Display::help()
               << std::endl;
 }
 
+Display::Display( const Arguments & args ):
+    impl( std::make_unique< IMPL >( args ) )
+{}
+
+Display::Display( const Display & o ):
+    impl( std::make_unique< IMPL >( *( o.impl ) ) )
+{}
+
+Display::Display( Display && o ) noexcept:
+    impl( std::move( o.impl ) )
+{}
+
+Display::~Display()
+{}
+
+Display & Display::operator =( Display o )
+{
+    swap( *( this ), o );
+    
+    return *( this );
+}
+
 void Display::operator()( const MachO::FATFile & file ) const
 {
     std::cout << file << std::endl;
@@ -58,3 +86,21 @@ void Display::operator()( const MachO::File & file ) const
 {
     std::cout << file << std::endl;
 }
+    
+void swap( Display & o1, Display & o2 )
+{
+    using std::swap;
+    
+    swap( o1.impl, o2.impl );
+}
+
+Display::IMPL::IMPL( const Arguments & args ):
+    _args( args )
+{}
+
+Display::IMPL::IMPL( const IMPL & o ):
+    _args( o._args )
+{}
+
+Display::IMPL::~IMPL()
+{}
