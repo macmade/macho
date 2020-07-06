@@ -49,8 +49,20 @@ namespace MachO
                 
                 DyldInfo & operator =( DyldInfo o );
                 
-                uint32_t command() const override;
-                uint32_t size()    const override;
+                Info getInfo() const override;
+                
+                uint32_t command()           const override;
+                uint32_t size()              const override;
+                uint32_t rebaseOffset()      const;
+                uint32_t rebaseSize()        const;
+                uint32_t bindingOffset()     const;
+                uint32_t bindingSize()       const;
+                uint32_t weakBindingOffset() const;
+                uint32_t weakBindingSize()   const;
+                uint32_t lazyBindingOffset() const;
+                uint32_t lazyBindingSize()   const;
+                uint32_t exportOffset()      const;
+                uint32_t exportSize()        const;
                 
                 friend void swap( DyldInfo & o1, DyldInfo & o2 );
                 
