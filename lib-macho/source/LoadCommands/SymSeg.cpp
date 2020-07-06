@@ -29,6 +29,7 @@
 
 #include <MachO/LoadCommands/SymSeg.hpp>
 #include <MachO/Casts.hpp>
+#include <MachO/ToString.hpp>
 
 namespace MachO
 {
@@ -44,6 +45,8 @@ namespace MachO
                 
                 uint32_t _command;
                 uint32_t _size;
+                uint32_t _segmentOffset;
+                uint32_t _segmentSize;
         };
 
         SymSeg::SymSeg( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
@@ -68,6 +71,16 @@ namespace MachO
             return *( this );
         }
         
+        Info SymSeg::getInfo() const
+        {
+            Info i( LoadCommand::getInfo() );
+            
+            i.addChild( { "Segment offset", ToString::Hex( this->segmentOffset() ) } );
+            i.addChild( { "Segment size",   ToString::Hex( this->segmentSize() ) } );
+            
+            return i;
+        }
+        
         uint32_t SymSeg::command() const
         {
             return this->impl->_command;
@@ -78,6 +91,16 @@ namespace MachO
             return this->impl->_size;
         }
         
+        uint32_t SymSeg::segmentOffset() const
+        {
+            return this->impl->_segmentOffset;
+        }
+        
+        uint32_t SymSeg::segmentSize() const
+        {
+            return this->impl->_segmentSize;
+        }
+        
         void swap( SymSeg & o1, SymSeg & o2 )
         {
             using std::swap;
@@ -86,16 +109,19 @@ namespace MachO
         }
         
         SymSeg::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
-            _command( command ),
-            _size(    size )
+            _command(       command ),
+            _size(          size ),
+            _segmentOffset( stream.readUInt32() ),
+            _segmentSize(   stream.readUInt32() )
         {
             ( void )kind;
-            ( void )stream;
         }
         
         SymSeg::IMPL::IMPL( const IMPL & o ):
-            _command( o._command ),
-            _size(    o._size )
+            _command(       o._command ),
+            _size(          o._size ),
+            _segmentOffset( o._segmentOffset ),
+            _segmentSize(   o._segmentSize )
         {}
 
         SymSeg::IMPL::~IMPL()

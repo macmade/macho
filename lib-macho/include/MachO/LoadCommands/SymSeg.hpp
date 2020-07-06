@@ -49,8 +49,12 @@ namespace MachO
                 
                 SymSeg & operator =( SymSeg o );
                 
-                uint32_t command() const override;
-                uint32_t size()    const override;
+                Info getInfo() const override;
+                
+                uint32_t command()       const override;
+                uint32_t size()          const override;
+                uint32_t segmentOffset() const;
+                uint32_t segmentSize()   const;
                 
                 friend void swap( SymSeg & o1, SymSeg & o2 );
                 
