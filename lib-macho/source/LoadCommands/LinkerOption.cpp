@@ -42,8 +42,9 @@ namespace MachO
                 IMPL( const IMPL & o );
                 ~IMPL();
                 
-                uint32_t _command;
-                uint32_t _size;
+                uint32_t                   _command;
+                uint32_t                   _size;
+                std::vector< std::string > _strings;
         };
 
         LinkerOption::LinkerOption( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  ):
@@ -68,6 +69,18 @@ namespace MachO
             return *( this );
         }
         
+        Info LinkerOption::getInfo() const
+        {
+            Info i( LoadCommand::getInfo() );
+            
+            for( const auto & s: this->strings() )
+            {
+                i.addChild( s );
+            }
+            
+            return i;
+        }
+        
         uint32_t LinkerOption::command() const
         {
             return this->impl->_command;
@@ -76,6 +89,11 @@ namespace MachO
         uint32_t LinkerOption::size() const
         {
             return this->impl->_size;
+        }
+        
+        std::vector< std::string > LinkerOption::strings() const
+        {
+            return this->impl->_strings;
         }
         
         void swap( LinkerOption & o1, LinkerOption & o2 )
@@ -89,13 +107,20 @@ namespace MachO
             _command( command ),
             _size(    size )
         {
+            uint32_t count( stream.readUInt32() );
+            
             ( void )kind;
-            ( void )stream;
+            
+            for( uint32_t i = 0; i < count; i++ )
+            {
+                this->_strings.push_back( stream.readNULLTerminatedString() );
+            }
         }
         
         LinkerOption::IMPL::IMPL( const IMPL & o ):
             _command( o._command ),
-            _size(    o._size )
+            _size(    o._size ),
+            _strings( o._strings )
         {}
 
         LinkerOption::IMPL::~IMPL()

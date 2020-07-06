@@ -33,6 +33,8 @@
 #include <MachO/LoadCommand.hpp>
 #include <MachO/BinaryStream.hpp>
 #include <MachO/File.hpp>
+#include <vector>
+#include <string>
 
 namespace MachO
 {
@@ -49,8 +51,11 @@ namespace MachO
                 
                 LinkerOption & operator =( LinkerOption o );
                 
-                uint32_t command() const override;
-                uint32_t size()    const override;
+                Info getInfo() const override;
+                
+                uint32_t command()                   const override;
+                uint32_t size()                      const override;
+                std::vector< std::string > strings() const;
                 
                 friend void swap( LinkerOption & o1, LinkerOption & o2 );
                 
