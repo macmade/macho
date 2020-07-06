@@ -56,7 +56,7 @@ namespace MachO
                 uint32_t    _flags;
         };
 
-        Segment64::Segment64( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  ):
+        Segment64::Segment64( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
             impl( std::make_unique< IMPL >( command, size, kind, stream ) )
         {}
         
@@ -157,7 +157,7 @@ namespace MachO
             swap( o1.impl, o2.impl );
         }
         
-        Segment64::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  ):
+        Segment64::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
             _command(          command ),
             _size(             size ),
             _name(             stream.readString( 16 ) ),

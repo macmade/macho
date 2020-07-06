@@ -49,7 +49,7 @@ namespace MachO
                 uint64_t _stackSize;
         };
 
-        EntryPoint::EntryPoint( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  ):
+        EntryPoint::EntryPoint( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
             impl( std::make_unique< IMPL >( command, size, kind, stream ) )
         {}
         
@@ -108,7 +108,7 @@ namespace MachO
             swap( o1.impl, o2.impl );
         }
         
-        EntryPoint::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  ):
+        EntryPoint::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
             _command(   command ),
             _size(      size ),
             _offset(    stream.readUInt64() ),

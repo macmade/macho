@@ -49,7 +49,7 @@ namespace MachO
                 uint32_t _sdk;
         };
 
-        VersionMin::VersionMin( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  ):
+        VersionMin::VersionMin( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
             impl( std::make_unique< IMPL >( command, size, kind, stream ) )
         {}
         
@@ -108,7 +108,7 @@ namespace MachO
             swap( o1.impl, o2.impl );
         }
         
-        VersionMin::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  ):
+        VersionMin::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
             _command( command ),
             _size(    size ),
             _version( stream.readUInt32() ),

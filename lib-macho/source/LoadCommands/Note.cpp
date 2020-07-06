@@ -50,7 +50,7 @@ namespace MachO
                 uint64_t    _dataSize;
         };
 
-        Note::Note( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  ):
+        Note::Note( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
             impl( std::make_unique< IMPL >( command, size, kind, stream ) )
         {}
         
@@ -115,7 +115,7 @@ namespace MachO
             swap( o1.impl, o2.impl );
         }
         
-        Note::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  ):
+        Note::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
             _command(    command ),
             _size(       size ),
             _dataOwner(  stream.readString( 16 ) ),

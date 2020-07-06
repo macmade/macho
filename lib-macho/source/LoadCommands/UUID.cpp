@@ -48,7 +48,7 @@ namespace MachO
                 uint8_t  _uuid[ 16 ];
         };
 
-        UUID::UUID( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  ):
+        UUID::UUID( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
             impl( std::make_unique< IMPL >( command, size, kind, stream ) )
         {
             ( void )kind;
@@ -99,7 +99,7 @@ namespace MachO
             swap( o1.impl, o2.impl );
         }
         
-        UUID::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  ):
+        UUID::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
             _command( command ),
             _size(    size )
         {

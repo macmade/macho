@@ -51,7 +51,7 @@ namespace MachO
                 std::vector< Tool > _tools;
         };
 
-        BuildVersion::BuildVersion( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  ):
+        BuildVersion::BuildVersion( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
             impl( std::make_unique< IMPL >( command, size, kind, stream ) )
         {}
         
@@ -133,7 +133,7 @@ namespace MachO
             swap( o1.impl, o2.impl );
         }
         
-        BuildVersion::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  ):
+        BuildVersion::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
             _command(  command ),
             _size(     size ),
             _platform( stream.readUInt32() ),

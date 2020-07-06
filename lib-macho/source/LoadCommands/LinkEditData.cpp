@@ -49,7 +49,7 @@ namespace MachO
                 uint32_t _dataSize;
         };
 
-        LinkEditData::LinkEditData( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  ):
+        LinkEditData::LinkEditData( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
             impl( std::make_unique< IMPL >( command, size, kind, stream ) )
         {}
         
@@ -108,7 +108,7 @@ namespace MachO
             swap( o1.impl, o2.impl );
         }
         
-        LinkEditData::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  ):
+        LinkEditData::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
             _command(    command ),
             _size(       size ),
             _dataOffset( stream.readUInt32() ),

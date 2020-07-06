@@ -46,7 +46,7 @@ namespace MachO
                 uint32_t _size;
         };
 
-        Unknown::Unknown( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  ):
+        Unknown::Unknown( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
             impl( std::make_unique< IMPL >( command, size, kind, stream ) )
         {}
         
@@ -85,7 +85,7 @@ namespace MachO
             swap( o1.impl, o2.impl );
         }
         
-        Unknown::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  ):
+        Unknown::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
             _command( command ),
             _size(    size )
         {

@@ -47,7 +47,7 @@ namespace MachO
                 std::string _name;
         };
 
-        SubFramework::SubFramework( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  ):
+        SubFramework::SubFramework( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
             impl( std::make_unique< IMPL >( command, size, kind, stream ) )
         {}
         
@@ -96,7 +96,7 @@ namespace MachO
             swap( o1.impl, o2.impl );
         }
         
-        SubFramework::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  ):
+        SubFramework::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
             _command( command ),
             _size(    size )
         {
