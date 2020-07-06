@@ -49,8 +49,13 @@ namespace MachO
                 
                 FilesetEntry & operator =( FilesetEntry o );
                 
-                uint32_t command() const override;
-                uint32_t size()    const override;
+                Info getInfo() const override;
+                
+                uint32_t    command()    const override;
+                uint32_t    size()       const override;
+                uint64_t    vmAddress()  const;
+                uint64_t    fileOffset() const;
+                std::string entryID()    const;
                 
                 friend void swap( FilesetEntry & o1, FilesetEntry & o2 );
                 

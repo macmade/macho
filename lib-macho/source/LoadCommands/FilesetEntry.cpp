@@ -29,6 +29,7 @@
 
 #include <MachO/LoadCommands/FilesetEntry.hpp>
 #include <MachO/Casts.hpp>
+#include <MachO/ToString.hpp>
 
 namespace MachO
 {
@@ -42,8 +43,11 @@ namespace MachO
                 IMPL( const IMPL & o );
                 ~IMPL();
                 
-                uint32_t _command;
-                uint32_t _size;
+                uint32_t    _command;
+                uint32_t    _size;
+                uint64_t    _vmAddress;
+                uint64_t    _fileOffset;
+                std::string _entryID;
         };
 
         FilesetEntry::FilesetEntry( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  ):
@@ -68,6 +72,17 @@ namespace MachO
             return *( this );
         }
         
+        Info FilesetEntry::getInfo() const
+        {
+            Info i( LoadCommand::getInfo() );
+            
+            i.addChild( { "VM address",  ToString::Hex( this->vmAddress() ) } );
+            i.addChild( { "File offset", ToString::Hex( this->fileOffset() ) } );
+            i.addChild( { "Entry ID",    this->entryID() } );
+            
+            return i;
+        }
+        
         uint32_t FilesetEntry::command() const
         {
             return this->impl->_command;
@@ -78,6 +93,21 @@ namespace MachO
             return this->impl->_size;
         }
         
+        uint64_t FilesetEntry::vmAddress() const
+        {
+            return this->impl->_vmAddress;
+        }
+        
+        uint64_t FilesetEntry::fileOffset() const
+        {
+            return this->impl->_fileOffset;
+        }
+        
+        std::string FilesetEntry::entryID() const
+        {
+            return this->impl->_entryID;
+        }
+        
         void swap( FilesetEntry & o1, FilesetEntry & o2 )
         {
             using std::swap;
@@ -86,16 +116,20 @@ namespace MachO
         }
         
         FilesetEntry::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  ):
-            _command( command ),
-            _size(    size )
+            _command(    command ),
+            _size(       size ),
+            _vmAddress(  stream.readUInt64() ),
+            _fileOffset( stream.readUInt64() )
         {
             ( void )kind;
-            ( void )stream;
         }
         
         FilesetEntry::IMPL::IMPL( const IMPL & o ):
-            _command( o._command ),
-            _size(    o._size )
+            _command(    o._command ),
+            _size(       o._size ),
+            _vmAddress(  o._vmAddress ),
+            _fileOffset( o._fileOffset ),
+            _entryID(    o._entryID )
         {}
 
         FilesetEntry::IMPL::~IMPL()
