@@ -39,7 +39,7 @@ namespace MachO
         {
             public:
                 
-                IMPL( uint32_t command, uint32_t size, BinaryStream & stream );
+                IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  );
                 IMPL( const IMPL & o );
                 ~IMPL();
                 
@@ -48,8 +48,8 @@ namespace MachO
                 uint64_t _version;
         };
 
-        SourceVersion::SourceVersion( uint32_t command, uint32_t size, BinaryStream & stream ):
-            impl( std::make_unique< IMPL >( command, size, stream ) )
+        SourceVersion::SourceVersion( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  ):
+            impl( std::make_unique< IMPL >( command, size, kind, stream ) )
         {}
         
         SourceVersion::SourceVersion( const SourceVersion & o ):
@@ -97,11 +97,13 @@ namespace MachO
             swap( o1.impl, o2.impl );
         }
         
-        SourceVersion::IMPL::IMPL( uint32_t command, uint32_t size, BinaryStream & stream ):
+        SourceVersion::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  ):
             _command( command ),
             _size(    size ),
             _version( stream.readUInt64() )
-        {}
+        {
+            ( void )kind;
+        }
         
         SourceVersion::IMPL::IMPL( const IMPL & o ):
             _command( o._command ),

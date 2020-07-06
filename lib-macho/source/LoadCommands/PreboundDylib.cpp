@@ -38,7 +38,7 @@ namespace MachO
         {
             public:
                 
-                IMPL( uint32_t command, uint32_t size, BinaryStream & stream );
+                IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  );
                 IMPL( const IMPL & o );
                 ~IMPL();
                 
@@ -46,8 +46,8 @@ namespace MachO
                 uint32_t _size;
         };
 
-        PreboundDylib::PreboundDylib( uint32_t command, uint32_t size, BinaryStream & stream ):
-            impl( std::make_unique< IMPL >( command, size, stream ) )
+        PreboundDylib::PreboundDylib( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  ):
+            impl( std::make_unique< IMPL >( command, size, kind, stream ) )
         {}
         
         PreboundDylib::PreboundDylib( const PreboundDylib & o ):
@@ -85,10 +85,11 @@ namespace MachO
             swap( o1.impl, o2.impl );
         }
         
-        PreboundDylib::IMPL::IMPL( uint32_t command, uint32_t size, BinaryStream & stream ):
+        PreboundDylib::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  ):
             _command( command ),
             _size(    size )
         {
+            ( void )kind;
             ( void )stream;
         }
         

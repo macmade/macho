@@ -32,6 +32,7 @@
 
 #include <MachO/LoadCommand.hpp>
 #include <MachO/BinaryStream.hpp>
+#include <MachO/File.hpp>
 
 namespace MachO
 {
@@ -41,7 +42,7 @@ namespace MachO
         {
             public:
                 
-                Note( uint32_t command, uint32_t size, BinaryStream & stream );
+                Note( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  );
                 Note( const Note & o );
                 Note( Note && o ) noexcept;
                 ~Note() override;

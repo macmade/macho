@@ -32,6 +32,7 @@
 
 #include <MachO/LoadCommand.hpp>
 #include <MachO/BinaryStream.hpp>
+#include <MachO/File.hpp>
 
 namespace MachO
 {
@@ -41,7 +42,7 @@ namespace MachO
         {
             public:
                 
-                SymSeg( uint32_t command, uint32_t size, BinaryStream & stream );
+                SymSeg( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  );
                 SymSeg( const SymSeg & o );
                 SymSeg( SymSeg && o ) noexcept;
                 ~SymSeg() override;

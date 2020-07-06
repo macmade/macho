@@ -39,7 +39,7 @@ namespace MachO
         {
             public:
                 
-                IMPL( uint32_t command, uint32_t size, BinaryStream & stream );
+                IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  );
                 IMPL( const IMPL & o );
                 ~IMPL();
                 
@@ -51,8 +51,8 @@ namespace MachO
                 uint32_t    _compatibilityVersion;
         };
 
-        Dylib::Dylib( uint32_t command, uint32_t size, BinaryStream & stream ):
-            impl( std::make_unique< IMPL >( command, size, stream ) )
+        Dylib::Dylib( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  ):
+            impl( std::make_unique< IMPL >( command, size, kind, stream ) )
         {}
         
         Dylib::Dylib( const Dylib & o ):
@@ -115,12 +115,14 @@ namespace MachO
             swap( o1.impl, o2.impl );
         }
         
-        Dylib::IMPL::IMPL( uint32_t command, uint32_t size, BinaryStream & stream ):
+        Dylib::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  ):
             _command( command ),
             _size(    size )
         {
             size_t   begin(  stream.tell() - 8 );
             uint32_t offset( stream.readUInt32() );
+            
+            ( void )kind;
             
             this->_timestamp            = stream.readUInt32();
             this->_currentVersion       = stream.readUInt32();

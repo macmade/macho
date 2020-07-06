@@ -32,6 +32,7 @@
 
 #include <MachO/LoadCommand.hpp>
 #include <MachO/BinaryStream.hpp>
+#include <MachO/File.hpp>
 
 namespace MachO
 {
@@ -41,7 +42,7 @@ namespace MachO
         {
             public:
                 
-                Ident( uint32_t command, uint32_t size, BinaryStream & stream );
+                Ident( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  );
                 Ident( const Ident & o );
                 Ident( Ident && o ) noexcept;
                 ~Ident() override;

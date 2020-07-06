@@ -34,6 +34,7 @@
 #include <MachO/BinaryStream.hpp>
 #include <MachO/Platform.hpp>
 #include <MachO/Tool.hpp>
+#include <MachO/File.hpp>
 #include <vector>
 
 namespace MachO
@@ -44,7 +45,7 @@ namespace MachO
         {
             public:
                 
-                BuildVersion( uint32_t command, uint32_t size, BinaryStream & stream );
+                BuildVersion( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  );
                 BuildVersion( const BuildVersion & o );
                 BuildVersion( BuildVersion && o ) noexcept;
                 ~BuildVersion() override;

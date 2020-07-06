@@ -39,7 +39,7 @@ namespace MachO
         {
             public:
                 
-                IMPL( uint32_t command, uint32_t size, BinaryStream & stream );
+                IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  );
                 IMPL( const IMPL & o );
                 ~IMPL();
                 
@@ -51,8 +51,8 @@ namespace MachO
                 std::vector< Tool > _tools;
         };
 
-        BuildVersion::BuildVersion( uint32_t command, uint32_t size, BinaryStream & stream ):
-            impl( std::make_unique< IMPL >( command, size, stream ) )
+        BuildVersion::BuildVersion( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  ):
+            impl( std::make_unique< IMPL >( command, size, kind, stream ) )
         {}
         
         BuildVersion::BuildVersion( const BuildVersion & o ):
@@ -133,7 +133,7 @@ namespace MachO
             swap( o1.impl, o2.impl );
         }
         
-        BuildVersion::IMPL::IMPL( uint32_t command, uint32_t size, BinaryStream & stream ):
+        BuildVersion::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  ):
             _command(  command ),
             _size(     size ),
             _platform( stream.readUInt32() ),
@@ -141,6 +141,8 @@ namespace MachO
             _sdk(      stream.readUInt32() )
         {
             uint32_t n( stream.readUInt32() );
+            
+            ( void )kind;
             
             for( uint32_t i = 0; i < n; i++ )
             {

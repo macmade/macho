@@ -32,6 +32,7 @@
 
 #include <MachO/LoadCommand.hpp>
 #include <MachO/BinaryStream.hpp>
+#include <MachO/File.hpp>
 
 namespace MachO
 {
@@ -41,7 +42,7 @@ namespace MachO
         {
             public:
                 
-                Dylinker( uint32_t command, uint32_t size, BinaryStream & stream );
+                Dylinker( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  );
                 Dylinker( const Dylinker & o );
                 Dylinker( Dylinker && o ) noexcept;
                 ~Dylinker() override;

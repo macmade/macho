@@ -32,6 +32,7 @@
 
 #include <MachO/LoadCommand.hpp>
 #include <MachO/BinaryStream.hpp>
+#include <MachO/File.hpp>
 
 namespace MachO
 {
@@ -41,7 +42,7 @@ namespace MachO
         {
             public:
                 
-                SubLibrary( uint32_t command, uint32_t size, BinaryStream & stream );
+                SubLibrary( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  );
                 SubLibrary( const SubLibrary & o );
                 SubLibrary( SubLibrary && o ) noexcept;
                 ~SubLibrary() override;
