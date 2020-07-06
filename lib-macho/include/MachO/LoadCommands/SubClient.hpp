@@ -49,8 +49,11 @@ namespace MachO
                 
                 SubClient & operator =( SubClient o );
                 
-                uint32_t command() const override;
-                uint32_t size()    const override;
+                std::string description() const override;
+                
+                uint32_t    command() const override;
+                uint32_t    size()    const override;
+                std::string name()    const;
                 
                 friend void swap( SubClient & o1, SubClient & o2 );
                 

@@ -48,9 +48,12 @@ namespace MachO
                 ~SubUmbrella() override;
                 
                 SubUmbrella & operator =( SubUmbrella o );
+        
+                std::string description() const override;
                 
-                uint32_t command() const override;
-                uint32_t size()    const override;
+                uint32_t    command() const override;
+                uint32_t    size()    const override;
+                std::string name()    const;
                 
                 friend void swap( SubUmbrella & o1, SubUmbrella & o2 );
                 

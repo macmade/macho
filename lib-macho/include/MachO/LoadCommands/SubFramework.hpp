@@ -48,9 +48,12 @@ namespace MachO
                 ~SubFramework() override;
                 
                 SubFramework & operator =( SubFramework o );
+        
+                std::string description() const override;
                 
-                uint32_t command() const override;
-                uint32_t size()    const override;
+                uint32_t    command() const override;
+                uint32_t    size()    const override;
+                std::string name()    const;
                 
                 friend void swap( SubFramework & o1, SubFramework & o2 );
                 

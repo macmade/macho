@@ -48,9 +48,12 @@ namespace MachO
                 ~SubLibrary() override;
                 
                 SubLibrary & operator =( SubLibrary o );
+        
+                std::string description() const override;
                 
-                uint32_t command() const override;
-                uint32_t size()    const override;
+                uint32_t    command() const override;
+                uint32_t    size()    const override;
+                std::string name()    const;
                 
                 friend void swap( SubLibrary & o1, SubLibrary & o2 );
                 
