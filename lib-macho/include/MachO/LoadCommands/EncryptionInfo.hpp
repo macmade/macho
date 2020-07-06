@@ -49,8 +49,13 @@ namespace MachO
                 
                 EncryptionInfo & operator =( EncryptionInfo o );
                 
-                uint32_t command() const override;
-                uint32_t size()    const override;
+                Info getInfo() const override;
+                
+                uint32_t command()     const override;
+                uint32_t size()        const override;
+                uint32_t cryptOffset() const;
+                uint32_t cryptSize()   const;
+                uint32_t cryptID()     const;
                 
                 friend void swap( EncryptionInfo & o1, EncryptionInfo & o2 );
                 

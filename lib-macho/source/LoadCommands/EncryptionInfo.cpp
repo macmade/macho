@@ -29,6 +29,7 @@
 
 #include <MachO/LoadCommands/EncryptionInfo.hpp>
 #include <MachO/Casts.hpp>
+#include <MachO/ToString.hpp>
 
 namespace MachO
 {
@@ -44,6 +45,9 @@ namespace MachO
                 
                 uint32_t _command;
                 uint32_t _size;
+                uint32_t _cryptOffset;
+                uint32_t _cryptSize;
+                uint32_t _cryptID;
         };
 
         EncryptionInfo::EncryptionInfo( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  ):
@@ -68,6 +72,17 @@ namespace MachO
             return *( this );
         }
         
+        Info EncryptionInfo::getInfo() const
+        {
+            Info i( LoadCommand::getInfo() );
+            
+            i.addChild( { "Crypt offset", ToString::Hex( this->cryptOffset() ) } );
+            i.addChild( { "Crypt size",   ToString::Hex( this->cryptSize() ) } );
+            i.addChild( { "Crypt ID",     ToString::Hex( this->cryptID() ) } );
+            
+            return i;
+        }
+        
         uint32_t EncryptionInfo::command() const
         {
             return this->impl->_command;
@@ -76,6 +91,21 @@ namespace MachO
         uint32_t EncryptionInfo::size() const
         {
             return this->impl->_size;
+        }
+        
+        uint32_t EncryptionInfo::cryptOffset() const
+        {
+            return this->impl->_cryptOffset;
+        }
+        
+        uint32_t EncryptionInfo::cryptSize() const
+        {
+            return this->impl->_cryptSize;
+        }
+        
+        uint32_t EncryptionInfo::cryptID() const
+        {
+            return this->impl->_cryptID;
         }
         
         void swap( EncryptionInfo & o1, EncryptionInfo & o2 )
@@ -87,15 +117,20 @@ namespace MachO
         
         EncryptionInfo::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  ):
             _command( command ),
-            _size(    size )
+            _size(    size ),
+            _cryptOffset( stream.readUInt32() ),
+            _cryptSize(   stream.readUInt32() ),
+            _cryptID(     stream.readUInt32() )
         {
             ( void )kind;
-            ( void )stream;
         }
         
         EncryptionInfo::IMPL::IMPL( const IMPL & o ):
-            _command( o._command ),
-            _size(    o._size )
+            _command(     o._command ),
+            _size(        o._size ),
+            _cryptOffset( o._cryptOffset ),
+            _cryptSize(   o._cryptSize ),
+            _cryptID(     o._cryptID )
         {}
 
         EncryptionInfo::IMPL::~IMPL()
