@@ -49,8 +49,12 @@ namespace MachO
                 
                 EntryPoint & operator =( EntryPoint o );
                 
-                uint32_t command() const override;
-                uint32_t size()    const override;
+                Info getInfo() const override;
+                
+                uint32_t command()   const override;
+                uint32_t size()      const override;
+                uint64_t offset()    const;
+                uint64_t stackSize() const;
                 
                 friend void swap( EntryPoint & o1, EntryPoint & o2 );
                 

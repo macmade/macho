@@ -29,6 +29,7 @@
 
 #include <MachO/LoadCommands/EntryPoint.hpp>
 #include <MachO/Casts.hpp>
+#include <MachO/ToString.hpp>
 
 namespace MachO
 {
@@ -44,6 +45,8 @@ namespace MachO
                 
                 uint32_t _command;
                 uint32_t _size;
+                uint64_t _offset;
+                uint64_t _stackSize;
         };
 
         EntryPoint::EntryPoint( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  ):
@@ -68,6 +71,16 @@ namespace MachO
             return *( this );
         }
         
+        Info EntryPoint::getInfo() const
+        {
+            Info i( LoadCommand::getInfo() );
+            
+            i.addChild( { "Offset",     ToString::Hex( this->offset() ) } );
+            i.addChild( { "Stack size", ToString::Hex( this->stackSize() ) } );
+            
+            return i;
+        }
+        
         uint32_t EntryPoint::command() const
         {
             return this->impl->_command;
@@ -78,6 +91,16 @@ namespace MachO
             return this->impl->_size;
         }
         
+        uint64_t EntryPoint::offset() const
+        {
+            return this->impl->_offset;
+        }
+        
+        uint64_t EntryPoint::stackSize() const
+        {
+            return this->impl->_stackSize;
+        }
+        
         void swap( EntryPoint & o1, EntryPoint & o2 )
         {
             using std::swap;
@@ -86,16 +109,19 @@ namespace MachO
         }
         
         EntryPoint::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  ):
-            _command( command ),
-            _size(    size )
+            _command(   command ),
+            _size(      size ),
+            _offset(    stream.readUInt64() ),
+            _stackSize( stream.readUInt64() )
         {
             ( void )kind;
-            ( void )stream;
         }
         
         EntryPoint::IMPL::IMPL( const IMPL & o ):
-            _command( o._command ),
-            _size(    o._size )
+            _command(   o._command ),
+            _size(      o._size ),
+            _offset(    o._offset ),
+            _stackSize( o._stackSize )
         {}
 
         EntryPoint::IMPL::~IMPL()
