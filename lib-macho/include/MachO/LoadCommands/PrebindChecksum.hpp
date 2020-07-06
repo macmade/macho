@@ -49,8 +49,11 @@ namespace MachO
                 
                 PrebindChecksum & operator =( PrebindChecksum o );
                 
-                uint32_t command() const override;
-                uint32_t size()    const override;
+                std::string description() const override;
+                
+                uint32_t command()  const override;
+                uint32_t size()     const override;
+                uint32_t checksum() const;
                 
                 friend void swap( PrebindChecksum & o1, PrebindChecksum & o2 );
                 

@@ -29,6 +29,7 @@
 
 #include <MachO/LoadCommands/PrebindChecksum.hpp>
 #include <MachO/Casts.hpp>
+#include <MachO/ToString.hpp>
 
 namespace MachO
 {
@@ -44,6 +45,7 @@ namespace MachO
                 
                 uint32_t _command;
                 uint32_t _size;
+                uint32_t _checksum;
         };
 
         PrebindChecksum::PrebindChecksum( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
@@ -68,6 +70,11 @@ namespace MachO
             return *( this );
         }
         
+        std::string PrebindChecksum::description() const
+        {
+            return ToString::Hex( this->checksum() );
+        }
+        
         uint32_t PrebindChecksum::command() const
         {
             return this->impl->_command;
@@ -78,6 +85,11 @@ namespace MachO
             return this->impl->_size;
         }
         
+        uint32_t PrebindChecksum::checksum() const
+        {
+            return this->impl->_checksum;
+        }
+        
         void swap( PrebindChecksum & o1, PrebindChecksum & o2 )
         {
             using std::swap;
@@ -86,16 +98,17 @@ namespace MachO
         }
         
         PrebindChecksum::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
-            _command( command ),
-            _size(    size )
+            _command(  command ),
+            _size(     size ),
+            _checksum( stream.readUInt32() )
         {
             ( void )kind;
-            ( void )stream;
         }
         
         PrebindChecksum::IMPL::IMPL( const IMPL & o ):
-            _command( o._command ),
-            _size(    o._size )
+            _command(  o._command ),
+            _size(     o._size ),
+            _checksum( o._checksum )
         {}
 
         PrebindChecksum::IMPL::~IMPL()
