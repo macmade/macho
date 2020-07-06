@@ -42,6 +42,9 @@ namespace MachO
                 IMPL( const IMPL & o );
                 ~IMPL();
                 
+                void _readSymbols( uint32_t offset, uint32_t count, BinaryStream & stream );
+                void _readStrings( uint32_t offset, uint32_t size, BinaryStream & stream );
+                
                 uint32_t _command;
                 uint32_t _size;
         };
@@ -89,7 +92,13 @@ namespace MachO
             _command( command ),
             _size(    size )
         {
-            ( void )stream;
+            uint32_t symOffset( stream.readUInt32() );
+            uint32_t symCount(  stream.readUInt32() );
+            uint32_t strOffset( stream.readUInt32() );
+            uint32_t strSize(   stream.readUInt32() );
+            
+            this->_readSymbols( symOffset, symCount, stream );
+            this->_readStrings( strOffset, strSize, stream );
         }
         
         DysymTab::IMPL::IMPL( const IMPL & o ):
@@ -99,5 +108,19 @@ namespace MachO
 
         DysymTab::IMPL::~IMPL()
         {}
+        
+        void DysymTab::IMPL::_readSymbols( uint32_t offset, uint32_t count, BinaryStream & stream )
+        {
+            ( void )offset;
+            ( void )count;
+            ( void )stream;
+        }
+        
+        void DysymTab::IMPL::_readStrings( uint32_t offset, uint32_t size, BinaryStream & stream )
+        {
+            ( void )offset;
+            ( void )size;
+            ( void )stream;
+        }
     }
 }

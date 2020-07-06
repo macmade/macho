@@ -44,7 +44,10 @@
 #include <MachO/InfoObject.hpp>
 #include <MachO/IntegerWrapper.hpp>
 #include <MachO/LoadCommand.hpp>
+#include <MachO/NList.hpp>
+#include <MachO/NList64.hpp>
 #include <MachO/Platform.hpp>
+#include <MachO/Tool.hpp>
 #include <MachO/ToString.hpp>
 
 #include <MachO/LoadCommands/BuildVersion.hpp>
