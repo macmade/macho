@@ -116,10 +116,6 @@
 		05C8C43424B0F55E0095E313 /* Platform.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 05C8C43224B0F55E0095E313 /* Platform.hpp */; };
 		05C8C43724B1070C0095E313 /* Tool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05C8C43524B1070C0095E313 /* Tool.cpp */; };
 		05C8C43824B1070C0095E313 /* Tool.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 05C8C43624B1070C0095E313 /* Tool.hpp */; };
-		05C8C43B24B325E00095E313 /* NList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05C8C43924B325E00095E313 /* NList.cpp */; };
-		05C8C43C24B325E00095E313 /* NList.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 05C8C43A24B325E00095E313 /* NList.hpp */; };
-		05C8C43F24B325EE0095E313 /* NList64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05C8C43D24B325EE0095E313 /* NList64.cpp */; };
-		05C8C44024B325EE0095E313 /* NList64.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 05C8C43E24B325EE0095E313 /* NList64.hpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -301,10 +297,6 @@
 		05C8C43224B0F55E0095E313 /* Platform.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Platform.hpp; sourceTree = "<group>"; };
 		05C8C43524B1070C0095E313 /* Tool.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Tool.cpp; sourceTree = "<group>"; };
 		05C8C43624B1070C0095E313 /* Tool.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Tool.hpp; sourceTree = "<group>"; };
-		05C8C43924B325E00095E313 /* NList.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NList.cpp; sourceTree = "<group>"; };
-		05C8C43A24B325E00095E313 /* NList.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NList.hpp; sourceTree = "<group>"; };
-		05C8C43D24B325EE0095E313 /* NList64.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NList64.cpp; sourceTree = "<group>"; };
-		05C8C43E24B325EE0095E313 /* NList64.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NList64.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -516,8 +508,6 @@
 				05C8C41324AFED710095E313 /* InfoObject.cpp */,
 				05C8C42924B0D82A0095E313 /* LoadCommand.cpp */,
 				05C8C36824AF7CCE0095E313 /* LoadCommands */,
-				05C8C43924B325E00095E313 /* NList.cpp */,
-				05C8C43D24B325EE0095E313 /* NList64.cpp */,
 				05C8C43124B0F55E0095E313 /* Platform.cpp */,
 				05C8C43524B1070C0095E313 /* Tool.cpp */,
 				05C8C41524AFEF6E0095E313 /* ToString.cpp */,
@@ -544,8 +534,6 @@
 				05C8C41D24B0C3110095E313 /* IntegerWrapper.hpp */,
 				05C8C36424AF7A530095E313 /* LoadCommand.hpp */,
 				05C8C36724AF7CC50095E313 /* LoadCommands */,
-				05C8C43A24B325E00095E313 /* NList.hpp */,
-				05C8C43E24B325EE0095E313 /* NList64.hpp */,
 				05C8C43224B0F55E0095E313 /* Platform.hpp */,
 				05C8C43624B1070C0095E313 /* Tool.hpp */,
 				05C8C41624AFEF6E0095E313 /* ToString.hpp */,
@@ -673,7 +661,6 @@
 				05C8C39A24AFDDEE0095E313 /* UUID.hpp in Headers */,
 				05C8C3DD24AFE9440095E313 /* Routines64.hpp in Headers */,
 				05C8C39B24AFDDEE0095E313 /* SubUmbrella.hpp in Headers */,
-				05C8C44024B325EE0095E313 /* NList64.hpp in Headers */,
 				05C8C33D24AE2D400095E313 /* Functions.hpp in Headers */,
 				05C8C41C24AFF5C10095E313 /* CPU.hpp in Headers */,
 				05C8C3D824AFE9440095E313 /* FVMLib.hpp in Headers */,
@@ -684,7 +671,6 @@
 				05C8C33924AE2D050095E313 /* FATFile.hpp in Headers */,
 				05C8C3DA24AFE9440095E313 /* PrebindChecksum.hpp in Headers */,
 				05C8C42224B0C4520095E313 /* FileType.hpp in Headers */,
-				05C8C43C24B325E00095E313 /* NList.hpp in Headers */,
 				05C8C39C24AFDDEE0095E313 /* PreboundDylib.hpp in Headers */,
 				05C8C3DB24AFE9440095E313 /* PrePage.hpp in Headers */,
 				05C8C33524AE24B10095E313 /* Casts.hpp in Headers */,
@@ -792,7 +778,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				05C8C43B24B325E00095E313 /* NList.cpp in Sources */,
 				05C8C3AD24AFDDF60095E313 /* UUID.cpp in Sources */,
 				05C8C40224AFE94F0095E313 /* LinkEditData.cpp in Sources */,
 				05C8C3B024AFDDF60095E313 /* Routines.cpp in Sources */,
@@ -844,7 +829,6 @@
 				05C8C41424AFED710095E313 /* InfoObject.cpp in Sources */,
 				05C8C41B24AFF5C10095E313 /* CPU.cpp in Sources */,
 				05C8C3AE24AFDDF60095E313 /* SubClient.cpp in Sources */,
-				05C8C43F24B325EE0095E313 /* NList64.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

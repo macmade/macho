@@ -49,8 +49,14 @@ namespace MachO
                 
                 DysymTab & operator =( DysymTab o );
                 
-                uint32_t command() const override;
-                uint32_t size()    const override;
+                Info getInfo() const override;
+                
+                uint32_t command()      const override;
+                uint32_t size()         const override;
+                uint32_t symbolOffset() const;
+                uint32_t symbolCount()  const;
+                uint32_t stringOffset() const;
+                uint32_t stringSize()   const;
                 
                 friend void swap( DysymTab & o1, DysymTab & o2 );
                 
@@ -63,4 +69,4 @@ namespace MachO
     }
 }
 
-#endif /* v */
+#endif /* MACHO_LOAD_COMMANDS_DYSYM_TAB_HPP */

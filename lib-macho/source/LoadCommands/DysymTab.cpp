@@ -28,9 +28,8 @@
  */
 
 #include <MachO/LoadCommands/DysymTab.hpp>
-#include <MachO/NList.hpp>
-#include <MachO/NList64.hpp>
 #include <MachO/Casts.hpp>
+#include <MachO/ToString.hpp>
 
 namespace MachO
 {
@@ -44,11 +43,12 @@ namespace MachO
                 IMPL( const IMPL & o );
                 ~IMPL();
                 
-                void _readSymbols( uint32_t offset, uint32_t count, File::Kind kind, BinaryStream & stream );
-                void _readStrings( uint32_t offset, uint32_t size, File::Kind kind, BinaryStream & stream );
-                
                 uint32_t _command;
                 uint32_t _size;
+                uint32_t _symbolOffset;
+                uint32_t _symbolCount;
+                uint32_t _stringOffset;
+                uint32_t _stringSize;
         };
 
         DysymTab::DysymTab( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  ):
@@ -73,6 +73,18 @@ namespace MachO
             return *( this );
         }
         
+        Info DysymTab::getInfo() const
+        {
+            Info i( LoadCommand::getInfo() );
+            
+            i.addChild( { "Symbol offset", ToString::Hex( this->symbolOffset() ) } );
+            i.addChild( { "Symbol size",   ToString::Hex( this->symbolCount() ) } );
+            i.addChild( { "String offset", ToString::Hex( this->stringOffset() ) } );
+            i.addChild( { "String size",   ToString::Hex( this->stringSize() ) } );
+            
+            return i;
+        }
+        
         uint32_t DysymTab::command() const
         {
             return this->impl->_command;
@@ -83,6 +95,26 @@ namespace MachO
             return this->impl->_size;
         }
         
+        uint32_t DysymTab::symbolOffset() const
+        {
+            return this->impl->_symbolOffset;
+        }
+        
+        uint32_t DysymTab::symbolCount() const
+        {
+            return this->impl->_symbolCount;
+        }
+        
+        uint32_t DysymTab::stringOffset() const
+        {
+            return this->impl->_stringOffset;
+        }
+        
+        uint32_t DysymTab::stringSize() const
+        {
+            return this->impl->_stringSize;
+        }
+        
         void swap( DysymTab & o1, DysymTab & o2 )
         {
             using std::swap;
@@ -91,49 +123,26 @@ namespace MachO
         }
         
         DysymTab::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  ):
-            _command( command ),
-            _size(    size )
+            _command(      command ),
+            _size(         size ),
+            _symbolOffset( stream.readUInt32() ),
+            _symbolCount(  stream.readUInt32() ),
+            _stringOffset( stream.readUInt32() ),
+            _stringSize(   stream.readUInt32() )
         {
-            uint32_t symOffset( stream.readUInt32() );
-            uint32_t symCount(  stream.readUInt32() );
-            uint32_t strOffset( stream.readUInt32() );
-            uint32_t strSize(   stream.readUInt32() );
-            
-            this->_readSymbols( symOffset, symCount, kind, stream );
-            this->_readStrings( strOffset, strSize, kind, stream );
+            ( void )kind;
         }
         
         DysymTab::IMPL::IMPL( const IMPL & o ):
-            _command( o._command ),
-            _size(    o._size )
+            _command(      o._command ),
+            _size(         o._size ),
+            _symbolOffset( o._symbolOffset ),
+            _symbolCount(  o._symbolCount ),
+            _stringOffset( o._stringOffset ),
+            _stringSize(   o._stringSize )
         {}
 
         DysymTab::IMPL::~IMPL()
         {}
-        
-        void DysymTab::IMPL::_readSymbols( uint32_t offset, uint32_t count, File::Kind kind, BinaryStream & stream )
-        {
-            stream.seek( offset, BinaryStream::SeekDirection::Begin );
-            
-            for( uint32_t i = 0; i < count; i++ )
-            {
-                if( kind == File::Kind::MachO32 )
-                {
-                    MachO::NList list( stream );
-                }
-                else
-                {
-                    MachO::NList64 list( stream );
-                }
-            }
-        }
-        
-        void DysymTab::IMPL::_readStrings( uint32_t offset, uint32_t size, File::Kind kind, BinaryStream & stream )
-        {
-            ( void )offset;
-            ( void )size;
-            ( void )kind;
-            ( void )stream;
-        }
     }
 }

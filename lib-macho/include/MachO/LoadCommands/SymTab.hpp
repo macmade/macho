@@ -49,8 +49,14 @@ namespace MachO
                 
                 SymTab & operator =( SymTab o );
                 
-                uint32_t command() const override;
-                uint32_t size()    const override;
+                Info getInfo() const override;
+                
+                uint32_t command()      const override;
+                uint32_t size()         const override;
+                uint32_t symbolOffset() const;
+                uint32_t symbolCount()  const;
+                uint32_t stringOffset() const;
+                uint32_t stringSize()   const;
                 
                 friend void swap( SymTab & o1, SymTab & o2 );
                 

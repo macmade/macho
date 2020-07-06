@@ -29,6 +29,7 @@
 
 #include <MachO/LoadCommands/SymTab.hpp>
 #include <MachO/Casts.hpp>
+#include <MachO/ToString.hpp>
 
 namespace MachO
 {
@@ -44,6 +45,10 @@ namespace MachO
                 
                 uint32_t _command;
                 uint32_t _size;
+                uint32_t _symbolOffset;
+                uint32_t _symbolCount;
+                uint32_t _stringOffset;
+                uint32_t _stringSize;
         };
 
         SymTab::SymTab( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  ):
@@ -68,6 +73,18 @@ namespace MachO
             return *( this );
         }
         
+        Info SymTab::getInfo() const
+        {
+            Info i( LoadCommand::getInfo() );
+            
+            i.addChild( { "Symbol offset", ToString::Hex( this->symbolOffset() ) } );
+            i.addChild( { "Symbol size",   ToString::Hex( this->symbolCount() ) } );
+            i.addChild( { "String offset", ToString::Hex( this->stringOffset() ) } );
+            i.addChild( { "String size",   ToString::Hex( this->stringSize() ) } );
+            
+            return i;
+        }
+        
         uint32_t SymTab::command() const
         {
             return this->impl->_command;
@@ -78,6 +95,26 @@ namespace MachO
             return this->impl->_size;
         }
         
+        uint32_t SymTab::symbolOffset() const
+        {
+            return this->impl->_symbolOffset;
+        }
+        
+        uint32_t SymTab::symbolCount() const
+        {
+            return this->impl->_symbolCount;
+        }
+        
+        uint32_t SymTab::stringOffset() const
+        {
+            return this->impl->_stringOffset;
+        }
+        
+        uint32_t SymTab::stringSize() const
+        {
+            return this->impl->_stringSize;
+        }
+        
         void swap( SymTab & o1, SymTab & o2 )
         {
             using std::swap;
@@ -86,16 +123,23 @@ namespace MachO
         }
         
         SymTab::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  ):
-            _command( command ),
-            _size(    size )
+            _command(      command ),
+            _size(         size ),
+            _symbolOffset( stream.readUInt32() ),
+            _symbolCount(  stream.readUInt32() ),
+            _stringOffset( stream.readUInt32() ),
+            _stringSize(   stream.readUInt32() )
         {
             ( void )kind;
-            ( void )stream;
         }
         
         SymTab::IMPL::IMPL( const IMPL & o ):
-            _command( o._command ),
-            _size(    o._size )
+            _command(      o._command ),
+            _size(         o._size ),
+            _symbolOffset( o._symbolOffset ),
+            _symbolCount(  o._symbolCount ),
+            _stringOffset( o._stringOffset ),
+            _stringSize(   o._stringSize )
         {}
 
         SymTab::IMPL::~IMPL()
