@@ -49,8 +49,12 @@ namespace MachO
                 
                 FVMFile & operator =( FVMFile o );
                 
-                uint32_t command() const override;
-                uint32_t size()    const override;
+                Info getInfo() const override;
+                
+                uint32_t    command()       const override;
+                uint32_t    size()          const override;
+                std::string name()          const;
+                uint32_t    headerAddress() const;
                 
                 friend void swap( FVMFile & o1, FVMFile & o2 );
                 
