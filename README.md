@@ -18,7 +18,7 @@ Mach-O file parser.
 
 ### Installation
 
-    brew install --HEAD macmade/macho
+    brew install --HEAD macmade/tap/macho
 
 ### Example output
 
