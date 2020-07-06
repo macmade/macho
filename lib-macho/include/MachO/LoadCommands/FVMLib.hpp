@@ -49,8 +49,13 @@ namespace MachO
                 
                 FVMLib & operator =( FVMLib o );
                 
-                uint32_t command() const override;
-                uint32_t size()    const override;
+                Info getInfo() const override;
+                
+                uint32_t    command()       const override;
+                uint32_t    size()          const override;
+                std::string name()          const;
+                uint32_t    minorVersion()  const;
+                uint32_t    headerAddress() const;
                 
                 friend void swap( FVMLib & o1, FVMLib & o2 );
                 

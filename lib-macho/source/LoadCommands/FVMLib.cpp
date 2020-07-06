@@ -29,6 +29,7 @@
 
 #include <MachO/LoadCommands/FVMLib.hpp>
 #include <MachO/Casts.hpp>
+#include <MachO/ToString.hpp>
 
 namespace MachO
 {
@@ -42,8 +43,11 @@ namespace MachO
                 IMPL( const IMPL & o );
                 ~IMPL();
                 
-                uint32_t _command;
-                uint32_t _size;
+                uint32_t    _command;
+                uint32_t    _size;
+                std::string _name;
+                uint32_t    _minorVersion;
+                uint32_t    _headerAddress;
         };
 
         FVMLib::FVMLib( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  ):
@@ -68,6 +72,17 @@ namespace MachO
             return *( this );
         }
         
+        Info FVMLib::getInfo() const
+        {
+            Info i( LoadCommand::getInfo() );
+            
+            i.addChild( { "Name",           this->name() } );
+            i.addChild( { "Minor version",  ToString::Hex( this->minorVersion() ) } );
+            i.addChild( { "Header address", ToString::Hex( this->headerAddress() ) } );
+            
+            return i;
+        }
+        
         uint32_t FVMLib::command() const
         {
             return this->impl->_command;
@@ -76,6 +91,21 @@ namespace MachO
         uint32_t FVMLib::size() const
         {
             return this->impl->_size;
+        }
+        
+        std::string FVMLib::name() const
+        {
+            return this->impl->_name;
+        }
+        
+        uint32_t FVMLib::minorVersion() const
+        {
+            return this->impl->_minorVersion;
+        }
+        
+        uint32_t FVMLib::headerAddress() const
+        {
+            return this->impl->_headerAddress;
         }
         
         void swap( FVMLib & o1, FVMLib & o2 )
@@ -89,13 +119,28 @@ namespace MachO
             _command( command ),
             _size(    size )
         {
+            size_t   begin(  stream.tell() - 8 );
+            uint32_t offset( stream.readUInt32() );
+            size_t   pos(    stream.tell() );
+            
             ( void )kind;
-            ( void )stream;
+            
+            stream.seek( numeric_cast< ssize_t >( begin + offset ), BinaryStream::SeekDirection::Begin );
+            
+            this->_name = stream.readNULLTerminatedString();
+            
+            stream.seek( numeric_cast< ssize_t >( pos ), BinaryStream::SeekDirection::Begin );
+            
+            this->_minorVersion  = stream.readUInt32();
+            this->_headerAddress = stream.readUInt32();
         }
         
         FVMLib::IMPL::IMPL( const IMPL & o ):
-            _command( o._command ),
-            _size(    o._size )
+            _command(       o._command ),
+            _size(          o._size ),
+            _name(          o._name ),
+            _minorVersion(  o._minorVersion ),
+            _headerAddress( o._headerAddress )
         {}
 
         FVMLib::IMPL::~IMPL()
