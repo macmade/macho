@@ -16,7 +16,11 @@ About
 
 Mach-O file parser.
 
-### Example output:
+### Installation
+
+    brew install --HEAD macmade/macho
+
+### Example output
 
     $ macho /System/Library/Frameworks/Foundation.framework/Foundation
     
