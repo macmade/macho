@@ -49,8 +49,12 @@ namespace MachO
                 
                 LinkEditData & operator =( LinkEditData o );
                 
-                uint32_t command() const override;
-                uint32_t size()    const override;
+                Info getInfo() const override;
+                
+                uint32_t command()    const override;
+                uint32_t size()       const override;
+                uint32_t dataOffset() const;
+                uint32_t dataSize()   const;
                 
                 friend void swap( LinkEditData & o1, LinkEditData & o2 );
                 
