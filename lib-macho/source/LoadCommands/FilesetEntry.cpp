@@ -121,7 +121,14 @@ namespace MachO
             _vmAddress(  stream.readUInt64() ),
             _fileOffset( stream.readUInt64() )
         {
+            size_t   begin(  stream.tell() - 8 );
+            uint32_t offset( stream.readUInt32() );
+            
             ( void )kind;
+            
+            stream.seek( numeric_cast< ssize_t >( begin + offset ), BinaryStream::SeekDirection::Begin );
+            
+            this->_entryID = stream.readNULLTerminatedString();
         }
         
         FilesetEntry::IMPL::IMPL( const IMPL & o ):
