@@ -27,8 +27,8 @@
  * @copyright   (c) 2020, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef MACHO_LOAD_COMMANDS_DYLINKER_HPP
-#define MACHO_LOAD_COMMANDS_DYLINKER_HPP
+#ifndef MACHO_LOAD_COMMANDS_SUB_DYLINKER_HPP
+#define MACHO_LOAD_COMMANDS_SUB_DYLINKER_HPP
 
 #include <MachO/LoadCommand.hpp>
 #include <MachO/BinaryStream.hpp>
@@ -48,9 +48,12 @@ namespace MachO
                 ~Dylinker() override;
                 
                 Dylinker & operator =( Dylinker o );
+        
+                std::string description() const override;
                 
-                uint32_t command() const override;
-                uint32_t size()    const override;
+                uint32_t    command() const override;
+                uint32_t    size()    const override;
+                std::string name()    const;
                 
                 friend void swap( Dylinker & o1, Dylinker & o2 );
                 
@@ -63,4 +66,4 @@ namespace MachO
     }
 }
 
-#endif /* MACHO_LOAD_COMMANDS_DYLINKER_HPP */
+#endif /* MACHO_LOAD_COMMANDS_SUB_DYLINKER_HPP */
