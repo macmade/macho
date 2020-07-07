@@ -69,7 +69,7 @@ namespace MachO
         return *( this );
     }
     
-    Info CPU::getInfo() const
+    XS::Info CPU::getInfo() const
     {
         return { "CPU", this->description() };
     }

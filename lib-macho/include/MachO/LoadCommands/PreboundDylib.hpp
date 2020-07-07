@@ -31,8 +31,8 @@
 #define MACHO_LOAD_COMMANDS_PREBOUND_DYLIB_HPP
 
 #include <MachO/LoadCommand.hpp>
-#include <MachO/BinaryStream.hpp>
 #include <MachO/File.hpp>
+#include <XS.hpp>
 #include <string>
 
 namespace MachO
@@ -43,7 +43,7 @@ namespace MachO
         {
             public:
                 
-                PreboundDylib( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  );
+                PreboundDylib( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
                 PreboundDylib( const PreboundDylib & o );
                 PreboundDylib( PreboundDylib && o ) noexcept;
                 ~PreboundDylib() override;

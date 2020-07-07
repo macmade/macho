@@ -33,24 +33,23 @@
 #include <memory>
 #include <algorithm>
 #include <string>
-#include <MachO/BinaryStream.hpp>
-#include <MachO/InfoObject.hpp>
+#include <XS.hpp>
 #include <MachO/CPU.hpp>
 
 namespace MachO
 {
-    class FatArch: public InfoObject
+    class FatArch: public XS::Info::Object
     {
         public:
             
-            FatArch( BinaryStream & stream );
+            FatArch( XS::IO::BinaryStream & stream );
             FatArch( const FatArch & o );
             FatArch( FatArch && o ) noexcept;
             ~FatArch() override;
             
             FatArch & operator =( FatArch o );
             
-            Info getInfo() const override;
+            XS::Info getInfo() const override;
             
             CPU      cpu()        const;
             uint32_t offset()     const;

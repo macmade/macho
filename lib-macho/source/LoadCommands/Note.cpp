@@ -28,8 +28,8 @@
  */
 
 #include <MachO/LoadCommands/Note.hpp>
-#include <MachO/Casts.hpp>
 #include <MachO/ToString.hpp>
+#include <XS.hpp>
 
 namespace MachO
 {
@@ -39,7 +39,7 @@ namespace MachO
         {
             public:
                 
-                IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  );
+                IMPL( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
                 IMPL( const IMPL & o );
                 ~IMPL();
                 
@@ -50,7 +50,7 @@ namespace MachO
                 uint64_t    _dataSize;
         };
 
-        Note::Note( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
+        Note::Note( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream ):
             impl( std::make_unique< IMPL >( command, size, kind, stream ) )
         {}
         
@@ -72,13 +72,13 @@ namespace MachO
             return *( this );
         }
         
-        Info Note::getInfo() const
+        XS::Info Note::getInfo() const
         {
-            Info i( LoadCommand::getInfo() );
+            XS::Info i( LoadCommand::getInfo() );
             
             i.addChild( { "Data owner",  this->dataOwner() } );
-            i.addChild( { "Data offset", ToString::Hex( this->dataOffset() ) } );
-            i.addChild( { "Data size",   ToString::Hex( this->dataSize() ) } );
+            i.addChild( { "Data offset", XS::ToString::Hex( this->dataOffset() ) } );
+            i.addChild( { "Data size",   XS::ToString::Hex( this->dataSize() ) } );
             
             return i;
         }
@@ -115,7 +115,7 @@ namespace MachO
             swap( o1.impl, o2.impl );
         }
         
-        Note::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
+        Note::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream ):
             _command(    command ),
             _size(       size ),
             _dataOwner(  stream.readString( 16 ) ),

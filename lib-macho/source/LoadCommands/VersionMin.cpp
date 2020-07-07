@@ -28,8 +28,8 @@
  */
 
 #include <MachO/LoadCommands/VersionMin.hpp>
-#include <MachO/Casts.hpp>
 #include <MachO/ToString.hpp>
+#include <XS.hpp>
 
 namespace MachO
 {
@@ -39,7 +39,7 @@ namespace MachO
         {
             public:
                 
-                IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  );
+                IMPL( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
                 IMPL( const IMPL & o );
                 ~IMPL();
                 
@@ -49,7 +49,7 @@ namespace MachO
                 uint32_t _sdk;
         };
 
-        VersionMin::VersionMin( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
+        VersionMin::VersionMin( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream ):
             impl( std::make_unique< IMPL >( command, size, kind, stream ) )
         {}
         
@@ -71,9 +71,9 @@ namespace MachO
             return *( this );
         }
         
-        Info VersionMin::getInfo() const
+        XS::Info VersionMin::getInfo() const
         {
-            Info i( LoadCommand::getInfo() );
+            XS::Info i( LoadCommand::getInfo() );
             
             i.addChild( { "Version", ToString::Version( this->version() ) } );
             i.addChild( { "SDK",     ToString::Version( this->sdk() ) } );
@@ -108,7 +108,7 @@ namespace MachO
             swap( o1.impl, o2.impl );
         }
         
-        VersionMin::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
+        VersionMin::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream ):
             _command( command ),
             _size(    size ),
             _version( stream.readUInt32() ),

@@ -28,8 +28,8 @@
  */
 
 #include <MachO/LoadCommands/TwoLevelHints.hpp>
-#include <MachO/Casts.hpp>
 #include <MachO/ToString.hpp>
+#include <XS.hpp>
 
 namespace MachO
 {
@@ -39,7 +39,7 @@ namespace MachO
         {
             public:
                 
-                IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  );
+                IMPL( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
                 IMPL( const IMPL & o );
                 ~IMPL();
                 
@@ -49,7 +49,7 @@ namespace MachO
                 uint32_t _count;
         };
 
-        TwoLevelHints::TwoLevelHints( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
+        TwoLevelHints::TwoLevelHints( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream ):
             impl( std::make_unique< IMPL >( command, size, kind, stream ) )
         {}
         
@@ -71,12 +71,12 @@ namespace MachO
             return *( this );
         }
         
-        Info TwoLevelHints::getInfo() const
+        XS::Info TwoLevelHints::getInfo() const
         {
-            Info i( LoadCommand::getInfo() );
+            XS::Info i( LoadCommand::getInfo() );
             
-            i.addChild( { "Offset", ToString::Hex( this->offset() ) } );
-            i.addChild( { "Count",  ToString::Hex( this->count() ) } );
+            i.addChild( { "Offset", XS::ToString::Hex( this->offset() ) } );
+            i.addChild( { "Count",  XS::ToString::Hex( this->count() ) } );
             
             return i;
         }
@@ -108,7 +108,7 @@ namespace MachO
             swap( o1.impl, o2.impl );
         }
         
-        TwoLevelHints::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
+        TwoLevelHints::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream ):
             _command( command ),
             _size(    size ),
             _offset(  stream.readUInt32() ),

@@ -31,11 +31,11 @@
 #define MACHO_LOAD_COMMANDS_BUILD_VERSION_HPP
 
 #include <MachO/LoadCommand.hpp>
-#include <MachO/BinaryStream.hpp>
 #include <MachO/Platform.hpp>
 #include <MachO/Tool.hpp>
 #include <MachO/File.hpp>
 #include <vector>
+#include <XS.hpp>
 
 namespace MachO
 {
@@ -45,14 +45,14 @@ namespace MachO
         {
             public:
                 
-                BuildVersion( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  );
+                BuildVersion( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
                 BuildVersion( const BuildVersion & o );
                 BuildVersion( BuildVersion && o ) noexcept;
                 ~BuildVersion() override;
                 
                 BuildVersion & operator =( BuildVersion o );
                 
-                Info getInfo() const override;
+                XS::Info getInfo() const override;
                 
                 uint32_t command()  const override;
                 uint32_t size()     const override;

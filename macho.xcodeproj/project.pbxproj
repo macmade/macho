@@ -13,13 +13,6 @@
 		05C8C32424AE1BE90095E313 /* File.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05C8C32224AE1BE90095E313 /* File.cpp */; };
 		05C8C32524AE1BE90095E313 /* File.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 05C8C32324AE1BE90095E313 /* File.hpp */; };
 		05C8C32724AE1C040095E313 /* MachO.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 05C8C32624AE1C040095E313 /* MachO.hpp */; };
-		05C8C32B24AE243F0095E313 /* BinaryFileStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05C8C32824AE243F0095E313 /* BinaryFileStream.cpp */; };
-		05C8C32C24AE243F0095E313 /* BinaryDataStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05C8C32924AE243F0095E313 /* BinaryDataStream.cpp */; };
-		05C8C32D24AE243F0095E313 /* BinaryStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05C8C32A24AE243F0095E313 /* BinaryStream.cpp */; };
-		05C8C33124AE24460095E313 /* BinaryFileStream.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 05C8C32E24AE24460095E313 /* BinaryFileStream.hpp */; };
-		05C8C33224AE24460095E313 /* BinaryStream.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 05C8C32F24AE24460095E313 /* BinaryStream.hpp */; };
-		05C8C33324AE24460095E313 /* BinaryDataStream.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 05C8C33024AE24460095E313 /* BinaryDataStream.hpp */; };
-		05C8C33524AE24B10095E313 /* Casts.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 05C8C33424AE24B10095E313 /* Casts.hpp */; };
 		05C8C33824AE2D050095E313 /* FatFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05C8C33624AE2D050095E313 /* FatFile.cpp */; };
 		05C8C33924AE2D050095E313 /* FatFile.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 05C8C33724AE2D050095E313 /* FatFile.hpp */; };
 		05C8C33C24AE2D400095E313 /* Functions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05C8C33A24AE2D400095E313 /* Functions.cpp */; };
@@ -98,10 +91,6 @@
 		05C8C40524AFE94F0095E313 /* Ident.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05C8C3F224AFE94F0095E313 /* Ident.cpp */; };
 		05C8C40624AFE94F0095E313 /* FVMFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05C8C3F324AFE94F0095E313 /* FVMFile.cpp */; };
 		05C8C40824AFEB4B0095E313 /* VersionMin.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 05C8C40724AFEB4B0095E313 /* VersionMin.hpp */; };
-		05C8C40E24AFECC00095E313 /* InfoObject.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 05C8C40C24AFECC00095E313 /* InfoObject.hpp */; };
-		05C8C41124AFECCC0095E313 /* Info.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05C8C40F24AFECCC0095E313 /* Info.cpp */; };
-		05C8C41224AFECCC0095E313 /* Info.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 05C8C41024AFECCC0095E313 /* Info.hpp */; };
-		05C8C41424AFED710095E313 /* InfoObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05C8C41324AFED710095E313 /* InfoObject.cpp */; };
 		05C8C41724AFEF6E0095E313 /* ToString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05C8C41524AFEF6E0095E313 /* ToString.cpp */; };
 		05C8C41824AFEF6E0095E313 /* ToString.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 05C8C41624AFEF6E0095E313 /* ToString.hpp */; };
 		05C8C41B24AFF5C10095E313 /* CPU.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05C8C41924AFF5C10095E313 /* CPU.cpp */; };
@@ -220,13 +209,6 @@
 		05C8C32224AE1BE90095E313 /* File.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = File.cpp; sourceTree = "<group>"; };
 		05C8C32324AE1BE90095E313 /* File.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = File.hpp; sourceTree = "<group>"; };
 		05C8C32624AE1C040095E313 /* MachO.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MachO.hpp; sourceTree = "<group>"; };
-		05C8C32824AE243F0095E313 /* BinaryFileStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BinaryFileStream.cpp; sourceTree = "<group>"; };
-		05C8C32924AE243F0095E313 /* BinaryDataStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BinaryDataStream.cpp; sourceTree = "<group>"; };
-		05C8C32A24AE243F0095E313 /* BinaryStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BinaryStream.cpp; sourceTree = "<group>"; };
-		05C8C32E24AE24460095E313 /* BinaryFileStream.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BinaryFileStream.hpp; sourceTree = "<group>"; };
-		05C8C32F24AE24460095E313 /* BinaryStream.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BinaryStream.hpp; sourceTree = "<group>"; };
-		05C8C33024AE24460095E313 /* BinaryDataStream.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BinaryDataStream.hpp; sourceTree = "<group>"; };
-		05C8C33424AE24B10095E313 /* Casts.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Casts.hpp; sourceTree = "<group>"; };
 		05C8C33624AE2D050095E313 /* FatFile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FatFile.cpp; sourceTree = "<group>"; };
 		05C8C33724AE2D050095E313 /* FatFile.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FatFile.hpp; sourceTree = "<group>"; };
 		05C8C33A24AE2D400095E313 /* Functions.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Functions.cpp; sourceTree = "<group>"; };
@@ -306,10 +288,6 @@
 		05C8C3F224AFE94F0095E313 /* Ident.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Ident.cpp; sourceTree = "<group>"; };
 		05C8C3F324AFE94F0095E313 /* FVMFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FVMFile.cpp; sourceTree = "<group>"; };
 		05C8C40724AFEB4B0095E313 /* VersionMin.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = VersionMin.hpp; sourceTree = "<group>"; };
-		05C8C40C24AFECC00095E313 /* InfoObject.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = InfoObject.hpp; sourceTree = "<group>"; };
-		05C8C40F24AFECCC0095E313 /* Info.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Info.cpp; sourceTree = "<group>"; };
-		05C8C41024AFECCC0095E313 /* Info.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Info.hpp; sourceTree = "<group>"; };
-		05C8C41324AFED710095E313 /* InfoObject.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = InfoObject.cpp; sourceTree = "<group>"; };
 		05C8C41524AFEF6E0095E313 /* ToString.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ToString.cpp; sourceTree = "<group>"; };
 		05C8C41624AFEF6E0095E313 /* ToString.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ToString.hpp; sourceTree = "<group>"; };
 		05C8C41924AFF5C10095E313 /* CPU.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CPU.cpp; sourceTree = "<group>"; };
@@ -536,9 +514,6 @@
 		05C8C32024AE1BBE0095E313 /* source */ = {
 			isa = PBXGroup;
 			children = (
-				05C8C32924AE243F0095E313 /* BinaryDataStream.cpp */,
-				05C8C32824AE243F0095E313 /* BinaryFileStream.cpp */,
-				05C8C32A24AE243F0095E313 /* BinaryStream.cpp */,
 				05C8C45424B4C30D0095E313 /* CacheFile.cpp */,
 				05C8C45624B4CD360095E313 /* CacheImageInfo.cpp */,
 				05C8C45A24B4D3CE0095E313 /* CacheMappingInfo.cpp */,
@@ -549,8 +524,6 @@
 				05C8C42324B0C4580095E313 /* FileFlags.cpp */,
 				05C8C42724B0C4C20095E313 /* FileType.cpp */,
 				05C8C33A24AE2D400095E313 /* Functions.cpp */,
-				05C8C40F24AFECCC0095E313 /* Info.cpp */,
-				05C8C41324AFED710095E313 /* InfoObject.cpp */,
 				05C8C42924B0D82A0095E313 /* LoadCommand.cpp */,
 				05C8C36824AF7CCE0095E313 /* LoadCommands */,
 				05C8C43124B0F55E0095E313 /* Platform.cpp */,
@@ -566,13 +539,9 @@
 		05C8C32124AE1BCA0095E313 /* MachO */ = {
 			isa = PBXGroup;
 			children = (
-				05C8C33024AE24460095E313 /* BinaryDataStream.hpp */,
-				05C8C32E24AE24460095E313 /* BinaryFileStream.hpp */,
-				05C8C32F24AE24460095E313 /* BinaryStream.hpp */,
 				05C8C45224B4C3060095E313 /* CacheFile.hpp */,
 				05C8C45724B4CD360095E313 /* CacheImageInfo.hpp */,
 				05C8C45B24B4D3CE0095E313 /* CacheMappingInfo.hpp */,
-				05C8C33424AE24B10095E313 /* Casts.hpp */,
 				05C8C41A24AFF5C10095E313 /* CPU.hpp */,
 				05C8C33F24AE49D10095E313 /* FatArch.hpp */,
 				05C8C33724AE2D050095E313 /* FatFile.hpp */,
@@ -580,8 +549,6 @@
 				05C8C41F24B0C4510095E313 /* FileFlags.hpp */,
 				05C8C42024B0C4510095E313 /* FileType.hpp */,
 				05C8C33B24AE2D400095E313 /* Functions.hpp */,
-				05C8C41024AFECCC0095E313 /* Info.hpp */,
-				05C8C40C24AFECC00095E313 /* InfoObject.hpp */,
 				05C8C41D24B0C3110095E313 /* IntegerWrapper.hpp */,
 				05C8C36424AF7A530095E313 /* LoadCommand.hpp */,
 				05C8C36724AF7CC50095E313 /* LoadCommands */,
@@ -699,10 +666,8 @@
 				05C8C32524AE1BE90095E313 /* File.hpp in Headers */,
 				05C8C39324AFDDEE0095E313 /* TwoLevelHints.hpp in Headers */,
 				05C8C43824B1070C0095E313 /* Tool.hpp in Headers */,
-				05C8C33124AE24460095E313 /* BinaryFileStream.hpp in Headers */,
 				05C8C3D524AFE9440095E313 /* Ident.hpp in Headers */,
 				05C8C39824AFDDEE0095E313 /* Unknown.hpp in Headers */,
-				05C8C40E24AFECC00095E313 /* InfoObject.hpp in Headers */,
 				05C8C39924AFDDEE0095E313 /* Segment64.hpp in Headers */,
 				05C8C3DF24AFE9440095E313 /* RPath.hpp in Headers */,
 				05C8C36624AF7A530095E313 /* LoadCommand.hpp in Headers */,
@@ -718,9 +683,7 @@
 				05C8C3D024AFE9440095E313 /* BuildVersion.hpp in Headers */,
 				05C8C3DC24AFE9440095E313 /* EntryPoint.hpp in Headers */,
 				05C8C3D624AFE9440095E313 /* Note.hpp in Headers */,
-				05C8C33324AE24460095E313 /* BinaryDataStream.hpp in Headers */,
 				05C8C43424B0F55E0095E313 /* Platform.hpp in Headers */,
-				05C8C41224AFECCC0095E313 /* Info.hpp in Headers */,
 				05C8C39A24AFDDEE0095E313 /* UUID.hpp in Headers */,
 				05C8C3DD24AFE9440095E313 /* Routines64.hpp in Headers */,
 				05C8C45D24B4D3CE0095E313 /* CacheMappingInfo.hpp in Headers */,
@@ -731,7 +694,6 @@
 				05C8C3D224AFE9440095E313 /* EncryptionInfo64.hpp in Headers */,
 				05C8C40824AFEB4B0095E313 /* VersionMin.hpp in Headers */,
 				05C8C3D324AFE9440095E313 /* LinkerOption.hpp in Headers */,
-				05C8C33224AE24460095E313 /* BinaryStream.hpp in Headers */,
 				05C8C33924AE2D050095E313 /* FatFile.hpp in Headers */,
 				05C8C3DA24AFE9440095E313 /* PrebindChecksum.hpp in Headers */,
 				05C8C45324B4C3060095E313 /* CacheFile.hpp in Headers */,
@@ -739,7 +701,6 @@
 				05C8C39C24AFDDEE0095E313 /* PreboundDylib.hpp in Headers */,
 				05C8C3DB24AFE9440095E313 /* PrePage.hpp in Headers */,
 				05C8C46924B503490095E313 /* SectionFlags.hpp in Headers */,
-				05C8C33524AE24B10095E313 /* Casts.hpp in Headers */,
 				05C8C45924B4CD360095E313 /* CacheImageInfo.hpp in Headers */,
 				05C8C38D24AFDDEE0095E313 /* Segment.hpp in Headers */,
 				05C8C39224AFDDEE0095E313 /* SubClient.hpp in Headers */,
@@ -892,7 +853,6 @@
 				05C8C33824AE2D050095E313 /* FatFile.cpp in Sources */,
 				05C8C3FD24AFE94F0095E313 /* PrePage.cpp in Sources */,
 				05C8C3B524AFDDF60095E313 /* Thread.cpp in Sources */,
-				05C8C32B24AE243F0095E313 /* BinaryFileStream.cpp in Sources */,
 				05C8C40624AFE94F0095E313 /* FVMFile.cpp in Sources */,
 				05C8C32424AE1BE90095E313 /* File.cpp in Sources */,
 				05C8C40024AFE94F0095E313 /* BuildVersion.cpp in Sources */,
@@ -903,21 +863,17 @@
 				05C8C3FE24AFE94F0095E313 /* Note.cpp in Sources */,
 				05C8C42824B0C4C20095E313 /* FileType.cpp in Sources */,
 				05C8C33C24AE2D400095E313 /* Functions.cpp in Sources */,
-				05C8C41124AFECCC0095E313 /* Info.cpp in Sources */,
 				05C8C46024B4E5DA0095E313 /* Section.cpp in Sources */,
 				05C8C3B624AFDDF60095E313 /* Dylinker.cpp in Sources */,
 				05C8C43324B0F55E0095E313 /* Platform.cpp in Sources */,
 				05C8C42524B0C4580095E313 /* FileFlags.cpp in Sources */,
 				05C8C3B424AFDDF60095E313 /* DysymTab.cpp in Sources */,
 				05C8C3FF24AFE94F0095E313 /* FilesetEntry.cpp in Sources */,
-				05C8C32D24AE243F0095E313 /* BinaryStream.cpp in Sources */,
 				05C8C40324AFE94F0095E313 /* EncryptionInfo64.cpp in Sources */,
 				05C8C40524AFE94F0095E313 /* Ident.cpp in Sources */,
 				05C8C3AC24AFDDF60095E313 /* SubLibrary.cpp in Sources */,
 				05C8C41724AFEF6E0095E313 /* ToString.cpp in Sources */,
-				05C8C32C24AE243F0095E313 /* BinaryDataStream.cpp in Sources */,
 				05C8C3AF24AFDDF60095E313 /* TwoLevelHints.cpp in Sources */,
-				05C8C41424AFED710095E313 /* InfoObject.cpp in Sources */,
 				05C8C41B24AFF5C10095E313 /* CPU.cpp in Sources */,
 				05C8C3AE24AFDDF60095E313 /* SubClient.cpp in Sources */,
 			);

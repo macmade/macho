@@ -31,11 +31,11 @@
 #define MACHO_LOAD_COMMAND_HPP
 
 #include <cstdint>
-#include <MachO/InfoObject.hpp>
+#include <XS.hpp>
 
 namespace MachO
 {
-    class LoadCommand: public InfoObject
+    class LoadCommand: public XS::Info::Object
     {
         public:
             
@@ -44,7 +44,7 @@ namespace MachO
             
             virtual std::string description() const;
             
-            Info getInfo() const override;
+            XS::Info getInfo() const override;
     };
 }
 

@@ -28,8 +28,8 @@
  */
 
 #include <MachO/LoadCommands/EncryptionInfo.hpp>
-#include <MachO/Casts.hpp>
 #include <MachO/ToString.hpp>
+#include <XS.hpp>
 
 namespace MachO
 {
@@ -39,7 +39,7 @@ namespace MachO
         {
             public:
                 
-                IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  );
+                IMPL( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
                 IMPL( const IMPL & o );
                 ~IMPL();
                 
@@ -50,7 +50,7 @@ namespace MachO
                 uint32_t _cryptID;
         };
 
-        EncryptionInfo::EncryptionInfo( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
+        EncryptionInfo::EncryptionInfo( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream ):
             impl( std::make_unique< IMPL >( command, size, kind, stream ) )
         {}
         
@@ -72,13 +72,13 @@ namespace MachO
             return *( this );
         }
         
-        Info EncryptionInfo::getInfo() const
+        XS::Info EncryptionInfo::getInfo() const
         {
-            Info i( LoadCommand::getInfo() );
+            XS::Info i( LoadCommand::getInfo() );
             
-            i.addChild( { "Crypt offset", ToString::Hex( this->cryptOffset() ) } );
-            i.addChild( { "Crypt size",   ToString::Hex( this->cryptSize() ) } );
-            i.addChild( { "Crypt ID",     ToString::Hex( this->cryptID() ) } );
+            i.addChild( { "Crypt offset", XS::ToString::Hex( this->cryptOffset() ) } );
+            i.addChild( { "Crypt size",   XS::ToString::Hex( this->cryptSize() ) } );
+            i.addChild( { "Crypt ID",     XS::ToString::Hex( this->cryptID() ) } );
             
             return i;
         }
@@ -115,7 +115,7 @@ namespace MachO
             swap( o1.impl, o2.impl );
         }
         
-        EncryptionInfo::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
+        EncryptionInfo::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream ):
             _command( command ),
             _size(    size ),
             _cryptOffset( stream.readUInt32() ),

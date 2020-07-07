@@ -28,8 +28,8 @@
  */
 
 #include <MachO/LoadCommands/LinkEditData.hpp>
-#include <MachO/Casts.hpp>
 #include <MachO/ToString.hpp>
+#include <XS.hpp>
 
 namespace MachO
 {
@@ -39,7 +39,7 @@ namespace MachO
         {
             public:
                 
-                IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  );
+                IMPL( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
                 IMPL( const IMPL & o );
                 ~IMPL();
                 
@@ -49,7 +49,7 @@ namespace MachO
                 uint32_t _dataSize;
         };
 
-        LinkEditData::LinkEditData( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
+        LinkEditData::LinkEditData( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream ):
             impl( std::make_unique< IMPL >( command, size, kind, stream ) )
         {}
         
@@ -71,12 +71,12 @@ namespace MachO
             return *( this );
         }
         
-        Info LinkEditData::getInfo() const
+        XS::Info LinkEditData::getInfo() const
         {
-            Info i( LoadCommand::getInfo() );
+            XS::Info i( LoadCommand::getInfo() );
             
-            i.addChild( { "Data offset", ToString::Hex( this->dataOffset() ) } );
-            i.addChild( { "Data size",   ToString::Hex( this->dataSize() ) } );
+            i.addChild( { "Data offset", XS::ToString::Hex( this->dataOffset() ) } );
+            i.addChild( { "Data size",   XS::ToString::Hex( this->dataSize() ) } );
             
             return i;
         }
@@ -108,7 +108,7 @@ namespace MachO
             swap( o1.impl, o2.impl );
         }
         
-        LinkEditData::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
+        LinkEditData::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream ):
             _command(    command ),
             _size(       size ),
             _dataOffset( stream.readUInt32() ),

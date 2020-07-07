@@ -32,14 +32,14 @@
 
 namespace MachO
 {
-    Info FileFlags::getInfo() const
+    XS::Info FileFlags::getInfo() const
     {
-        Info i( "Flags" );
-        auto flags( this->flags() );
+        XS::Info i( "Flags" );
+        auto     flags( this->flags() );
         
         if( flags.size() > 0 )
         {
-            i.value( ToString::Hex( this->value() ) );
+            i.value( XS::ToString::Hex( this->value() ) );
             
             for( const auto & p: flags )
             {

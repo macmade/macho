@@ -29,7 +29,7 @@
 
 #include <MachO/CacheImageInfo.hpp>
 #include <MachO/ToString.hpp>
-#include <MachO/Casts.hpp>
+#include <XS.hpp>
 
 namespace MachO
 {
@@ -37,7 +37,7 @@ namespace MachO
     {
         public:
             
-            IMPL( BinaryStream & stream );
+            IMPL( XS::IO::BinaryStream & stream );
             IMPL( const IMPL & o );
             ~IMPL( void );
             
@@ -47,7 +47,7 @@ namespace MachO
             std::string _path;
     };
 
-    CacheImageInfo::CacheImageInfo( BinaryStream & stream ):
+    CacheImageInfo::CacheImageInfo( XS::IO::BinaryStream & stream ):
         impl( std::make_unique< IMPL >( stream ) )
     {}
 
@@ -69,13 +69,13 @@ namespace MachO
         return *( this );
     }
     
-    Info CacheImageInfo::getInfo() const
+    XS::Info CacheImageInfo::getInfo() const
     {
-        Info i( "Cache image info" );
+        XS::Info i( "Cache image info" );
         
-        i.addChild( { "Address",           ToString::Hex( this->address() ) } );
-        i.addChild( { "Modification time", ToString::DateTime( this->modificationTime() ) } );
-        i.addChild( { "Inode",             ToString::Hex( this->inode() ) } );
+        i.addChild( { "Address",           XS::ToString::Hex( this->address() ) } );
+        i.addChild( { "Modification time", XS::ToString::DateTime( this->modificationTime() ) } );
+        i.addChild( { "Inode",             XS::ToString::Hex( this->inode() ) } );
         i.addChild( { "Path",              this->path() } );
         
         return i;
@@ -108,7 +108,7 @@ namespace MachO
         swap( o1.impl, o2.impl );
     }
 
-    CacheImageInfo::IMPL::IMPL( BinaryStream & stream ):
+    CacheImageInfo::IMPL::IMPL( XS::IO::BinaryStream & stream ):
         _address(          stream.readUInt64() ),
         _modificationTime( stream.readUInt64() ),
         _inode(            stream.readUInt64() )
@@ -116,11 +116,11 @@ namespace MachO
         uint32_t offset( stream.readUInt32() );
         size_t   pos( stream.tell() );
         
-        stream.seek( numeric_cast< ssize_t >( offset ), BinaryStream::SeekDirection::Begin );
+        stream.seek( offset, XS::IO::BinaryStream::SeekDirection::Begin );
         
         this->_path = stream.readNULLTerminatedString();
         
-        stream.seek( numeric_cast< ssize_t >( pos ), BinaryStream::SeekDirection::Begin );
+        stream.seek( pos, XS::IO::BinaryStream::SeekDirection::Begin );
         stream.readUInt32();
     }
 

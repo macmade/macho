@@ -31,8 +31,8 @@
 #define MACHO_LOAD_COMMANDS_THREAD_HPP
 
 #include <MachO/LoadCommand.hpp>
-#include <MachO/BinaryStream.hpp>
 #include <MachO/File.hpp>
+#include <XS.hpp>
 
 namespace MachO
 {
@@ -42,7 +42,7 @@ namespace MachO
         {
             public:
                 
-                Thread( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  );
+                Thread( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
                 Thread( const Thread & o );
                 Thread( Thread && o ) noexcept;
                 ~Thread() override;

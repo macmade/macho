@@ -28,78 +28,11 @@
  */
 
 #include <MachO/ToString.hpp>
-#include <MachO/Casts.hpp>
 
 namespace MachO
 {
     namespace ToString
     {
-        std::string Size( uint64_t size )
-        {
-            if( size < 1000 )
-            {
-                return std::to_string( size ) + " bytes";
-            }
-            else
-            {
-                double            s( static_cast< double >( size ) );
-                std::stringstream ss;
-                
-                ss << std::fixed << std::setprecision( 2 );
-                
-                if( size < 1000 * 1000 )
-                {
-                    ss << s / 1000.0;
-                    ss << " KB";
-                }
-                else if( size < 1000 * 1000 * 1000 )
-                {
-                    ss << ( s / 1000.0 ) / 1000.0;
-                    ss << " MB";
-                }
-                else
-                {
-                    ss << ( ( s / 1000.0 ) / 1000.0 ) / 1000.0;
-                    ss << " GB";
-                }
-                
-                return ss.str();
-            }
-        }
-        
-        std::string Filename( const std::string & path )
-        {
-            size_t pos( path.rfind( '/' ) );
-            
-            if( pos == std::string::npos )
-            {
-                return path;
-            }
-            
-            return path.substr( pos + 1 );
-        }
-        
-        std::string UUID( const uint8_t * bytes )
-        {
-            std::stringstream ss;
-            
-            for( int i = 0; i < 16; i++ )
-            {
-                if( i == 4 || i == 6 || i == 8 || i == 10 )
-                {
-                    ss << "-";
-                }
-                
-                ss << std::hex
-                   << std::uppercase
-                   << std::setfill( '0' )
-                   << std::setw( 0 )
-                   << static_cast< int >( bytes[ i ] );
-            }
-            
-            return ss.str();
-        }
-        
         std::string Version( uint32_t value )
         {
             uint32_t a =   value >> 16;
@@ -132,18 +65,6 @@ namespace MachO
                  + std::to_string( d )
                  + "."
                  + std::to_string( e );
-        }
-        
-        std::string DateTime( uint64_t value )
-        {
-            char        buf[ 256 ];
-            time_t      ts( numeric_cast< time_t >( value ) );
-            struct tm * tm( localtime( &ts ) );
-            
-            memset( buf, 0, sizeof( buf ) );
-            strftime( buf, sizeof( buf ), "%c", tm );
-            
-            return buf;
         }
     }
 }

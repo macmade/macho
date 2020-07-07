@@ -31,18 +31,18 @@
 #define MACHO_FILE_TYPE_HPP
 
 #include <MachO/IntegerWrapper.hpp>
-#include <MachO/InfoObject.hpp>
+#include <XS.hpp>
 #include <string>
 
 namespace MachO
 {
-    class FileType: public IntegerWrapper< uint32_t >, public InfoObject
+    class FileType: public IntegerWrapper< uint32_t >, public XS::Info::Object
     {
         public:
             
             using IntegerWrapper::IntegerWrapper;
             
-            Info getInfo() const override;
+            XS::Info getInfo() const override;
             
             std::string name()        const;
             std::string description() const;

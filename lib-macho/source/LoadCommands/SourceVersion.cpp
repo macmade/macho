@@ -28,8 +28,8 @@
  */
 
 #include <MachO/LoadCommands/SourceVersion.hpp>
-#include <MachO/Casts.hpp>
 #include <MachO/ToString.hpp>
+#include <XS.hpp>
 
 namespace MachO
 {
@@ -39,7 +39,7 @@ namespace MachO
         {
             public:
                 
-                IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  );
+                IMPL( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
                 IMPL( const IMPL & o );
                 ~IMPL();
                 
@@ -48,7 +48,7 @@ namespace MachO
                 uint64_t _version;
         };
 
-        SourceVersion::SourceVersion( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
+        SourceVersion::SourceVersion( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream ):
             impl( std::make_unique< IMPL >( command, size, kind, stream ) )
         {}
         
@@ -97,7 +97,7 @@ namespace MachO
             swap( o1.impl, o2.impl );
         }
         
-        SourceVersion::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
+        SourceVersion::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream ):
             _command( command ),
             _size(    size ),
             _version( stream.readUInt64() )

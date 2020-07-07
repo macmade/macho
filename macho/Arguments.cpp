@@ -66,10 +66,10 @@ Arguments & Arguments::operator =( Arguments o )
     return *( this );
 }
 
-MachO::Info Arguments::getInfo() const
+XS::Info Arguments::getInfo() const
 {
-    MachO::Info i( "Arguments" );
-    MachO::Info files( "Files" );
+    XS::Info i( "Arguments" );
+    XS::Info files( "Files" );
     
     i.addChild( { "Help", std::to_string( this->showHelp() ) } );
     i.addChild( { "Info", std::to_string( this->showInfo() ) } );

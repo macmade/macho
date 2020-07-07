@@ -31,8 +31,8 @@
 #define MACHO_LOAD_COMMANDS_DYSYM_TAB_HPP
 
 #include <MachO/LoadCommand.hpp>
-#include <MachO/BinaryStream.hpp>
 #include <MachO/File.hpp>
+#include <XS.hpp>
 
 namespace MachO
 {
@@ -42,14 +42,14 @@ namespace MachO
         {
             public:
                 
-                DysymTab( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  );
+                DysymTab( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
                 DysymTab( const DysymTab & o );
                 DysymTab( DysymTab && o ) noexcept;
                 ~DysymTab() override;
                 
                 DysymTab & operator =( DysymTab o );
                 
-                Info getInfo() const override;
+                XS::Info getInfo() const override;
                 
                 uint32_t command()      const override;
                 uint32_t size()         const override;

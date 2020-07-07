@@ -28,8 +28,8 @@
  */
 
 #include <MachO/LoadCommands/FVMFile.hpp>
-#include <MachO/Casts.hpp>
 #include <MachO/ToString.hpp>
+#include <XS.hpp>
 
 namespace MachO
 {
@@ -39,7 +39,7 @@ namespace MachO
         {
             public:
                 
-                IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  );
+                IMPL( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
                 IMPL( const IMPL & o );
                 ~IMPL();
                 
@@ -49,7 +49,7 @@ namespace MachO
                 uint32_t    _headerAddress;
         };
 
-        FVMFile::FVMFile( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
+        FVMFile::FVMFile( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream ):
             impl( std::make_unique< IMPL >( command, size, kind, stream ) )
         {}
         
@@ -71,12 +71,12 @@ namespace MachO
             return *( this );
         }
         
-        Info FVMFile::getInfo() const
+        XS::Info FVMFile::getInfo() const
         {
-            Info i( LoadCommand::getInfo() );
+            XS::Info i( LoadCommand::getInfo() );
             
             i.addChild( { "Name",           this->name() } );
-            i.addChild( { "Header address", ToString::Hex( this->headerAddress() ) } );
+            i.addChild( { "Header address", XS::ToString::Hex( this->headerAddress() ) } );
             
             return i;
         }
@@ -108,7 +108,7 @@ namespace MachO
             swap( o1.impl, o2.impl );
         }
         
-        FVMFile::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
+        FVMFile::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream ):
             _command( command ),
             _size(    size )
         {
@@ -118,11 +118,11 @@ namespace MachO
             
             ( void )kind;
             
-            stream.seek( numeric_cast< ssize_t >( begin + offset ), BinaryStream::SeekDirection::Begin );
+            stream.seek( begin + offset, XS::IO::BinaryStream::SeekDirection::Begin );
             
             this->_name = stream.readNULLTerminatedString();
             
-            stream.seek( numeric_cast< ssize_t >( pos ), BinaryStream::SeekDirection::Begin );
+            stream.seek( pos, XS::IO::BinaryStream::SeekDirection::Begin );
             
             this->_headerAddress = stream.readUInt32();
         }

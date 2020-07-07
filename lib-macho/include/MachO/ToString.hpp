@@ -30,47 +30,15 @@
 #ifndef MACHO_TO_STRING_HPP
 #define MACHO_TO_STRING_HPP
 
-#include <type_traits>
-#include <ios>
-#include <sstream>
-#include <iomanip>
+#include <cstdint>
 #include <string>
-#include <vector>
 
 namespace MachO
 {
     namespace ToString
     {
-        std::string Size( uint64_t size );
-        std::string Filename( const std::string & path );
-        std::string UUID( const uint8_t * bytes );
         std::string Version( uint32_t value );
         std::string Version( uint64_t value );
-        std::string DateTime( uint64_t value );
-        
-        template
-        <
-            typename _T_,
-            typename std::enable_if
-            <
-                   std::is_integral< _T_ >::value
-                && std::is_unsigned< _T_ >::value
-            >
-            ::type * = nullptr
-        >
-        std::string Hex( _T_ value )
-        {
-            std::stringstream ss;
-            
-            ss << "0x"
-               << std::setfill( '0' )
-               << std::setw( sizeof( _T_ ) * 2 )
-               << std::hex
-               << std::uppercase
-               << value;
-            
-            return ss.str();
-        }
     }
 }
 

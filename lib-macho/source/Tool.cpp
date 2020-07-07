@@ -70,7 +70,7 @@ namespace MachO
         return *( this );
     }
     
-    Info Tool::getInfo() const
+    XS::Info Tool::getInfo() const
     {
         return { this->name(), ToString::Version( this->version() ) };
     }

@@ -36,7 +36,7 @@ namespace MachO
     {
         public:
             
-            IMPL( BinaryStream & stream );
+            IMPL( XS::IO::BinaryStream & stream );
             IMPL( const IMPL & o );
             ~IMPL( void );
             
@@ -51,7 +51,7 @@ namespace MachO
             SectionFlags _flags;
     };
 
-    Section::Section( BinaryStream & stream ):
+    Section::Section( XS::IO::BinaryStream & stream ):
         impl( std::make_unique< IMPL >( stream ) )
     {}
 
@@ -73,18 +73,18 @@ namespace MachO
         return *( this );
     }
 
-    Info Section::getInfo() const
+    XS::Info Section::getInfo() const
     {
-        Info i( "Section" );
+        XS::Info i( "Section" );
         
         i.addChild( { "Section",           this->section() } );
         i.addChild( { "Segment",           this->segment() } );
-        i.addChild( { "Address",           ToString::Hex( this->address() ) } );
-        i.addChild( { "Size",              ToString::Hex( this->size() ) } );
-        i.addChild( { "Offset",            ToString::Hex( this->offset() ) } );
-        i.addChild( { "Alignment",         ToString::Hex( this->alignment() ) } );
-        i.addChild( { "Relocation offset", ToString::Hex( this->relocationOffset() ) } );
-        i.addChild( { "Relocation count",  ToString::Hex( this->relocationCount() ) } );
+        i.addChild( { "Address",           XS::ToString::Hex( this->address() ) } );
+        i.addChild( { "Size",              XS::ToString::Hex( this->size() ) } );
+        i.addChild( { "Offset",            XS::ToString::Hex( this->offset() ) } );
+        i.addChild( { "Alignment",         XS::ToString::Hex( this->alignment() ) } );
+        i.addChild( { "Relocation offset", XS::ToString::Hex( this->relocationOffset() ) } );
+        i.addChild( { "Relocation count",  XS::ToString::Hex( this->relocationCount() ) } );
         i.addChild( this->flags() );
         
         return i;
@@ -142,7 +142,7 @@ namespace MachO
         swap( o1.impl, o2.impl );
     }
 
-    Section::IMPL::IMPL( BinaryStream & stream ):
+    Section::IMPL::IMPL( XS::IO::BinaryStream & stream ):
         _section(          stream.readString( 16 ) ),
         _segment(          stream.readString( 16 ) ),
         _address(          stream.readUInt32() ),

@@ -34,26 +34,25 @@
 #include <algorithm>
 #include <string>
 #include <vector>
-#include <MachO/BinaryStream.hpp>
 #include <MachO/FatArch.hpp>
 #include <MachO/File.hpp>
-#include <MachO/InfoObject.hpp>
+#include <XS.hpp>
 
 namespace MachO
 {
-    class FatFile: public InfoObject
+    class FatFile: public XS::Info::Object
     {
         public:
             
             FatFile( const std::string & path );
-            FatFile( BinaryStream & stream );
+            FatFile( XS::IO::BinaryStream & stream );
             FatFile( const FatFile & o );
             FatFile( FatFile && o ) noexcept;
             ~FatFile() override;
             
             FatFile & operator =( FatFile o );
             
-            Info getInfo() const override;
+            XS::Info getInfo() const override;
             
             std::vector< std::pair< FatArch, File > > architectures() const;
             

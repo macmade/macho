@@ -31,8 +31,8 @@
 #define MACHO_LOAD_COMMANDS_ENTRY_POINT_HPP
 
 #include <MachO/LoadCommand.hpp>
-#include <MachO/BinaryStream.hpp>
 #include <MachO/File.hpp>
+#include <XS.hpp>
 
 namespace MachO
 {
@@ -42,14 +42,14 @@ namespace MachO
         {
             public:
                 
-                EntryPoint( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  );
+                EntryPoint( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
                 EntryPoint( const EntryPoint & o );
                 EntryPoint( EntryPoint && o ) noexcept;
                 ~EntryPoint() override;
                 
                 EntryPoint & operator =( EntryPoint o );
                 
-                Info getInfo() const override;
+                XS::Info getInfo() const override;
                 
                 uint32_t command()   const override;
                 uint32_t size()      const override;

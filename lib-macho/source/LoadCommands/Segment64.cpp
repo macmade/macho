@@ -28,8 +28,8 @@
  */
 
 #include <MachO/LoadCommands/Segment64.hpp>
-#include <MachO/Casts.hpp>
 #include <MachO/ToString.hpp>
+#include <XS.hpp>
 
 namespace MachO
 {
@@ -39,7 +39,7 @@ namespace MachO
         {
             public:
                 
-                IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  );
+                IMPL( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
                 IMPL( const IMPL & o );
                 ~IMPL();
                 
@@ -56,7 +56,7 @@ namespace MachO
                 std::vector< Section64 > _sections;
         };
 
-        Segment64::Segment64( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
+        Segment64::Segment64( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream ):
             impl( std::make_unique< IMPL >( command, size, kind, stream ) )
         {}
         
@@ -78,19 +78,19 @@ namespace MachO
             return *( this );
         }
         
-        Info Segment64::getInfo() const
+        XS::Info Segment64::getInfo() const
         {
-            Info i( LoadCommand::getInfo() );
-            Info sections( "Sections" );
+            XS::Info i( LoadCommand::getInfo() );
+            XS::Info sections( "Sections" );
             
             i.addChild( { "Name",        this->name() } );
-            i.addChild( { "VM address",  ToString::Hex(  this->vmAddress() ) } );
-            i.addChild( { "VM size",     ToString::Size( this->vmSize() ) } );
-            i.addChild( { "File offset", ToString::Hex(  this->fileOffset() ) } );
-            i.addChild( { "File size",   ToString::Size( this->fileSize() ) } );
-            i.addChild( { "Max prot",    ToString::Hex(  this->maxProtection() ) } );
-            i.addChild( { "Init prot",   ToString::Hex(  this->initProtection() ) } );
-            i.addChild( { "Flags",       ToString::Hex(  this->flags() ) } );
+            i.addChild( { "VM address",  XS::ToString::Hex(  this->vmAddress() ) } );
+            i.addChild( { "VM size",     XS::ToString::Size( this->vmSize() ) } );
+            i.addChild( { "File offset", XS::ToString::Hex(  this->fileOffset() ) } );
+            i.addChild( { "File size",   XS::ToString::Size( this->fileSize() ) } );
+            i.addChild( { "Max prot",    XS::ToString::Hex(  this->maxProtection() ) } );
+            i.addChild( { "Init prot",   XS::ToString::Hex(  this->initProtection() ) } );
+            i.addChild( { "Flags",       XS::ToString::Hex(  this->flags() ) } );
             
             for( const auto & section: this->sections() )
             {
@@ -168,7 +168,7 @@ namespace MachO
             swap( o1.impl, o2.impl );
         }
         
-        Segment64::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
+        Segment64::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream ):
             _command(          command ),
             _size(             size ),
             _name(             stream.readString( 16 ) ),

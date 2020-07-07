@@ -31,7 +31,7 @@
 
 namespace MachO
 {
-    Info FileType::getInfo() const
+    XS::Info FileType::getInfo() const
     {
         std::string name(        this->name() );
         std::string description( this->description() );

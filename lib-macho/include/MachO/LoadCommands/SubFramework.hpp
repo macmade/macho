@@ -31,8 +31,8 @@
 #define MACHO_LOAD_COMMANDS_SUB_FRAMEWORK_HPP
 
 #include <MachO/LoadCommand.hpp>
-#include <MachO/BinaryStream.hpp>
 #include <MachO/File.hpp>
+#include <XS.hpp>
 
 namespace MachO
 {
@@ -42,7 +42,7 @@ namespace MachO
         {
             public:
                 
-                SubFramework( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  );
+                SubFramework( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
                 SubFramework( const SubFramework & o );
                 SubFramework( SubFramework && o ) noexcept;
                 ~SubFramework() override;

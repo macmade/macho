@@ -36,7 +36,7 @@ namespace MachO
         return "";
     }
     
-    Info LoadCommand::getInfo() const
+    XS::Info LoadCommand::getInfo() const
     {
         std::string name;
         

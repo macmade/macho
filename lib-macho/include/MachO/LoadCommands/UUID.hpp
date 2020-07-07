@@ -31,8 +31,8 @@
 #define MACHO_LOAD_COMMANDS_UUID_HPP
 
 #include <MachO/LoadCommand.hpp>
-#include <MachO/BinaryStream.hpp>
 #include <MachO/File.hpp>
+#include <XS.hpp>
 
 namespace MachO
 {
@@ -42,7 +42,7 @@ namespace MachO
         {
             public:
                 
-                UUID( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  );
+                UUID( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
                 UUID( const UUID & o );
                 UUID( UUID && o ) noexcept;
                 ~UUID() override;

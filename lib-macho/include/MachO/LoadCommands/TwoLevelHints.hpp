@@ -31,8 +31,8 @@
 #define MACHO_LOAD_COMMANDS_TWO_LEVEL_HINTS_HPP
 
 #include <MachO/LoadCommand.hpp>
-#include <MachO/BinaryStream.hpp>
 #include <MachO/File.hpp>
+#include <XS.hpp>
 
 namespace MachO
 {
@@ -42,14 +42,14 @@ namespace MachO
         {
             public:
                 
-                TwoLevelHints( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  );
+                TwoLevelHints( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
                 TwoLevelHints( const TwoLevelHints & o );
                 TwoLevelHints( TwoLevelHints && o ) noexcept;
                 ~TwoLevelHints() override;
                 
                 TwoLevelHints & operator =( TwoLevelHints o );
                 
-                Info getInfo() const override;
+                XS::Info getInfo() const override;
                 
                 uint32_t command() const override;
                 uint32_t size()    const override;

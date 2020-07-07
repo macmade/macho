@@ -28,11 +28,9 @@
  */
 
 #include <MachO/FatFile.hpp>
-#include <MachO/BinaryFileStream.hpp>
-#include <MachO/BinaryDataStream.hpp>
-#include <MachO/Casts.hpp>
 #include <MachO/ToString.hpp>
 #include <optional>
+#include <XS.hpp>
 
 namespace MachO
 {
@@ -41,11 +39,11 @@ namespace MachO
         public:
             
             IMPL( const std::string & path );
-            IMPL( BinaryStream & stream );
+            IMPL( XS::IO::BinaryStream & stream );
             IMPL( const IMPL & o );
             ~IMPL();
             
-            void parse( BinaryStream & stream );
+            void parse( XS::IO::BinaryStream & stream );
             
             std::optional< std::string >              _path;
             std::vector< std::pair< FatArch, File > > _archs;
@@ -55,7 +53,7 @@ namespace MachO
         impl( std::make_unique< IMPL >( path ) )
     {}
     
-    FatFile::FatFile( BinaryStream & stream ):
+    FatFile::FatFile( XS::IO::BinaryStream & stream ):
         impl( std::make_unique< IMPL >( stream ) )
     {}
     
@@ -77,14 +75,14 @@ namespace MachO
         return *( this );
     }
             
-    Info FatFile::getInfo() const
+    XS::Info FatFile::getInfo() const
     {
-        Info i( "Fat Mach-O file" );
-        Info archs( "Architectures" );
+        XS::Info i( "Fat Mach-O file" );
+        XS::Info archs( "Architectures" );
         
         if( this->impl->_path.has_value() )
         {
-            i.value( ToString::Filename( this->impl->_path.value() ) );
+            i.value( XS::ToString::Filename( this->impl->_path.value() ) );
         }
         
         for( const auto & p: this->impl->_archs )
@@ -117,12 +115,12 @@ namespace MachO
     FatFile::IMPL::IMPL( const std::string & path ):
         _path( path )
     {
-        BinaryFileStream stream( path );
+        XS::IO::BinaryFileStream stream( path );
         
         this->parse( stream );
     }
     
-    FatFile::IMPL::IMPL( BinaryStream & stream )
+    FatFile::IMPL::IMPL( XS::IO::BinaryStream & stream )
     {
         this->parse( stream );
     }
@@ -135,13 +133,13 @@ namespace MachO
     FatFile::IMPL::~IMPL()
     {}
     
-    void FatFile::IMPL::parse( BinaryStream & stream )
+    void FatFile::IMPL::parse( XS::IO::BinaryStream & stream )
     {
         uint32_t magic( stream.readBigEndianUInt32() );
         
         if( magic != 0xCAFEBABE )
         {
-            throw std::runtime_error( "Invalid Mach-O fat signature: " + ToString::Hex( magic ) );
+            throw std::runtime_error( "Invalid Mach-O fat signature: " + XS::ToString::Hex( magic ) );
         }
         
         for( uint32_t i = 0, n = stream.readBigEndianUInt32(); i < n; i++ )
@@ -149,15 +147,15 @@ namespace MachO
             FatArch arch( stream );
             size_t  pos(  stream.tell() );
             
-            stream.seek( arch.offset(), BinaryStream::SeekDirection::Begin );
+            stream.seek( arch.offset(), XS::IO::BinaryStream::SeekDirection::Begin );
             
             {
-                BinaryDataStream data( stream.read( arch.size() ) );
+                XS::IO::BinaryDataStream data( stream.read( arch.size() ) );
                 
                 this->_archs.push_back( { arch, data } );
             }
             
-            stream.seek( numeric_cast< ssize_t >( pos ), BinaryStream::SeekDirection::Begin );
+            stream.seek( pos, XS::IO::BinaryStream::SeekDirection::Begin );
         }
     }
 }

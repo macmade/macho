@@ -28,8 +28,8 @@
  */
 
 #include <MachO/LoadCommands/FilesetEntry.hpp>
-#include <MachO/Casts.hpp>
 #include <MachO/ToString.hpp>
+#include <XS.hpp>
 
 namespace MachO
 {
@@ -39,7 +39,7 @@ namespace MachO
         {
             public:
                 
-                IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  );
+                IMPL( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
                 IMPL( const IMPL & o );
                 ~IMPL();
                 
@@ -50,7 +50,7 @@ namespace MachO
                 std::string _entryID;
         };
 
-        FilesetEntry::FilesetEntry( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
+        FilesetEntry::FilesetEntry( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream ):
             impl( std::make_unique< IMPL >( command, size, kind, stream ) )
         {}
         
@@ -72,12 +72,12 @@ namespace MachO
             return *( this );
         }
         
-        Info FilesetEntry::getInfo() const
+        XS::Info FilesetEntry::getInfo() const
         {
-            Info i( LoadCommand::getInfo() );
+            XS::Info i( LoadCommand::getInfo() );
             
-            i.addChild( { "VM address",  ToString::Hex( this->vmAddress() ) } );
-            i.addChild( { "File offset", ToString::Hex( this->fileOffset() ) } );
+            i.addChild( { "VM address",  XS::ToString::Hex( this->vmAddress() ) } );
+            i.addChild( { "File offset", XS::ToString::Hex( this->fileOffset() ) } );
             i.addChild( { "Entry ID",    this->entryID() } );
             
             return i;
@@ -115,7 +115,7 @@ namespace MachO
             swap( o1.impl, o2.impl );
         }
         
-        FilesetEntry::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
+        FilesetEntry::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream ):
             _command(    command ),
             _size(       size ),
             _vmAddress(  stream.readUInt64() ),
@@ -126,7 +126,7 @@ namespace MachO
             
             ( void )kind;
             
-            stream.seek( numeric_cast< ssize_t >( begin + offset ), BinaryStream::SeekDirection::Begin );
+            stream.seek( begin + offset, XS::IO::BinaryStream::SeekDirection::Begin );
             
             this->_entryID = stream.readNULLTerminatedString();
         }

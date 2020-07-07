@@ -31,8 +31,8 @@
 #define MACHO_LOAD_COMMANDS_SOURCE_VERSION_HPP
 
 #include <MachO/LoadCommand.hpp>
-#include <MachO/BinaryStream.hpp>
 #include <MachO/File.hpp>
+#include <XS.hpp>
 
 namespace MachO
 {
@@ -42,7 +42,7 @@ namespace MachO
         {
             public:
                 
-                SourceVersion( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  );
+                SourceVersion( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
                 SourceVersion( const SourceVersion & o );
                 SourceVersion( SourceVersion && o ) noexcept;
                 ~SourceVersion() override;

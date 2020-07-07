@@ -28,8 +28,8 @@
  */
 
 #include <MachO/LoadCommands/BuildVersion.hpp>
-#include <MachO/Casts.hpp>
 #include <MachO/ToString.hpp>
+#include <XS.hpp>
 
 namespace MachO
 {
@@ -39,7 +39,7 @@ namespace MachO
         {
             public:
                 
-                IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  );
+                IMPL( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
                 IMPL( const IMPL & o );
                 ~IMPL();
                 
@@ -51,7 +51,7 @@ namespace MachO
                 std::vector< Tool > _tools;
         };
 
-        BuildVersion::BuildVersion( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
+        BuildVersion::BuildVersion( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream ):
             impl( std::make_unique< IMPL >( command, size, kind, stream ) )
         {}
         
@@ -73,9 +73,9 @@ namespace MachO
             return *( this );
         }
         
-        Info BuildVersion::getInfo() const
+        XS::Info BuildVersion::getInfo() const
         {
-            Info i( LoadCommand::getInfo() );
+            XS::Info i( LoadCommand::getInfo() );
             
             i.addChild( this->platform() );
             i.addChild( { "Min OS", ToString::Version( this->minOS() ) } );
@@ -83,7 +83,7 @@ namespace MachO
             
             if( this->impl->_tools.size() > 0 )
             {
-                Info tools( "Tools" );
+                XS::Info tools( "Tools" );
                 
                 for( const auto & tool: this->impl->_tools )
                 {
@@ -133,7 +133,7 @@ namespace MachO
             swap( o1.impl, o2.impl );
         }
         
-        BuildVersion::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
+        BuildVersion::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream ):
             _command(  command ),
             _size(     size ),
             _platform( stream.readUInt32() ),

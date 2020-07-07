@@ -31,8 +31,8 @@
 #define MACHO_LOAD_COMMANDS_FILESET_ENTRY_HPP
 
 #include <MachO/LoadCommand.hpp>
-#include <MachO/BinaryStream.hpp>
 #include <MachO/File.hpp>
+#include <XS.hpp>
 
 namespace MachO
 {
@@ -42,14 +42,14 @@ namespace MachO
         {
             public:
                 
-                FilesetEntry( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  );
+                FilesetEntry( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
                 FilesetEntry( const FilesetEntry & o );
                 FilesetEntry( FilesetEntry && o ) noexcept;
                 ~FilesetEntry() override;
                 
                 FilesetEntry & operator =( FilesetEntry o );
                 
-                Info getInfo() const override;
+                XS::Info getInfo() const override;
                 
                 uint32_t    command()    const override;
                 uint32_t    size()       const override;

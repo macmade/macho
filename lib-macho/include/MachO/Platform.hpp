@@ -31,18 +31,18 @@
 #define MACHO_PLATFORM_HPP
 
 #include <MachO/IntegerWrapper.hpp>
-#include <MachO/InfoObject.hpp>
+#include <XS.hpp>
 #include <string>
 
 namespace MachO
 {
-    class Platform: public IntegerWrapper< uint32_t >, public InfoObject
+    class Platform: public IntegerWrapper< uint32_t >, public XS::Info::Object
     {
         public:
             
             using IntegerWrapper::IntegerWrapper;
             
-            Info getInfo() const override;
+            XS::Info getInfo() const override;
     };
 }
 

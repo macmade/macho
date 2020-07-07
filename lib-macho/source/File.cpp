@@ -28,12 +28,9 @@
  */
 
 #include <MachO/File.hpp>
-#include <MachO/BinaryFileStream.hpp>
-#include <MachO/BinaryDataStream.hpp>
-#include <MachO/InfoObject.hpp>
 #include <MachO/ToString.hpp>
-#include <MachO/Casts.hpp>
 #include <optional>
+#include <XS.hpp>
 
 #include <MachO/LoadCommands/BuildVersion.hpp>
 #include <MachO/LoadCommands/DyldInfo.hpp>
@@ -78,12 +75,12 @@ namespace MachO
         public:
             
             IMPL( const std::string & path );
-            IMPL( BinaryStream & stream );
+            IMPL( XS::IO::BinaryStream & stream );
             IMPL( const IMPL & o );
             ~IMPL();
             
-            void parse( BinaryStream & stream );
-            void parseLoadCommands( uint32_t count, BinaryStream & stream );
+            void parse( XS::IO::BinaryStream & stream );
+            void parseLoadCommands( uint32_t count, XS::IO::BinaryStream & stream );
             
             std::optional< std::string > _path;
             Kind                         _kind;
@@ -99,7 +96,7 @@ namespace MachO
         impl( std::make_unique< IMPL >( path ) )
     {}
     
-    File::File( BinaryStream & stream ):
+    File::File( XS::IO::BinaryStream & stream ):
         impl( std::make_unique< IMPL >( stream ) )
     {}
     
@@ -121,15 +118,15 @@ namespace MachO
         return *( this );
     }
             
-    Info File::getInfo() const
+    XS::Info File::getInfo() const
     {
-        Info i(        "Mach-O file" );
-        Info commands( "Commands" );
-        Info libs(     "Libraries" );
+        XS::Info i(        "Mach-O file" );
+        XS::Info commands( "Commands" );
+        XS::Info libs(     "Libraries" );
         
         if( this->impl->_path.has_value() )
         {
-            i.value( ToString::Filename( this->impl->_path.value() ) );
+            i.value( XS::ToString::Filename( this->impl->_path.value() ) );
         }
         
         commands.value( std::to_string( this->loadCommands().size() ) );
@@ -208,12 +205,12 @@ namespace MachO
     File::IMPL::IMPL( const std::string & path ):
         _path( path )
     {
-        BinaryFileStream stream( path );
+        XS::IO::BinaryFileStream stream( path );
         
         this->parse( stream );
     }
     
-    File::IMPL::IMPL( BinaryStream & stream )
+    File::IMPL::IMPL( XS::IO::BinaryStream & stream )
     {
         this->parse( stream );
     }
@@ -231,7 +228,7 @@ namespace MachO
     File::IMPL::~IMPL()
     {}
     
-    void File::IMPL::parse( BinaryStream & stream )
+    void File::IMPL::parse( XS::IO::BinaryStream & stream )
     {
         uint32_t magic( stream.readUInt32() );
         
@@ -240,32 +237,32 @@ namespace MachO
             this->_kind       = Kind::MachO32;
             this->_endianness = Endianness::LittleEndian;
             
-            stream.setPreferredEndianness( BinaryStream::Endianness::LittleEndian );
+            stream.setPreferredEndianness( XS::IO::BinaryStream::Endianness::LittleEndian );
         }
         else if( magic == 0xFEEDFACF )
         {
             this->_kind       = Kind::MachO64;
             this->_endianness = Endianness::LittleEndian;
             
-            stream.setPreferredEndianness( BinaryStream::Endianness::LittleEndian );
+            stream.setPreferredEndianness( XS::IO::BinaryStream::Endianness::LittleEndian );
         }
         else if( magic == 0xCEFAEDFE )
         {
             this->_kind       = Kind::MachO32;
             this->_endianness = Endianness::BigEndian;
             
-            stream.setPreferredEndianness( BinaryStream::Endianness::BigEndian );
+            stream.setPreferredEndianness( XS::IO::BinaryStream::Endianness::BigEndian );
         }
         else if( magic == 0xCFFAEDFE )
         {
             this->_kind       = Kind::MachO64;
             this->_endianness = Endianness::BigEndian;
             
-            stream.setPreferredEndianness( BinaryStream::Endianness::BigEndian );
+            stream.setPreferredEndianness( XS::IO::BinaryStream::Endianness::BigEndian );
         }
         else
         {
-            throw std::runtime_error( "Invalid Mach-O signature: " + ToString::Hex( magic ) );
+            throw std::runtime_error( "Invalid Mach-O signature: " + XS::ToString::Hex( magic ) );
         }
         
         this->_cpu  = { stream.readUInt32(), stream.readUInt32() };
@@ -287,7 +284,7 @@ namespace MachO
         }
     }
     
-    void File::IMPL::parseLoadCommands( uint32_t count, BinaryStream & stream )
+    void File::IMPL::parseLoadCommands( uint32_t count, XS::IO::BinaryStream & stream )
     {
         for( uint32_t i = 0; i < count; i++ )
         {
@@ -365,7 +362,7 @@ namespace MachO
                 }
             }
             
-            stream.seek( numeric_cast< ssize_t >( pos + size ), BinaryStream::SeekDirection::Begin );
+            stream.seek( pos + size, XS::IO::BinaryStream::SeekDirection::Begin );
         }
     }
 }

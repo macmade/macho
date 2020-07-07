@@ -28,8 +28,8 @@
  */
 
 #include <MachO/LoadCommands/Dylib.hpp>
-#include <MachO/Casts.hpp>
 #include <MachO/ToString.hpp>
+#include <XS.hpp>
 
 namespace MachO
 {
@@ -39,7 +39,7 @@ namespace MachO
         {
             public:
                 
-                IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  );
+                IMPL( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
                 IMPL( const IMPL & o );
                 ~IMPL();
                 
@@ -51,7 +51,7 @@ namespace MachO
                 uint32_t    _compatibilityVersion;
         };
 
-        Dylib::Dylib( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
+        Dylib::Dylib( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream ):
             impl( std::make_unique< IMPL >( command, size, kind, stream ) )
         {}
         
@@ -75,7 +75,7 @@ namespace MachO
         
         std::string Dylib::description() const
         {
-            return ToString::Filename( this->name() );
+            return XS::ToString::Filename( this->name() );
         }
         
         uint32_t Dylib::command() const
@@ -115,7 +115,7 @@ namespace MachO
             swap( o1.impl, o2.impl );
         }
         
-        Dylib::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
+        Dylib::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream ):
             _command( command ),
             _size(    size )
         {
@@ -128,7 +128,7 @@ namespace MachO
             this->_currentVersion       = stream.readUInt32();
             this->_compatibilityVersion = stream.readUInt32();
             
-            stream.seek( numeric_cast< ssize_t >( begin + offset ), BinaryStream::SeekDirection::Begin );
+            stream.seek( begin + offset, XS::IO::BinaryStream::SeekDirection::Begin );
             
             this->_name = stream.readNULLTerminatedString();
         }

@@ -32,9 +32,9 @@
 
 namespace MachO
 {
-    Info SectionFlags::getInfo() const
+    XS::Info SectionFlags::getInfo() const
     {
-        Info i( "Flags", this->type() );
+        XS::Info i( "Flags", this->type() );
         
         for( const auto & attribute: this->attributes() )
         {
@@ -73,7 +73,7 @@ namespace MachO
             case 0x14: return "S_THREAD_LOCAL_VARIABLE_POINTERS";
             case 0x15: return "S_THREAD_LOCAL_INIT_FUNCTION_POINTERS";
             case 0x16: return "S_INIT_FUNC_OFFSETS";
-            default:   return "Unknown (" + ToString::Hex( value ) + ")";
+            default:   return "Unknown (" + XS::ToString::Hex( value ) + ")";
         }
     }
     

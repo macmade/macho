@@ -32,24 +32,23 @@
 
 #include <memory>
 #include <algorithm>
-#include <MachO/InfoObject.hpp>
-#include <MachO/BinaryStream.hpp>
 #include <string>
+#include <XS.hpp>
 
 namespace MachO
 {
-    class CacheMappingInfo: public InfoObject
+    class CacheMappingInfo: public XS::Info::Object
     {
         public:
             
-            CacheMappingInfo( BinaryStream & stream );
+            CacheMappingInfo( XS::IO::BinaryStream & stream );
             CacheMappingInfo( const CacheMappingInfo & o );
             CacheMappingInfo( CacheMappingInfo && o ) noexcept;
             ~CacheMappingInfo( void ) override;
             
             CacheMappingInfo & operator =( CacheMappingInfo o );
             
-            Info getInfo() const override;
+            XS::Info getInfo() const override;
             
             uint64_t address()    const;
             uint64_t size()       const;

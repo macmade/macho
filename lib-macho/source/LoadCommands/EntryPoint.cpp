@@ -28,8 +28,8 @@
  */
 
 #include <MachO/LoadCommands/EntryPoint.hpp>
-#include <MachO/Casts.hpp>
 #include <MachO/ToString.hpp>
+#include <XS.hpp>
 
 namespace MachO
 {
@@ -39,7 +39,7 @@ namespace MachO
         {
             public:
                 
-                IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  );
+                IMPL( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
                 IMPL( const IMPL & o );
                 ~IMPL();
                 
@@ -49,7 +49,7 @@ namespace MachO
                 uint64_t _stackSize;
         };
 
-        EntryPoint::EntryPoint( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
+        EntryPoint::EntryPoint( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream ):
             impl( std::make_unique< IMPL >( command, size, kind, stream ) )
         {}
         
@@ -71,12 +71,12 @@ namespace MachO
             return *( this );
         }
         
-        Info EntryPoint::getInfo() const
+        XS::Info EntryPoint::getInfo() const
         {
-            Info i( LoadCommand::getInfo() );
+            XS::Info i( LoadCommand::getInfo() );
             
-            i.addChild( { "Offset",     ToString::Hex( this->offset() ) } );
-            i.addChild( { "Stack size", ToString::Hex( this->stackSize() ) } );
+            i.addChild( { "Offset",     XS::ToString::Hex( this->offset() ) } );
+            i.addChild( { "Stack size", XS::ToString::Hex( this->stackSize() ) } );
             
             return i;
         }
@@ -108,7 +108,7 @@ namespace MachO
             swap( o1.impl, o2.impl );
         }
         
-        EntryPoint::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
+        EntryPoint::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream ):
             _command(   command ),
             _size(      size ),
             _offset(    stream.readUInt64() ),

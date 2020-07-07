@@ -28,8 +28,8 @@
  */
 
 #include <MachO/LoadCommands/DysymTab.hpp>
-#include <MachO/Casts.hpp>
 #include <MachO/ToString.hpp>
+#include <XS.hpp>
 
 namespace MachO
 {
@@ -39,7 +39,7 @@ namespace MachO
         {
             public:
                 
-                IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  );
+                IMPL( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
                 IMPL( const IMPL & o );
                 ~IMPL();
                 
@@ -51,7 +51,7 @@ namespace MachO
                 uint32_t _stringSize;
         };
 
-        DysymTab::DysymTab( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
+        DysymTab::DysymTab( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream ):
             impl( std::make_unique< IMPL >( command, size, kind, stream ) )
         {}
         
@@ -73,14 +73,14 @@ namespace MachO
             return *( this );
         }
         
-        Info DysymTab::getInfo() const
+        XS::Info DysymTab::getInfo() const
         {
-            Info i( LoadCommand::getInfo() );
+            XS::Info i( LoadCommand::getInfo() );
             
-            i.addChild( { "Symbol offset", ToString::Hex( this->symbolOffset() ) } );
-            i.addChild( { "Symbol size",   ToString::Hex( this->symbolCount() ) } );
-            i.addChild( { "String offset", ToString::Hex( this->stringOffset() ) } );
-            i.addChild( { "String size",   ToString::Hex( this->stringSize() ) } );
+            i.addChild( { "Symbol offset", XS::ToString::Hex( this->symbolOffset() ) } );
+            i.addChild( { "Symbol size",   XS::ToString::Hex( this->symbolCount() ) } );
+            i.addChild( { "String offset", XS::ToString::Hex( this->stringOffset() ) } );
+            i.addChild( { "String size",   XS::ToString::Hex( this->stringSize() ) } );
             
             return i;
         }
@@ -122,7 +122,7 @@ namespace MachO
             swap( o1.impl, o2.impl );
         }
         
-        DysymTab::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
+        DysymTab::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream ):
             _command(      command ),
             _size(         size ),
             _symbolOffset( stream.readUInt32() ),

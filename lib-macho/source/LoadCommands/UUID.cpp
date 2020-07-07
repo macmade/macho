@@ -28,8 +28,8 @@
  */
 
 #include <MachO/LoadCommands/UUID.hpp>
-#include <MachO/Casts.hpp>
 #include <MachO/ToString.hpp>
+#include <XS.hpp>
 
 namespace MachO
 {
@@ -39,7 +39,7 @@ namespace MachO
         {
             public:
                 
-                IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  );
+                IMPL( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
                 IMPL( const IMPL & o );
                 ~IMPL();
                 
@@ -48,7 +48,7 @@ namespace MachO
                 uint8_t  _uuid[ 16 ];
         };
 
-        UUID::UUID( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
+        UUID::UUID( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream ):
             impl( std::make_unique< IMPL >( command, size, kind, stream ) )
         {
             ( void )kind;
@@ -79,7 +79,7 @@ namespace MachO
         
         std::string UUID::uuid() const
         {
-            return ToString::UUID( this->impl->_uuid );
+            return XS::ToString::UUID( this->impl->_uuid );
         }
         
         uint32_t UUID::command() const
@@ -99,7 +99,7 @@ namespace MachO
             swap( o1.impl, o2.impl );
         }
         
-        UUID::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
+        UUID::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream ):
             _command( command ),
             _size(    size )
         {

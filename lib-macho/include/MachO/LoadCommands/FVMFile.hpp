@@ -31,8 +31,8 @@
 #define MACHO_LOAD_COMMANDS_FVM_FILE_HPP
 
 #include <MachO/LoadCommand.hpp>
-#include <MachO/BinaryStream.hpp>
 #include <MachO/File.hpp>
+#include <XS.hpp>
 
 namespace MachO
 {
@@ -42,14 +42,14 @@ namespace MachO
         {
             public:
                 
-                FVMFile( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  );
+                FVMFile( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
                 FVMFile( const FVMFile & o );
                 FVMFile( FVMFile && o ) noexcept;
                 ~FVMFile() override;
                 
                 FVMFile & operator =( FVMFile o );
                 
-                Info getInfo() const override;
+                XS::Info getInfo() const override;
                 
                 uint32_t    command()       const override;
                 uint32_t    size()          const override;

@@ -34,9 +34,9 @@
 #include <algorithm>
 #include <string>
 #include <vector>
-#include <MachO/InfoObject.hpp>
+#include <XS.hpp>
 
-class Arguments: public MachO::InfoObject
+class Arguments: public XS::Info::Object
 {
     public:
         
@@ -47,7 +47,7 @@ class Arguments: public MachO::InfoObject
         
         Arguments & operator =( Arguments o );
         
-        MachO::Info getInfo() const override;
+        XS::Info getInfo() const override;
         
         bool                       showHelp() const;
         bool                       showInfo() const;

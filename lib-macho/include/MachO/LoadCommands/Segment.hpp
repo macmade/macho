@@ -31,8 +31,8 @@
 #define MACHO_LOAD_COMMANDS_SEGMENT_HPP
 
 #include <MachO/LoadCommand.hpp>
-#include <MachO/BinaryStream.hpp>
 #include <MachO/File.hpp>
+#include <XS.hpp>
 #include <MachO/Section.hpp>
 #include <string>
 #include <vector>
@@ -45,14 +45,14 @@ namespace MachO
         {
             public:
                 
-                Segment( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  );
+                Segment( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
                 Segment( const Segment & o );
                 Segment( Segment && o ) noexcept;
                 ~Segment() override;
                 
                 Segment & operator =( Segment o );
                 
-                Info getInfo() const override;
+                XS::Info getInfo() const override;
                 
                 uint32_t command() const override;
                 uint32_t size()    const override;

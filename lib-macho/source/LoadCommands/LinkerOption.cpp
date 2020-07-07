@@ -28,7 +28,7 @@
  */
 
 #include <MachO/LoadCommands/LinkerOption.hpp>
-#include <MachO/Casts.hpp>
+#include <XS.hpp>
 
 namespace MachO
 {
@@ -38,7 +38,7 @@ namespace MachO
         {
             public:
                 
-                IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  );
+                IMPL( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
                 IMPL( const IMPL & o );
                 ~IMPL();
                 
@@ -47,7 +47,7 @@ namespace MachO
                 std::vector< std::string > _strings;
         };
 
-        LinkerOption::LinkerOption( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
+        LinkerOption::LinkerOption( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream ):
             impl( std::make_unique< IMPL >( command, size, kind, stream ) )
         {}
         
@@ -69,9 +69,9 @@ namespace MachO
             return *( this );
         }
         
-        Info LinkerOption::getInfo() const
+        XS::Info LinkerOption::getInfo() const
         {
-            Info i( LoadCommand::getInfo() );
+            XS::Info i( LoadCommand::getInfo() );
             
             for( const auto & s: this->strings() )
             {
@@ -103,7 +103,7 @@ namespace MachO
             swap( o1.impl, o2.impl );
         }
         
-        LinkerOption::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
+        LinkerOption::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream ):
             _command( command ),
             _size(    size )
         {

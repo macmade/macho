@@ -33,24 +33,23 @@
 #include <memory>
 #include <algorithm>
 #include <string>
-#include <MachO/InfoObject.hpp>
-#include <MachO/BinaryStream.hpp>
+#include <XS.hpp>
 #include <MachO/SectionFlags.hpp>
 
 namespace MachO
 {
-    class Section64: public InfoObject
+    class Section64: public XS::Info::Object
     {
         public:
             
-            Section64( BinaryStream & stream );
+            Section64( XS::IO::BinaryStream & stream );
             Section64( const Section64 & o );
             Section64( Section64 && o ) noexcept;
             ~Section64( void ) override;
             
             Section64 & operator =( Section64 o );
             
-            Info getInfo() const override;
+            XS::Info getInfo() const override;
             
             std::string  section()          const;
             std::string  segment()          const;

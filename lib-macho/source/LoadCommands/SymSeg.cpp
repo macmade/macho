@@ -28,8 +28,8 @@
  */
 
 #include <MachO/LoadCommands/SymSeg.hpp>
-#include <MachO/Casts.hpp>
 #include <MachO/ToString.hpp>
+#include <XS.hpp>
 
 namespace MachO
 {
@@ -39,7 +39,7 @@ namespace MachO
         {
             public:
                 
-                IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  );
+                IMPL( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
                 IMPL( const IMPL & o );
                 ~IMPL();
                 
@@ -49,7 +49,7 @@ namespace MachO
                 uint32_t _segmentSize;
         };
 
-        SymSeg::SymSeg( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
+        SymSeg::SymSeg( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream ):
             impl( std::make_unique< IMPL >( command, size, kind, stream ) )
         {}
         
@@ -71,12 +71,12 @@ namespace MachO
             return *( this );
         }
         
-        Info SymSeg::getInfo() const
+        XS::Info SymSeg::getInfo() const
         {
-            Info i( LoadCommand::getInfo() );
+            XS::Info i( LoadCommand::getInfo() );
             
-            i.addChild( { "Segment offset", ToString::Hex( this->segmentOffset() ) } );
-            i.addChild( { "Segment size",   ToString::Hex( this->segmentSize() ) } );
+            i.addChild( { "Segment offset", XS::ToString::Hex( this->segmentOffset() ) } );
+            i.addChild( { "Segment size",   XS::ToString::Hex( this->segmentSize() ) } );
             
             return i;
         }
@@ -108,7 +108,7 @@ namespace MachO
             swap( o1.impl, o2.impl );
         }
         
-        SymSeg::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
+        SymSeg::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream ):
             _command(       command ),
             _size(          size ),
             _segmentOffset( stream.readUInt32() ),

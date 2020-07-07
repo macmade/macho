@@ -30,26 +30,26 @@
 #ifndef MACHO_CACHE_IMAGE_INFO_HPP
 #define MACHO_CACHE_IMAGE_INFO_HPP
 
+#include <XS.hpp>
 #include <memory>
 #include <algorithm>
-#include <MachO/InfoObject.hpp>
-#include <MachO/BinaryStream.hpp>
 #include <string>
+#include <XS.hpp>
 
 namespace MachO
 {
-    class CacheImageInfo: public InfoObject
+    class CacheImageInfo: public XS::Info::Object
     {
         public:
             
-            CacheImageInfo( BinaryStream & stream );
+            CacheImageInfo( XS::IO::BinaryStream & stream );
             CacheImageInfo( const CacheImageInfo & o );
             CacheImageInfo( CacheImageInfo && o ) noexcept;
             ~CacheImageInfo( void ) override;
             
             CacheImageInfo & operator =( CacheImageInfo o );
             
-            Info getInfo() const override;
+            XS::Info getInfo() const override;
             
             uint64_t    address()          const;
             uint64_t    modificationTime() const;

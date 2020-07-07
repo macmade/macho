@@ -36,7 +36,7 @@ namespace MachO
     {
         public:
             
-            IMPL( BinaryStream & stream );
+            IMPL( XS::IO::BinaryStream & stream );
             IMPL( const IMPL & o );
             ~IMPL();
             
@@ -46,7 +46,7 @@ namespace MachO
             uint32_t _align;
     };
     
-    FatArch::FatArch( BinaryStream & stream ):
+    FatArch::FatArch( XS::IO::BinaryStream & stream ):
         impl( std::make_unique< IMPL >( stream ) )
     {}
     
@@ -68,9 +68,9 @@ namespace MachO
         return *( this );
     }
     
-    Info FatArch::getInfo() const
+    XS::Info FatArch::getInfo() const
     {
-        return { this->cpu().description(), ToString::Size( this->size() ) };
+        return { this->cpu().description(), XS::ToString::Size( this->size() ) };
     }
     
     CPU FatArch::cpu() const
@@ -100,7 +100,7 @@ namespace MachO
         swap( o1.impl, o2.impl );
     }
     
-    FatArch::IMPL::IMPL( BinaryStream & stream ):
+    FatArch::IMPL::IMPL( XS::IO::BinaryStream & stream ):
         _cpu(    stream.readBigEndianUInt32(), stream.readBigEndianUInt32() ),
         _offset( stream.readBigEndianUInt32() ),
         _size(   stream.readBigEndianUInt32() ),

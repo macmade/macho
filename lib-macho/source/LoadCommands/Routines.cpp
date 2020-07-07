@@ -28,8 +28,8 @@
  */
 
 #include <MachO/LoadCommands/Routines.hpp>
-#include <MachO/Casts.hpp>
 #include <MachO/ToString.hpp>
+#include <XS.hpp>
 
 namespace MachO
 {
@@ -39,7 +39,7 @@ namespace MachO
         {
             public:
                 
-                IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  );
+                IMPL( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
                 IMPL( const IMPL & o );
                 ~IMPL();
                 
@@ -49,7 +49,7 @@ namespace MachO
                 uint32_t _initModule;
         };
 
-        Routines::Routines( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
+        Routines::Routines( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream ):
             impl( std::make_unique< IMPL >( command, size, kind, stream ) )
         {}
         
@@ -71,12 +71,12 @@ namespace MachO
             return *( this );
         }
         
-        Info Routines::getInfo() const
+        XS::Info Routines::getInfo() const
         {
-            Info i( LoadCommand::getInfo() );
+            XS::Info i( LoadCommand::getInfo() );
             
-            i.addChild( { "Init address", ToString::Hex( this->initAddress() ) } );
-            i.addChild( { "Init module",  ToString::Hex( this->initModule() ) } );
+            i.addChild( { "Init address", XS::ToString::Hex( this->initAddress() ) } );
+            i.addChild( { "Init module",  XS::ToString::Hex( this->initModule() ) } );
             
             return i;
         }
@@ -108,7 +108,7 @@ namespace MachO
             swap( o1.impl, o2.impl );
         }
         
-        Routines::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
+        Routines::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream ):
             _command(     command ),
             _size(        size ),
             _initAddress( stream.readUInt32() ),

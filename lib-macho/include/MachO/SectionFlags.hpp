@@ -31,20 +31,20 @@
 #define MACHO_SECTION_FLAGS_HPP
 
 #include <MachO/IntegerWrapper.hpp>
-#include <MachO/InfoObject.hpp>
+#include <XS.hpp>
 #include <string>
 #include <vector>
 #include <utility>
 
 namespace MachO
 {
-    class SectionFlags: public IntegerWrapper< uint32_t >, public InfoObject
+    class SectionFlags: public IntegerWrapper< uint32_t >, public XS::Info::Object
     {
         public:
             
             using IntegerWrapper::IntegerWrapper;
             
-            Info getInfo() const override;
+            XS::Info getInfo() const override;
             
             std::string                type()       const;
             std::vector< std::string > attributes() const;

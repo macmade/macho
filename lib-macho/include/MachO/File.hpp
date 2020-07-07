@@ -34,16 +34,15 @@
 #include <algorithm>
 #include <string>
 #include <vector>
-#include <MachO/BinaryStream.hpp>
+#include <XS.hpp>
 #include <MachO/LoadCommand.hpp>
-#include <MachO/InfoObject.hpp>
 #include <MachO/FileFlags.hpp>
 #include <MachO/FileType.hpp>
 #include <MachO/CPU.hpp>
 
 namespace MachO
 {
-    class File: public InfoObject
+    class File: public XS::Info::Object
     {
         public:
             
@@ -60,14 +59,14 @@ namespace MachO
             };
             
             File( const std::string & path );
-            File( BinaryStream & stream );
+            File( XS::IO::BinaryStream & stream );
             File( const File & o );
             File( File && o ) noexcept;
             ~File() override;
             
             File & operator =( File o );
             
-            Info getInfo() const override;
+            XS::Info getInfo() const override;
             
             Kind       kind()       const;
             Endianness endianness() const;

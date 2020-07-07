@@ -28,8 +28,8 @@
  */
 
 #include <MachO/LoadCommands/PrebindChecksum.hpp>
-#include <MachO/Casts.hpp>
 #include <MachO/ToString.hpp>
+#include <XS.hpp>
 
 namespace MachO
 {
@@ -39,7 +39,7 @@ namespace MachO
         {
             public:
                 
-                IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  );
+                IMPL( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
                 IMPL( const IMPL & o );
                 ~IMPL();
                 
@@ -48,7 +48,7 @@ namespace MachO
                 uint32_t _checksum;
         };
 
-        PrebindChecksum::PrebindChecksum( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
+        PrebindChecksum::PrebindChecksum( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream ):
             impl( std::make_unique< IMPL >( command, size, kind, stream ) )
         {}
         
@@ -72,7 +72,7 @@ namespace MachO
         
         std::string PrebindChecksum::description() const
         {
-            return ToString::Hex( this->checksum() );
+            return XS::ToString::Hex( this->checksum() );
         }
         
         uint32_t PrebindChecksum::command() const
@@ -97,7 +97,7 @@ namespace MachO
             swap( o1.impl, o2.impl );
         }
         
-        PrebindChecksum::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
+        PrebindChecksum::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream ):
             _command(  command ),
             _size(     size ),
             _checksum( stream.readUInt32() )

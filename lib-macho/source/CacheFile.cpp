@@ -28,9 +28,9 @@
  */
 
 #include <MachO/CacheFile.hpp>
-#include <MachO/BinaryFileStream.hpp>
 #include <MachO/ToString.hpp>
 #include <optional>
+#include <XS.hpp>
 
 namespace MachO
 {
@@ -39,11 +39,11 @@ namespace MachO
         public:
             
             IMPL( const std::string & path );
-            IMPL( BinaryStream & stream );
+            IMPL( XS::IO::BinaryStream & stream );
             IMPL( const IMPL & o );
             ~IMPL( void );
             
-            void parse( BinaryStream & stream );
+            void parse( XS::IO::BinaryStream & stream );
             
             std::optional< std::string >    _path;
             std::string                     _header;
@@ -60,7 +60,7 @@ namespace MachO
         impl( std::make_unique< IMPL >( path ) )
     {}
     
-    CacheFile::CacheFile( BinaryStream & stream ):
+    CacheFile::CacheFile( XS::IO::BinaryStream & stream ):
         impl( std::make_unique< IMPL >( stream ) )
     {}
 
@@ -82,23 +82,23 @@ namespace MachO
         return *( this );
     }
     
-    Info CacheFile::getInfo() const
+    XS::Info CacheFile::getInfo() const
     {
-        Info i( "Dyld cache file" );
-        Info mappings( "Mappings" );
-        Info images( "Images" );
+        XS::Info i( "Dyld cache file" );
+        XS::Info mappings( "Mappings" );
+        XS::Info images( "Images" );
         
         if( this->impl->_path.has_value() )
         {
-            i.value( ToString::Filename( this->impl->_path.value() ) );
+            i.value( XS::ToString::Filename( this->impl->_path.value() ) );
         }
         
         i.addChild( { "Header",         this->header() } );
-        i.addChild( { "Mapping offset", ToString::Hex( this->mappingOffset() ) } );
-        i.addChild( { "Mapping count",  ToString::Hex( this->mappingCount() ) } );
-        i.addChild( { "Image offset",   ToString::Hex( this->imageOffset() ) } );
-        i.addChild( { "Image count",    ToString::Hex( this->imageCount() ) } );
-        i.addChild( { "Base address",   ToString::Hex( this->baseAddress() ) } );
+        i.addChild( { "Mapping offset", XS::ToString::Hex( this->mappingOffset() ) } );
+        i.addChild( { "Mapping count",  XS::ToString::Hex( this->mappingCount() ) } );
+        i.addChild( { "Image offset",   XS::ToString::Hex( this->imageOffset() ) } );
+        i.addChild( { "Image count",    XS::ToString::Hex( this->imageCount() ) } );
+        i.addChild( { "Base address",   XS::ToString::Hex( this->baseAddress() ) } );
         
         for( const auto & mapping: this->mappings() )
         {
@@ -175,12 +175,12 @@ namespace MachO
     CacheFile::IMPL::IMPL( const std::string & path ):
         _path( path )
     {
-        BinaryFileStream stream( path );
+        XS::IO::BinaryFileStream stream( path );
         
         this->parse( stream );
     }
     
-    CacheFile::IMPL::IMPL( BinaryStream & stream )
+    CacheFile::IMPL::IMPL( XS::IO::BinaryStream & stream )
     {
         this->parse( stream );
     }
@@ -200,7 +200,7 @@ namespace MachO
     CacheFile::IMPL::~IMPL( void )
     {}
     
-    void CacheFile::IMPL::parse( BinaryStream & stream )
+    void CacheFile::IMPL::parse( XS::IO::BinaryStream & stream )
     {
         this->_header        = stream.readString( 16 );
         this->_mappingOffset = stream.readUInt32();
@@ -209,14 +209,14 @@ namespace MachO
         this->_imageCount    = stream.readUInt32();
         this->_baseAddress   = stream.readUInt32();
         
-        stream.seek( this->_imageOffset, BinaryStream::SeekDirection::Begin );
+        stream.seek( this->_imageOffset, XS::IO::BinaryStream::SeekDirection::Begin );
         
         for( uint32_t i = 0; i < this->_imageCount; i++ )
         {
             this->_images.push_back( stream );
         }
         
-        stream.seek( this->_mappingOffset, BinaryStream::SeekDirection::Begin );
+        stream.seek( this->_mappingOffset, XS::IO::BinaryStream::SeekDirection::Begin );
         
         for( uint32_t i = 0; i < this->_mappingCount; i++ )
         {

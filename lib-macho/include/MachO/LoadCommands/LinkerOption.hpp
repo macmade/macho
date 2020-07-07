@@ -31,8 +31,8 @@
 #define MACHO_LOAD_COMMANDS_LINKER_OPTION_HPP
 
 #include <MachO/LoadCommand.hpp>
-#include <MachO/BinaryStream.hpp>
 #include <MachO/File.hpp>
+#include <XS.hpp>
 #include <vector>
 #include <string>
 
@@ -44,14 +44,14 @@ namespace MachO
         {
             public:
                 
-                LinkerOption( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  );
+                LinkerOption( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
                 LinkerOption( const LinkerOption & o );
                 LinkerOption( LinkerOption && o ) noexcept;
                 ~LinkerOption() override;
                 
                 LinkerOption & operator =( LinkerOption o );
                 
-                Info getInfo() const override;
+                XS::Info getInfo() const override;
                 
                 uint32_t command()                   const override;
                 uint32_t size()                      const override;

@@ -28,7 +28,7 @@
  */
 
 #include <MachO/Functions.hpp>
-#include <MachO/BinaryFileStream.hpp>
+#include <XS.hpp>
 
 namespace MachO
 {
@@ -37,7 +37,7 @@ namespace MachO
         uint32_t magic( 0 );
         
         {
-            BinaryFileStream stream( path );
+            XS::IO::BinaryFileStream stream( path );
             
             magic = stream.readBigEndianUInt32();
         }

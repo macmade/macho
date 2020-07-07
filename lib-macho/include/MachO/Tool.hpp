@@ -31,11 +31,11 @@
 #define MACHO_TOOL_HPP
 
 #include <cstdint>
-#include <MachO/InfoObject.hpp>
+#include <XS.hpp>
 
 namespace MachO
 {
-    class Tool: public InfoObject
+    class Tool: public XS::Info::Object
     {
         public:
             
@@ -47,7 +47,7 @@ namespace MachO
             
             Tool & operator =( Tool o );
             
-            Info getInfo() const override;
+            XS::Info getInfo() const override;
             
             uint32_t    tool()    const;
             uint32_t    version() const;

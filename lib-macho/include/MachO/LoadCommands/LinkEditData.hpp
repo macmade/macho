@@ -31,8 +31,8 @@
 #define MACHO_LOAD_COMMANDS_LINK_EDIT_DATA_HPP
 
 #include <MachO/LoadCommand.hpp>
-#include <MachO/BinaryStream.hpp>
 #include <MachO/File.hpp>
+#include <XS.hpp>
 
 namespace MachO
 {
@@ -42,14 +42,14 @@ namespace MachO
         {
             public:
                 
-                LinkEditData( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream  );
+                LinkEditData( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
                 LinkEditData( const LinkEditData & o );
                 LinkEditData( LinkEditData && o ) noexcept;
                 ~LinkEditData() override;
                 
                 LinkEditData & operator =( LinkEditData o );
                 
-                Info getInfo() const override;
+                XS::Info getInfo() const override;
                 
                 uint32_t command()    const override;
                 uint32_t size()       const override;

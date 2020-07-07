@@ -30,21 +30,15 @@
 #ifndef MACHO_HPP
 #define MACHO_HPP
 
-#include <MachO/BinaryDataStream.hpp>
-#include <MachO/BinaryFileStream.hpp>
-#include <MachO/BinaryStream.hpp>
 #include <MachO/CacheFile.hpp>
 #include <MachO/CacheImageInfo.hpp>
 #include <MachO/CacheMappingInfo.hpp>
-#include <MachO/Casts.hpp>
 #include <MachO/FatArch.hpp>
 #include <MachO/FatFile.hpp>
 #include <MachO/File.hpp>
 #include <MachO/FileFlags.hpp>
 #include <MachO/FileType.hpp>
 #include <MachO/Functions.hpp>
-#include <MachO/Info.hpp>
-#include <MachO/InfoObject.hpp>
 #include <MachO/IntegerWrapper.hpp>
 #include <MachO/LoadCommand.hpp>
 #include <MachO/Platform.hpp>

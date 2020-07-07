@@ -29,7 +29,7 @@
 
 #include <MachO/CacheMappingInfo.hpp>
 #include <MachO/ToString.hpp>
-#include <MachO/Casts.hpp>
+#include <XS.hpp>
 
 namespace MachO
 {
@@ -37,7 +37,7 @@ namespace MachO
     {
         public:
             
-            IMPL( BinaryStream & stream );
+            IMPL( XS::IO::BinaryStream & stream );
             IMPL( const IMPL & o );
             ~IMPL( void );
             
@@ -48,7 +48,7 @@ namespace MachO
             uint32_t _initProt;
     };
 
-    CacheMappingInfo::CacheMappingInfo( BinaryStream & stream ):
+    CacheMappingInfo::CacheMappingInfo( XS::IO::BinaryStream & stream ):
         impl( std::make_unique< IMPL >( stream ) )
     {}
 
@@ -70,15 +70,15 @@ namespace MachO
         return *( this );
     }
     
-    Info CacheMappingInfo::getInfo() const
+    XS::Info CacheMappingInfo::getInfo() const
     {
-        Info i( "Mapping info" );
+        XS::Info i( "Mapping info" );
         
-        i.addChild( { "Address",     ToString::Hex( this->address() ) } );
-        i.addChild( { "Size",        ToString::Hex( this->size() ) } );
-        i.addChild( { "File offset", ToString::Hex( this->fileOffset() ) } );
-        i.addChild( { "Max prot",    ToString::Hex( this->maxProt() ) } );
-        i.addChild( { "Init prot",   ToString::Hex( this->initProt() ) } );
+        i.addChild( { "Address",     XS::ToString::Hex( this->address() ) } );
+        i.addChild( { "Size",        XS::ToString::Hex( this->size() ) } );
+        i.addChild( { "File offset", XS::ToString::Hex( this->fileOffset() ) } );
+        i.addChild( { "Max prot",    XS::ToString::Hex( this->maxProt() ) } );
+        i.addChild( { "Init prot",   XS::ToString::Hex( this->initProt() ) } );
         
         return i;
     }
@@ -115,7 +115,7 @@ namespace MachO
         swap( o1.impl, o2.impl );
     }
 
-    CacheMappingInfo::IMPL::IMPL( BinaryStream & stream ):
+    CacheMappingInfo::IMPL::IMPL( XS::IO::BinaryStream & stream ):
         _address(    stream.readUInt64() ),
         _size(       stream.readUInt64() ),
         _fileOffset( stream.readUInt64() ),

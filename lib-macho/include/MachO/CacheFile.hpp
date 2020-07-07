@@ -33,26 +33,25 @@
 #include <memory>
 #include <algorithm>
 #include <vector>
-#include <MachO/BinaryStream.hpp>
-#include <MachO/InfoObject.hpp>
 #include <MachO/CacheImageInfo.hpp>
 #include <MachO/CacheMappingInfo.hpp>
+#include <XS.hpp>
 
 namespace MachO
 {
-    class CacheFile: public InfoObject
+    class CacheFile: public XS::Info::Object
     {
         public:
             
             CacheFile( const std::string & path );
-            CacheFile( BinaryStream & stream );
+            CacheFile( XS::IO::BinaryStream & stream );
             CacheFile( const CacheFile & o );
             CacheFile( CacheFile && o ) noexcept;
             ~CacheFile( void ) override;
             
             CacheFile & operator =( CacheFile o );
             
-            Info getInfo() const override;
+            XS::Info getInfo() const override;
             
             std::string header()        const;
             uint32_t    mappingOffset() const;

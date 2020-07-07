@@ -31,7 +31,7 @@
 
 namespace MachO
 {
-    Info Platform::getInfo() const
+    XS::Info Platform::getInfo() const
     {
         std::string platform;
         
