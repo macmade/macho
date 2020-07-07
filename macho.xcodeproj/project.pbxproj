@@ -118,6 +118,8 @@
 		05C8C43824B1070C0095E313 /* Tool.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 05C8C43624B1070C0095E313 /* Tool.hpp */; };
 		05C8C45324B4C3060095E313 /* CacheFile.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 05C8C45224B4C3060095E313 /* CacheFile.hpp */; };
 		05C8C45524B4C30D0095E313 /* CacheFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05C8C45424B4C30D0095E313 /* CacheFile.cpp */; };
+		05C8C45824B4CD360095E313 /* CacheImageInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05C8C45624B4CD360095E313 /* CacheImageInfo.cpp */; };
+		05C8C45924B4CD360095E313 /* CacheImageInfo.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 05C8C45724B4CD360095E313 /* CacheImageInfo.hpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -301,6 +303,8 @@
 		05C8C43624B1070C0095E313 /* Tool.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Tool.hpp; sourceTree = "<group>"; };
 		05C8C45224B4C3060095E313 /* CacheFile.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CacheFile.hpp; sourceTree = "<group>"; };
 		05C8C45424B4C30D0095E313 /* CacheFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CacheFile.cpp; sourceTree = "<group>"; };
+		05C8C45624B4CD360095E313 /* CacheImageInfo.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CacheImageInfo.cpp; sourceTree = "<group>"; };
+		05C8C45724B4CD360095E313 /* CacheImageInfo.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CacheImageInfo.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -502,6 +506,7 @@
 				05C8C32824AE243F0095E313 /* BinaryFileStream.cpp */,
 				05C8C32A24AE243F0095E313 /* BinaryStream.cpp */,
 				05C8C45424B4C30D0095E313 /* CacheFile.cpp */,
+				05C8C45624B4CD360095E313 /* CacheImageInfo.cpp */,
 				05C8C41924AFF5C10095E313 /* CPU.cpp */,
 				05C8C33E24AE49D10095E313 /* FatArch.cpp */,
 				05C8C33624AE2D050095E313 /* FatFile.cpp */,
@@ -527,6 +532,7 @@
 				05C8C32E24AE24460095E313 /* BinaryFileStream.hpp */,
 				05C8C32F24AE24460095E313 /* BinaryStream.hpp */,
 				05C8C45224B4C3060095E313 /* CacheFile.hpp */,
+				05C8C45724B4CD360095E313 /* CacheImageInfo.hpp */,
 				05C8C33424AE24B10095E313 /* Casts.hpp */,
 				05C8C41A24AFF5C10095E313 /* CPU.hpp */,
 				05C8C33F24AE49D10095E313 /* FatArch.hpp */,
@@ -681,6 +687,7 @@
 				05C8C39C24AFDDEE0095E313 /* PreboundDylib.hpp in Headers */,
 				05C8C3DB24AFE9440095E313 /* PrePage.hpp in Headers */,
 				05C8C33524AE24B10095E313 /* Casts.hpp in Headers */,
+				05C8C45924B4CD360095E313 /* CacheImageInfo.hpp in Headers */,
 				05C8C38D24AFDDEE0095E313 /* Segment.hpp in Headers */,
 				05C8C39224AFDDEE0095E313 /* SubClient.hpp in Headers */,
 				05C8C39524AFDDEE0095E313 /* SubFramework.hpp in Headers */,
@@ -805,6 +812,7 @@
 				05C8C3F524AFE94F0095E313 /* LinkerOption.cpp in Sources */,
 				05C8C3BA24AFDDF60095E313 /* SubFramework.cpp in Sources */,
 				05C8C3B924AFDDF60095E313 /* SymTab.cpp in Sources */,
+				05C8C45824B4CD360095E313 /* CacheImageInfo.cpp in Sources */,
 				05C8C3FB24AFE94F0095E313 /* SourceVersion.cpp in Sources */,
 				05C8C3B824AFDDF60095E313 /* Segment.cpp in Sources */,
 				05C8C33824AE2D050095E313 /* FatFile.cpp in Sources */,

@@ -32,8 +32,10 @@
 
 #include <memory>
 #include <algorithm>
+#include <vector>
 #include <MachO/BinaryStream.hpp>
 #include <MachO/InfoObject.hpp>
+#include <MachO/CacheImageInfo.hpp>
 
 namespace MachO
 {
@@ -57,6 +59,8 @@ namespace MachO
             uint32_t    imageOffset()   const;
             uint32_t    imageCount()    const;
             uint32_t    baseAddress()   const;
+            
+            std::vector< CacheImageInfo > images() const;
             
             friend void swap( CacheFile & o1, CacheFile & o2 );
             

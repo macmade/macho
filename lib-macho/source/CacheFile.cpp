@@ -45,13 +45,14 @@ namespace MachO
             
             void parse( BinaryStream & stream );
             
-            std::optional< std::string > _path;
-            std::string                  _header;
-            uint32_t                     _mappingOffset;
-            uint32_t                     _mappingCount;
-            uint32_t                     _imageOffset;
-            uint32_t                     _imageCount;
-            uint32_t                     _baseAddress;
+            std::optional< std::string >  _path;
+            std::string                   _header;
+            uint32_t                      _mappingOffset;
+            uint32_t                      _mappingCount;
+            uint32_t                      _imageOffset;
+            uint32_t                      _imageCount;
+            uint32_t                      _baseAddress;
+            std::vector< CacheImageInfo > _images;
     };
 
     CacheFile::CacheFile( const std::string & path ):
@@ -83,6 +84,7 @@ namespace MachO
     Info CacheFile::getInfo() const
     {
         Info i( "Dyld cache file" );
+        Info images( "Images" );
         
         if( this->impl->_path.has_value() )
         {
@@ -95,6 +97,16 @@ namespace MachO
         i.addChild( { "Image offset",   ToString::Hex( this->imageOffset() ) } );
         i.addChild( { "Image count",    ToString::Hex( this->imageCount() ) } );
         i.addChild( { "Base address",   ToString::Hex( this->baseAddress() ) } );
+        
+        for( const auto & image: this->images() )
+        {
+            images.addChild( image );
+        }
+        
+        if( this->images().size() > 0 )
+        {
+            i.addChild( images );
+        }
         
         return i;
     }
@@ -129,6 +141,11 @@ namespace MachO
         return this->impl->_baseAddress;
     }
     
+    std::vector< CacheImageInfo > CacheFile::images() const
+    {
+        return this->impl->_images;
+    }
+    
     void swap( CacheFile & o1, CacheFile & o2 )
     {
         using std::swap;
@@ -156,7 +173,8 @@ namespace MachO
         _mappingCount(  o._mappingCount ),
         _imageOffset(   o._imageOffset ),
         _imageCount(    o._imageCount ),
-        _baseAddress(   o._baseAddress )
+        _baseAddress(   o._baseAddress ),
+        _images(        o._images )
     {}
 
     CacheFile::IMPL::~IMPL( void )
@@ -170,5 +188,12 @@ namespace MachO
         this->_imageOffset   = stream.readUInt32();
         this->_imageCount    = stream.readUInt32();
         this->_baseAddress   = stream.readUInt32();
+        
+        stream.seek( this->_imageOffset, BinaryStream::SeekDirection::Begin );
+        
+        for( uint32_t i = 0; i < this->_imageCount; i++ )
+        {
+            this->_images.push_back( stream );
+        }
     }
 }

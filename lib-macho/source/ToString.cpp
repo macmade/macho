@@ -28,6 +28,7 @@
  */
 
 #include <MachO/ToString.hpp>
+#include <MachO/Casts.hpp>
 
 namespace MachO
 {
@@ -99,7 +100,7 @@ namespace MachO
             return ss.str();
         }
         
-        std::string Version( const uint32_t value )
+        std::string Version( uint32_t value )
         {
             uint32_t a =   value >> 16;
             uint32_t b = ( value >>  8 ) & 0xFF;
@@ -112,7 +113,7 @@ namespace MachO
                  + std::to_string( c );
         }
         
-        std::string Version( const uint64_t value )
+        std::string Version( uint64_t value )
         {
             ( void )value;
             
@@ -131,6 +132,18 @@ namespace MachO
                  + std::to_string( d )
                  + "."
                  + std::to_string( e );
+        }
+        
+        std::string DateTime( uint64_t value )
+        {
+            char        buf[ 256 ];
+            time_t      ts( numeric_cast< time_t >( value ) );
+            struct tm * tm( localtime( &ts ) );
+            
+            memset( buf, 0, sizeof( buf ) );
+            strftime( buf, sizeof( buf ), "%c", tm );
+            
+            return buf;
         }
     }
 }

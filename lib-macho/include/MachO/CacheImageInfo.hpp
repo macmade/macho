@@ -23,55 +23,46 @@
  ******************************************************************************/
 
 /*!
- * @header      ToString.hpp
+ * @header      CacheImageInfo.hpp
  * @copyright   (c) 2020, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef MACHO_TO_STRING_HPP
-#define MACHO_TO_STRING_HPP
+#ifndef MACHO_CACHE_IMAGE_INFO_HPP
+#define MACHO_CACHE_IMAGE_INFO_HPP
 
-#include <type_traits>
-#include <ios>
-#include <sstream>
-#include <iomanip>
+#include <memory>
+#include <algorithm>
+#include <MachO/InfoObject.hpp>
+#include <MachO/BinaryStream.hpp>
 #include <string>
-#include <vector>
 
 namespace MachO
 {
-    namespace ToString
+    class CacheImageInfo: public InfoObject
     {
-        std::string Size( uint64_t size );
-        std::string Filename( const std::string & path );
-        std::string UUID( const uint8_t * bytes );
-        std::string Version( uint32_t value );
-        std::string Version( uint64_t value );
-        std::string DateTime( uint64_t value );
-        
-        template
-        <
-            typename _T_,
-            typename std::enable_if
-            <
-                   std::is_integral< _T_ >::value
-                && std::is_unsigned< _T_ >::value
-            >
-            ::type * = nullptr
-        >
-        std::string Hex( _T_ value )
-        {
-            std::stringstream ss;
+        public:
             
-            ss << "0x"
-               << std::setfill( '0' )
-               << std::setw( sizeof( _T_ ) * 2 )
-               << std::hex
-               << std::uppercase
-               << value;
+            CacheImageInfo( BinaryStream & stream );
+            CacheImageInfo( const CacheImageInfo & o );
+            CacheImageInfo( CacheImageInfo && o ) noexcept;
+            ~CacheImageInfo( void ) override;
             
-            return ss.str();
-        }
-    }
+            CacheImageInfo & operator =( CacheImageInfo o );
+            
+            Info getInfo() const override;
+            
+            uint64_t    address()          const;
+            uint64_t    modificationTime() const;
+            uint64_t    inode()            const;
+            std::string path()             const;
+            
+            friend void swap( CacheImageInfo & o1, CacheImageInfo & o2 );
+            
+        private:
+            
+            class IMPL;
+            std::unique_ptr< IMPL > impl;
+    };
 }
 
-#endif /* MACHO_TO_STRING_HPP */
+#endif /* MACHO_CACHE_IMAGE_INFO_HPP */
