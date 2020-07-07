@@ -1,18 +1,6 @@
 language: objective-c
-osx_image: xcode10.2
-cache:
-    directories:
-    - $HOME/.ccache
-install:
-- gem install xcpretty
-- brew install ccache
-- PATH=$PATH:/usr/local/opt/ccache/libexec
+osx_image: xcode12
 script:
 - set -o pipefail && xcodebuild -project "macho.xcodeproj" -scheme "macho" build analyze
-before_script:
-- ccache -s
-- ccache -z
-after_script:
-- ccache -s
 notifications:
     slack: xs-labs:FXh1yLXNkpcVxKZhZU6icdhI
