@@ -112,11 +112,13 @@ namespace MachO
         
         if( this->mappings().size() > 0 )
         {
+            mappings.value( std::to_string( this->mappings().size() ) );
             i.addChild( mappings );
         }
         
         if( this->images().size() > 0 )
         {
+            images.value( std::to_string( this->images().size() ) );
             i.addChild( images );
         }
         

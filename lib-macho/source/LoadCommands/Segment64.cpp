@@ -43,17 +43,17 @@ namespace MachO
                 IMPL( const IMPL & o );
                 ~IMPL();
                 
-                uint32_t    _command;
-                uint32_t    _size;
-                std::string _name;
-                uint64_t    _vmAddress;
-                uint64_t    _vmSize;
-                uint64_t    _fileOffset;
-                uint64_t    _fileSize;
-                uint32_t    _maxProtection;
-                uint32_t    _initProtection;
-                uint32_t    _numberOfSections;
-                uint32_t    _flags;
+                uint32_t                 _command;
+                uint32_t                 _size;
+                std::string              _name;
+                uint64_t                 _vmAddress;
+                uint64_t                 _vmSize;
+                uint64_t                 _fileOffset;
+                uint64_t                 _fileSize;
+                uint32_t                 _maxProtection;
+                uint32_t                 _initProtection;
+                uint32_t                 _flags;
+                std::vector< Section64 > _sections;
         };
 
         Segment64::Segment64( uint32_t command, uint32_t size, File::Kind kind, BinaryStream & stream ):
@@ -81,6 +81,7 @@ namespace MachO
         Info Segment64::getInfo() const
         {
             Info i( LoadCommand::getInfo() );
+            Info sections( "Sections" );
             
             i.addChild( { "Name",        this->name() } );
             i.addChild( { "VM address",  ToString::Hex(  this->vmAddress() ) } );
@@ -89,8 +90,18 @@ namespace MachO
             i.addChild( { "File size",   ToString::Size( this->fileSize() ) } );
             i.addChild( { "Max prot",    ToString::Hex(  this->maxProtection() ) } );
             i.addChild( { "Init prot",   ToString::Hex(  this->initProtection() ) } );
-            i.addChild( { "Sections",    std::to_string( this->numberOfSections() ) } );
             i.addChild( { "Flags",       ToString::Hex(  this->flags() ) } );
+            
+            for( const auto & section: this->sections() )
+            {
+                sections.addChild( section );
+            }
+            
+            if( this->sections().size() > 0 )
+            {
+                sections.value( std::to_string( this->sections().size() ) );
+                i.addChild( sections );
+            }
             
             return i;
         }
@@ -140,14 +151,14 @@ namespace MachO
             return this->impl->_initProtection;
         }
         
-        uint32_t Segment64::numberOfSections() const
-        {
-            return this->impl->_numberOfSections;
-        }
-        
         uint32_t Segment64::flags() const
         {
             return this->impl->_flags;
+        }
+        
+        std::vector< Section64 > Segment64::sections() const
+        {
+            return this->impl->_sections;
         }
         
         void swap( Segment64 & o1, Segment64 & o2 )
@@ -166,25 +177,32 @@ namespace MachO
             _fileOffset(       stream.readUInt64() ),
             _fileSize(         stream.readUInt64() ),
             _maxProtection(    stream.readUInt32() ),
-            _initProtection(   stream.readUInt32() ),
-            _numberOfSections( stream.readUInt32() ),
-            _flags(            stream.readUInt32() )
+            _initProtection(   stream.readUInt32() )
         {
+            uint32_t sections( stream.readUInt32() );
+            
             ( void )kind;
+            
+            this->_flags = stream.readUInt32();
+            
+            for( uint32_t i = 0; i < sections; i++ )
+            {
+                this->_sections.push_back( stream );
+            }
         }
         
         Segment64::IMPL::IMPL( const IMPL & o ):
-            _command(          o._command ),
-            _size(             o._size ),
-            _name(             o._name ),
-            _vmAddress(        o._vmAddress ),
-            _vmSize(           o._vmSize ),
-            _fileOffset(       o._fileOffset ),
-            _fileSize(         o._fileSize ),
-            _maxProtection(    o._maxProtection ),
-            _initProtection(   o._initProtection ),
-            _numberOfSections( o._numberOfSections ),
-            _flags(            o._flags )
+            _command(        o._command ),
+            _size(           o._size ),
+            _name(           o._name ),
+            _vmAddress(      o._vmAddress ),
+            _vmSize(         o._vmSize ),
+            _fileOffset(     o._fileOffset ),
+            _fileSize(       o._fileSize ),
+            _maxProtection(  o._maxProtection ),
+            _initProtection( o._initProtection ),
+            _flags(          o._flags ),
+            _sections(       o._sections )
         {}
 
         Segment64::IMPL::~IMPL()

@@ -33,6 +33,9 @@
 #include <MachO/LoadCommand.hpp>
 #include <MachO/BinaryStream.hpp>
 #include <MachO/File.hpp>
+#include <MachO/Section.hpp>
+#include <string>
+#include <vector>
 
 namespace MachO
 {
@@ -61,8 +64,9 @@ namespace MachO
                 uint32_t    fileSize()         const;
                 uint32_t    maxProtection()    const;
                 uint32_t    initProtection()   const;
-                uint32_t    numberOfSections() const;
                 uint32_t    flags()            const;
+                
+                std::vector< Section > sections() const;
                 
                 friend void swap( Segment & o1, Segment & o2 );
                 

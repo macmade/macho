@@ -122,6 +122,10 @@
 		05C8C45924B4CD360095E313 /* CacheImageInfo.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 05C8C45724B4CD360095E313 /* CacheImageInfo.hpp */; };
 		05C8C45C24B4D3CE0095E313 /* CacheMappingInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05C8C45A24B4D3CE0095E313 /* CacheMappingInfo.cpp */; };
 		05C8C45D24B4D3CE0095E313 /* CacheMappingInfo.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 05C8C45B24B4D3CE0095E313 /* CacheMappingInfo.hpp */; };
+		05C8C46024B4E5DA0095E313 /* Section.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05C8C45E24B4E5DA0095E313 /* Section.cpp */; };
+		05C8C46124B4E5DA0095E313 /* Section.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 05C8C45F24B4E5DA0095E313 /* Section.hpp */; };
+		05C8C46324B4E8B40095E313 /* Section64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05C8C46224B4E8B40095E313 /* Section64.cpp */; };
+		05C8C46524B4E8C00095E313 /* Section64.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 05C8C46424B4E8C00095E313 /* Section64.hpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -309,6 +313,10 @@
 		05C8C45724B4CD360095E313 /* CacheImageInfo.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CacheImageInfo.hpp; sourceTree = "<group>"; };
 		05C8C45A24B4D3CE0095E313 /* CacheMappingInfo.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CacheMappingInfo.cpp; sourceTree = "<group>"; };
 		05C8C45B24B4D3CE0095E313 /* CacheMappingInfo.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CacheMappingInfo.hpp; sourceTree = "<group>"; };
+		05C8C45E24B4E5DA0095E313 /* Section.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Section.cpp; sourceTree = "<group>"; };
+		05C8C45F24B4E5DA0095E313 /* Section.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Section.hpp; sourceTree = "<group>"; };
+		05C8C46224B4E8B40095E313 /* Section64.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Section64.cpp; sourceTree = "<group>"; };
+		05C8C46424B4E8C00095E313 /* Section64.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Section64.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -524,6 +532,8 @@
 				05C8C42924B0D82A0095E313 /* LoadCommand.cpp */,
 				05C8C36824AF7CCE0095E313 /* LoadCommands */,
 				05C8C43124B0F55E0095E313 /* Platform.cpp */,
+				05C8C45E24B4E5DA0095E313 /* Section.cpp */,
+				05C8C46224B4E8B40095E313 /* Section64.cpp */,
 				05C8C43524B1070C0095E313 /* Tool.cpp */,
 				05C8C41524AFEF6E0095E313 /* ToString.cpp */,
 			);
@@ -553,6 +563,8 @@
 				05C8C36424AF7A530095E313 /* LoadCommand.hpp */,
 				05C8C36724AF7CC50095E313 /* LoadCommands */,
 				05C8C43224B0F55E0095E313 /* Platform.hpp */,
+				05C8C45F24B4E5DA0095E313 /* Section.hpp */,
+				05C8C46424B4E8C00095E313 /* Section64.hpp */,
 				05C8C43624B1070C0095E313 /* Tool.hpp */,
 				05C8C41624AFEF6E0095E313 /* ToString.hpp */,
 			);
@@ -662,6 +674,7 @@
 				05C8C39924AFDDEE0095E313 /* Segment64.hpp in Headers */,
 				05C8C3DF24AFE9440095E313 /* RPath.hpp in Headers */,
 				05C8C36624AF7A530095E313 /* LoadCommand.hpp in Headers */,
+				05C8C46524B4E8C00095E313 /* Section64.hpp in Headers */,
 				05C8C34124AE49D10095E313 /* FatArch.hpp in Headers */,
 				05C8C32724AE1C040095E313 /* MachO.hpp in Headers */,
 				05C8C39724AFDDEE0095E313 /* Dylinker.hpp in Headers */,
@@ -706,6 +719,7 @@
 				05C8C41E24B0C3110095E313 /* IntegerWrapper.hpp in Headers */,
 				05C8C42124B0C4520095E313 /* FileFlags.hpp in Headers */,
 				05C8C38F24AFDDEE0095E313 /* Dylib.hpp in Headers */,
+				05C8C46124B4E5DA0095E313 /* Section.hpp in Headers */,
 				05C8C39024AFDDEE0095E313 /* DysymTab.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -812,6 +826,7 @@
 				05C8C45524B4C30D0095E313 /* CacheFile.cpp in Sources */,
 				05C8C3BC24AFDFEF0095E313 /* PreboundDylib.cpp in Sources */,
 				05C8C3F924AFE94F0095E313 /* EntryPoint.cpp in Sources */,
+				05C8C46324B4E8B40095E313 /* Section64.cpp in Sources */,
 				05C8C3B324AFDDF60095E313 /* Unknown.cpp in Sources */,
 				05C8C3B724AFDDF60095E313 /* Segment64.cpp in Sources */,
 				05C8C45C24B4D3CE0095E313 /* CacheMappingInfo.cpp in Sources */,
@@ -838,6 +853,7 @@
 				05C8C42824B0C4C20095E313 /* FileType.cpp in Sources */,
 				05C8C33C24AE2D400095E313 /* Functions.cpp in Sources */,
 				05C8C41124AFECCC0095E313 /* Info.cpp in Sources */,
+				05C8C46024B4E5DA0095E313 /* Section.cpp in Sources */,
 				05C8C3B624AFDDF60095E313 /* Dylinker.cpp in Sources */,
 				05C8C43324B0F55E0095E313 /* Platform.cpp in Sources */,
 				05C8C42524B0C4580095E313 /* FileFlags.cpp in Sources */,
