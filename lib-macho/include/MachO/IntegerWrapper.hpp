@@ -92,4 +92,4 @@ namespace MachO
     };
 }
 
-#endif /* MACHO_CPU_HPP */
+#endif /* MACHO_INTEGER_WRAPPER_HPP */
