@@ -35,6 +35,7 @@
 #include <string>
 #include <MachO/InfoObject.hpp>
 #include <MachO/BinaryStream.hpp>
+#include <MachO/SectionFlags.hpp>
 
 namespace MachO
 {
@@ -51,15 +52,15 @@ namespace MachO
             
             Info getInfo() const override;
             
-            std::string section()          const;
-            std::string segment()          const;
-            uint32_t    address()          const;
-            uint32_t    size()             const;
-            uint32_t    offset()           const;
-            uint32_t    alignment()        const;
-            uint32_t    relocationOffset() const;
-            uint32_t    relocationCount()  const;
-            uint32_t    flags()            const;
+            std::string  section()          const;
+            std::string  segment()          const;
+            uint32_t     address()          const;
+            uint32_t     size()             const;
+            uint32_t     offset()           const;
+            uint32_t     alignment()        const;
+            uint32_t     relocationOffset() const;
+            uint32_t     relocationCount()  const;
+            SectionFlags flags()            const;
             
             friend void swap( Section & o1, Section & o2 );
             

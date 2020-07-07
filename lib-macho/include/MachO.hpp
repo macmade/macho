@@ -48,6 +48,9 @@
 #include <MachO/IntegerWrapper.hpp>
 #include <MachO/LoadCommand.hpp>
 #include <MachO/Platform.hpp>
+#include <MachO/Section.hpp>
+#include <MachO/Section64.hpp>
+#include <MachO/SectionFlags.hpp>
 #include <MachO/Tool.hpp>
 #include <MachO/ToString.hpp>
 

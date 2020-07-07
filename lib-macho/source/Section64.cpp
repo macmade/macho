@@ -40,15 +40,15 @@ namespace MachO
             IMPL( const IMPL & o );
             ~IMPL( void );
             
-            std::string _section;
-            std::string _segment;
-            uint64_t    _address;
-            uint64_t    _size;
-            uint32_t    _offset;
-            uint32_t    _alignment;
-            uint32_t    _relocationOffset;
-            uint32_t    _relocationCount;
-            uint32_t    _flags;
+            std::string  _section;
+            std::string  _segment;
+            uint64_t     _address;
+            uint64_t     _size;
+            uint32_t     _offset;
+            uint32_t     _alignment;
+            uint32_t     _relocationOffset;
+            uint32_t     _relocationCount;
+            SectionFlags _flags;
     };
 
     Section64::Section64( BinaryStream & stream ):
@@ -85,7 +85,7 @@ namespace MachO
         i.addChild( { "Alignment",         ToString::Hex( this->alignment() ) } );
         i.addChild( { "Relocation offset", ToString::Hex( this->relocationOffset() ) } );
         i.addChild( { "Relocation count",  ToString::Hex( this->relocationCount() ) } );
-        i.addChild( { "Flags",             ToString::Hex( this->flags() ) } );
+        i.addChild( this->flags() );
         
         return i;
     }
@@ -130,7 +130,7 @@ namespace MachO
         return this->impl->_relocationCount;
     }
     
-    uint32_t Section64::flags() const
+    SectionFlags Section64::flags() const
     {
         return this->impl->_flags;
     }

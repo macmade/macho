@@ -23,52 +23,32 @@
  ******************************************************************************/
 
 /*!
- * @header      Section64.hpp
+ * @header      SectionFlags.hpp
  * @copyright   (c) 2020, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef MACHO_SECTION_64_HPP
-#define MACHO_SECTION_64_HPP
+#ifndef MACHO_SECTION_FLAGS_HPP
+#define MACHO_SECTION_FLAGS_HPP
 
-#include <memory>
-#include <algorithm>
-#include <string>
+#include <MachO/IntegerWrapper.hpp>
 #include <MachO/InfoObject.hpp>
-#include <MachO/BinaryStream.hpp>
-#include <MachO/SectionFlags.hpp>
+#include <string>
+#include <vector>
+#include <utility>
 
 namespace MachO
 {
-    class Section64: public InfoObject
+    class SectionFlags: public IntegerWrapper< uint32_t >, public InfoObject
     {
         public:
             
-            Section64( BinaryStream & stream );
-            Section64( const Section64 & o );
-            Section64( Section64 && o ) noexcept;
-            ~Section64( void ) override;
-            
-            Section64 & operator =( Section64 o );
+            using IntegerWrapper::IntegerWrapper;
             
             Info getInfo() const override;
             
-            std::string  section()          const;
-            std::string  segment()          const;
-            uint64_t     address()          const;
-            uint64_t     size()             const;
-            uint32_t     offset()           const;
-            uint32_t     alignment()        const;
-            uint32_t     relocationOffset() const;
-            uint32_t     relocationCount()  const;
-            SectionFlags flags()            const;
-            
-            friend void swap( Section64 & o1, Section64 & o2 );
-            
-        private:
-            
-            class IMPL;
-            std::unique_ptr< IMPL > impl;
+            std::string                type()       const;
+            std::vector< std::string > attributes() const;
     };
 }
 
-#endif /* MACHO_SECTION_64_HPP */
+#endif /* MACHO_SECTION_FLAGS_HPP */
