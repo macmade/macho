@@ -34,19 +34,24 @@
 #include <algorithm>
 #include <string>
 #include <vector>
+#include <MachO/InfoObject.hpp>
 
-class Arguments
+class Arguments: public MachO::InfoObject
 {
     public:
         
         Arguments( int argc, char ** argv );
         Arguments( const Arguments & o );
         Arguments( Arguments && o ) noexcept;
-        ~Arguments();
+        ~Arguments() override;
         
         Arguments & operator =( Arguments o );
         
+        MachO::Info getInfo() const override;
+        
         bool                       showHelp() const;
+        bool                       showInfo() const;
+        bool                       showLibs() const;
         std::string                exec()     const;
         std::vector< std::string > files()    const;
         

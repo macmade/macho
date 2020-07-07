@@ -51,7 +51,9 @@ void Display::help()
                  "\n"
                  "Options:\n"
                  "\n"
-                 "    --help    Shows this help dialog."
+                 "    -h / --help    Shows this help dialog.\n"
+                 "    -i / --info    Prints a complete info dump.\n"
+                 "    -l / --libs    Prints the list of linked libraries."
               << std::endl;
 }
 
@@ -84,12 +86,18 @@ void Display::operator()( const MachO::FatFile & file ) const
 
 void Display::operator()( const MachO::File & file ) const
 {
-    std::cout << file << std::endl;
+    if( this->impl->_args.showInfo() )
+    {
+        std::cout << file << std::endl;
+    }
 }
 
 void Display::operator()( const MachO::CacheFile & file ) const
 {
-    std::cout << file << std::endl;
+    if( this->impl->_args.showInfo() )
+    {
+        std::cout << file << std::endl;
+    }
 }
     
 void swap( Display & o1, Display & o2 )
