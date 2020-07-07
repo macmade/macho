@@ -29,91 +29,125 @@
 
 #include "Display.hpp"
 
-class Display::IMPL
+namespace Display
 {
-    public:
+    void Error( const std::exception & e )
+    {
+        std::cerr << "Error: " << e.what() << std::endl;
+    }
+
+    void Help()
+    {
+        std::cout << "Usage: macho [OPTIONS] [PATH] ...\n"
+                     "\n"
+                     "Options:\n"
+                     "\n"
+                     "    -h / --help    Shows this help dialog.\n"
+                     "    -i / --info    Prints a complete info dump.\n"
+                     "    -l / --libs    Prints the list of linked libraries."
+                  << std::endl;
+    }
+
+    void File( const MachO::File & file )
+    {
+        XS::Info i( "Mach-O file", XS::ToString::Filename( file.path().value_or( "" ) ) );
         
-        IMPL( const Arguments & args );
-        IMPL( const IMPL & o );
-        ~IMPL();
+        i.addChild( file.cpu() );
         
-        Arguments _args;
-};
-
-void Display::error( const std::exception & e )
-{
-    std::cerr << "Error: " << e.what() << std::endl;
-}
-
-void Display::help()
-{
-    std::cout << "Usage: macho [OPTIONS] [PATH]\n"
-                 "\n"
-                 "Options:\n"
-                 "\n"
-                 "    -h / --help    Shows this help dialog.\n"
-                 "    -i / --info    Prints a complete info dump.\n"
-                 "    -l / --libs    Prints the list of linked libraries."
-              << std::endl;
-}
-
-Display::Display( const Arguments & args ):
-    impl( std::make_unique< IMPL >( args ) )
-{}
-
-Display::Display( const Display & o ):
-    impl( std::make_unique< IMPL >( *( o.impl ) ) )
-{}
-
-Display::Display( Display && o ) noexcept:
-    impl( std::move( o.impl ) )
-{}
-
-Display::~Display()
-{}
-
-Display & Display::operator =( Display o )
-{
-    swap( *( this ), o );
+        std::cout << i << std::endl;
+    }
     
-    return *( this );
-}
+    void File( const MachO::FatFile & file )
+    {
+        XS::Info i( "Fat Mach-O file", XS::ToString::Filename( file.path().value_or( "" ) ) );
+        
+        for( const auto & p: file.architectures() )
+        {
+            i.addChild( p.first );
+        }
+        
+        std::cout << i << std::endl;
+    }
+    
+    void File( const MachO::CacheFile & file )
+    {
+        XS::Info i( "Dyld cache file", XS::ToString::Filename( file.path().value_or( "" ) ) );
+        
+        for( const auto & image: file.images() )
+        {
+            i.addChild( XS::ToString::Filename( image.path() ) );
+        }
+        
+        std::cout << i << std::endl;
+    }
+    
+    void Libs( const MachO::File & file )
+    {
+        XS::Info i( "Mach-O file", XS::ToString::Filename( file.path().value_or( "" ) ) );
+        XS::Info libs( "Libraries" );
+        
+        for( const auto & command: file.loadCommands() )
+        {
+            try
+            {
+                MachO::LoadCommands::Dylib & lib( dynamic_cast< MachO::LoadCommands::Dylib & >( command.get() ) );
+                
+                libs.addChild( XS::ToString::Filename( lib.name() ) );
+            }
+            catch( ... )
+            {}
+        }
+        
+        i.addChild( file.cpu() );
+        i.addChild( libs );
+        
+        std::cout << i << std::endl;
+    }
+    
+    void Libs( const MachO::FatFile & file )
+    {
+        XS::Info i( "Fat Mach-O file", XS::ToString::Filename( file.path().value_or( "" ) ) );
+        
+        for( const auto & p: file.architectures() )
+        {
+            XS::Info libs( "Libraries" );
+            
+            for( const auto & command: p.second.loadCommands() )
+            {
+                try
+                {
+                    MachO::LoadCommands::Dylib & lib( dynamic_cast< MachO::LoadCommands::Dylib & >( command.get() ) );
+                    
+                    libs.addChild( XS::ToString::Filename( lib.name() ) );
+                }
+                catch( ... )
+                {}
+            }
+            
+            i.addChild( p.first );
+            i.addChild( libs );
+        }
+        
+        std::cout << i << std::endl;
+    }
+    
+    void Libs( const MachO::CacheFile & file )
+    {
+        File( file );
+    }
 
-void Display::operator()( const MachO::FatFile & file ) const
-{
-    std::cout << file << std::endl;
-}
+    void Info( const MachO::File & file )
+    {
+        std::cout << file << std::endl;
+    }
 
-void Display::operator()( const MachO::File & file ) const
-{
-    if( this->impl->_args.showInfo() )
+    void Info( const MachO::FatFile & file )
+    {
+        std::cout << file << std::endl;
+    }
+
+    void Info( const MachO::CacheFile & file )
     {
         std::cout << file << std::endl;
     }
 }
-
-void Display::operator()( const MachO::CacheFile & file ) const
-{
-    if( this->impl->_args.showInfo() )
-    {
-        std::cout << file << std::endl;
-    }
-}
-    
-void swap( Display & o1, Display & o2 )
-{
-    using std::swap;
-    
-    swap( o1.impl, o2.impl );
-}
-
-Display::IMPL::IMPL( const Arguments & args ):
-    _args( args )
-{}
-
-Display::IMPL::IMPL( const IMPL & o ):
-    _args( o._args )
-{}
-
-Display::IMPL::~IMPL()
-{}

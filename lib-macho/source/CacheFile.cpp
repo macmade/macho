@@ -29,7 +29,6 @@
 
 #include <MachO/CacheFile.hpp>
 #include <MachO/ToString.hpp>
-#include <optional>
 #include <XS.hpp>
 
 namespace MachO
@@ -123,6 +122,11 @@ namespace MachO
         }
         
         return i;
+    }
+    
+    std::optional< std::string > CacheFile::path() const
+    {
+        return this->impl->_path;
     }
     
     std::string CacheFile::header() const

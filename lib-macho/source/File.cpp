@@ -29,7 +29,6 @@
 
 #include <MachO/File.hpp>
 #include <MachO/ToString.hpp>
-#include <optional>
 #include <XS.hpp>
 
 #include <MachO/LoadCommands/BuildVersion.hpp>
@@ -122,7 +121,6 @@ namespace MachO
     {
         XS::Info i(        "Mach-O file" );
         XS::Info commands( "Commands" );
-        XS::Info libs(     "Libraries" );
         
         if( this->impl->_path.has_value() )
         {
@@ -134,15 +132,6 @@ namespace MachO
         for( const auto & command: this->loadCommands() )
         {
             commands.addChild( command.get() );
-            
-            try
-            {
-                auto lib( dynamic_cast< const LoadCommands::Dylib & >( command.get() ) );
-                
-                libs.addChild( lib.name() );
-            }
-            catch( ... )
-            {}
         }
         
         i.addChild( this->cpu() );
@@ -150,12 +139,12 @@ namespace MachO
         i.addChild( this->flags() );
         i.addChild( commands );
         
-        if( libs.children().size() > 0 )
-        {
-            i.addChild( libs );
-        }
-        
         return i;
+    }
+    
+    std::optional< std::string > File::path() const
+    {
+        return this->impl->_path;
     }
     
     File::Kind File::kind() const

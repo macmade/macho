@@ -33,6 +33,7 @@
 #include <memory>
 #include <algorithm>
 #include <vector>
+#include <optional>
 #include <MachO/CacheImageInfo.hpp>
 #include <MachO/CacheMappingInfo.hpp>
 #include <XS.hpp>
@@ -53,12 +54,13 @@ namespace MachO
             
             XS::Info getInfo() const override;
             
-            std::string header()        const;
-            uint32_t    mappingOffset() const;
-            uint32_t    mappingCount()  const;
-            uint32_t    imageOffset()   const;
-            uint32_t    imageCount()    const;
-            uint32_t    baseAddress()   const;
+            std::optional< std::string > path()          const;
+            std::string                  header()        const;
+            uint32_t                     mappingOffset() const;
+            uint32_t                     mappingCount()  const;
+            uint32_t                     imageOffset()   const;
+            uint32_t                     imageCount()    const;
+            uint32_t                     baseAddress()   const;
             
             std::vector< CacheImageInfo >   images()   const;
             std::vector< CacheMappingInfo > mappings() const;

@@ -30,6 +30,7 @@
 #include "Arguments.hpp"
 #include "Display.hpp"
 #include <MachO.hpp>
+#include <vector>
 
 int main( int argc, char * argv[] )
 {
@@ -37,7 +38,7 @@ int main( int argc, char * argv[] )
     
     if( args.showHelp() || args.files().size() == 0 )
     {
-        Display::help();
+        Display::Help();
         
         return EXIT_SUCCESS;
     }
@@ -49,11 +50,31 @@ int main( int argc, char * argv[] )
         {
             try
             {
-                std::visit( Display( args ), MachO::Parse( file ) );
+                std::visit
+                (
+                    [ & ]( const auto & var )
+                    {
+                        if( args.showInfo() )
+                        {
+                            Display::Info( var );
+                        }
+                        
+                        if( args.showLibs() )
+                        {
+                            Display::Libs( var );
+                        }
+                        
+                        if( args.showInfo() == false && args.showLibs() == false )
+                        {
+                            Display::File( var );
+                        }
+                    },
+                    MachO::Parse( file )
+                );
             }
             catch( const std::exception & e )
             {
-                Display::error( e );
+                Display::Error( e );
                 
                 status = EXIT_FAILURE;
             }

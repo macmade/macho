@@ -34,6 +34,7 @@
 #include <algorithm>
 #include <string>
 #include <vector>
+#include <optional>
 #include <XS.hpp>
 #include <MachO/LoadCommand.hpp>
 #include <MachO/FileFlags.hpp>
@@ -68,11 +69,12 @@ namespace MachO
             
             XS::Info getInfo() const override;
             
-            Kind       kind()       const;
-            Endianness endianness() const;
-            CPU        cpu()        const;
-            FileType   type()       const;
-            FileFlags  flags()      const;
+            std::optional< std::string > path()       const;
+            Kind                         kind()       const;
+            Endianness                   endianness() const;
+            CPU                          cpu()        const;
+            FileType                     type()       const;
+            FileFlags                    flags()      const;
             
             std::vector< std::reference_wrapper< LoadCommand > > loadCommands() const;
             

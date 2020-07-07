@@ -34,6 +34,7 @@
 #include <algorithm>
 #include <string>
 #include <vector>
+#include <optional>
 #include <MachO/FatArch.hpp>
 #include <MachO/File.hpp>
 #include <XS.hpp>
@@ -54,6 +55,7 @@ namespace MachO
             
             XS::Info getInfo() const override;
             
+            std::optional< std::string >              path()          const;
             std::vector< std::pair< FatArch, File > > architectures() const;
             
             friend void swap( FatFile & o1, FatFile & o2 );

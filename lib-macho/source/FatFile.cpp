@@ -29,7 +29,6 @@
 
 #include <MachO/FatFile.hpp>
 #include <MachO/ToString.hpp>
-#include <optional>
 #include <XS.hpp>
 
 namespace MachO
@@ -100,6 +99,11 @@ namespace MachO
         return i;
     }
 
+    std::optional< std::string > FatFile::path() const
+    {
+        return this->impl->_path;
+    }
+    
     std::vector< std::pair< FatArch, File > > FatFile::architectures() const
     {
         return this->impl->_archs;

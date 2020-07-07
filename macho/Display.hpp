@@ -36,32 +36,22 @@
 #include <memory>
 #include <algorithm>
 
-class Display
+namespace Display
 {
-    public:
-        
-        static void error( const std::exception & e );
-        static void help();
-            
-        Display( const Arguments & args );
-        Display( const Display & o );
-        Display( Display && o ) noexcept;
-        
-        virtual ~Display();
-        
-        Display & operator =( Display o );
-        
-        void operator()( const MachO::FatFile   & file ) const;
-        void operator()( const MachO::File      & file ) const;
-        void operator()( const MachO::CacheFile & file ) const;
-        
-        friend void swap( Display & o1, Display & o2 );
-            
-        private:
-            
-            class IMPL;
-            
-            std::unique_ptr< IMPL > impl;
-};
+    void Error( const std::exception & e );
+    void Help();
+    
+    void File( const MachO::File      & file );
+    void File( const MachO::FatFile   & file );
+    void File( const MachO::CacheFile & file );
+    
+    void Libs( const MachO::File      & file );
+    void Libs( const MachO::FatFile   & file );
+    void Libs( const MachO::CacheFile & file );
+    
+    void Info( const MachO::File      & file );
+    void Info( const MachO::FatFile   & file );
+    void Info( const MachO::CacheFile & file );
+}
 
 #endif /* DISPLAY_HPP */
