@@ -51,6 +51,13 @@ namespace MachO
             
             Info getInfo() const override;
             
+            std::string header()        const;
+            uint32_t    mappingOffset() const;
+            uint32_t    mappingCount()  const;
+            uint32_t    imageOffset()   const;
+            uint32_t    imageCount()    const;
+            uint32_t    baseAddress()   const;
+            
             friend void swap( CacheFile & o1, CacheFile & o2 );
             
         private:

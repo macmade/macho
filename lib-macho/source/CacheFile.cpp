@@ -46,6 +46,12 @@ namespace MachO
             void parse( BinaryStream & stream );
             
             std::optional< std::string > _path;
+            std::string                  _header;
+            uint32_t                     _mappingOffset;
+            uint32_t                     _mappingCount;
+            uint32_t                     _imageOffset;
+            uint32_t                     _imageCount;
+            uint32_t                     _baseAddress;
     };
 
     CacheFile::CacheFile( const std::string & path ):
@@ -83,7 +89,44 @@ namespace MachO
             i.value( ToString::Filename( this->impl->_path.value() ) );
         }
         
+        i.addChild( { "Header",         this->header() } );
+        i.addChild( { "Mapping offset", ToString::Hex( this->mappingOffset() ) } );
+        i.addChild( { "Mapping count",  ToString::Hex( this->mappingCount() ) } );
+        i.addChild( { "Image offset",   ToString::Hex( this->imageOffset() ) } );
+        i.addChild( { "Image count",    ToString::Hex( this->imageCount() ) } );
+        i.addChild( { "Base address",   ToString::Hex( this->baseAddress() ) } );
+        
         return i;
+    }
+    
+    std::string CacheFile::header() const
+    {
+        return this->impl->_header;
+    }
+    
+    uint32_t CacheFile::mappingOffset() const
+    {
+        return this->impl->_mappingOffset;
+    }
+    
+    uint32_t CacheFile::mappingCount() const
+    {
+        return this->impl->_mappingCount;
+    }
+    
+    uint32_t CacheFile::imageOffset() const
+    {
+        return this->impl->_imageOffset;
+    }
+    
+    uint32_t CacheFile::imageCount() const
+    {
+        return this->impl->_imageCount;
+    }
+    
+    uint32_t CacheFile::baseAddress() const
+    {
+        return this->impl->_baseAddress;
     }
     
     void swap( CacheFile & o1, CacheFile & o2 )
@@ -107,7 +150,13 @@ namespace MachO
     }
     
     CacheFile::IMPL::IMPL( const IMPL & o ):
-        _path( o._path )
+        _path(          o._path ),
+        _header(        o._header ),
+        _mappingOffset( o._mappingOffset ),
+        _mappingCount(  o._mappingCount ),
+        _imageOffset(   o._imageOffset ),
+        _imageCount(    o._imageCount ),
+        _baseAddress(   o._baseAddress )
     {}
 
     CacheFile::IMPL::~IMPL( void )
@@ -115,6 +164,11 @@ namespace MachO
     
     void CacheFile::IMPL::parse( BinaryStream & stream )
     {
-        ( void )stream;
+        this->_header        = stream.readString( 16 );
+        this->_mappingOffset = stream.readUInt32();
+        this->_mappingCount  = stream.readUInt32();
+        this->_imageOffset   = stream.readUInt32();
+        this->_imageCount    = stream.readUInt32();
+        this->_baseAddress   = stream.readUInt32();
     }
 }
