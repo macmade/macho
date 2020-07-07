@@ -23,16 +23,16 @@
  ******************************************************************************/
 
 /*!
- * @file        FATArch.cpp
+ * @file        FatArch.cpp
  * @copyright   (c) 2020, Jean-David Gadina - www.xs-labs.com
  */
 
-#include <MachO/FATArch.hpp>
+#include <MachO/FatArch.hpp>
 #include <MachO/ToString.hpp>
 
 namespace MachO
 {
-    class FATArch::IMPL
+    class FatArch::IMPL
     {
         public:
             
@@ -46,74 +46,74 @@ namespace MachO
             uint32_t _align;
     };
     
-    FATArch::FATArch( BinaryStream & stream ):
+    FatArch::FatArch( BinaryStream & stream ):
         impl( std::make_unique< IMPL >( stream ) )
     {}
     
-    FATArch::FATArch( const FATArch & o ):
+    FatArch::FatArch( const FatArch & o ):
         impl( std::make_unique< IMPL >( *( o.impl ) ) )
     {}
 
-    FATArch::FATArch( FATArch && o ) noexcept:
+    FatArch::FatArch( FatArch && o ) noexcept:
         impl( std::move( o.impl ) )
     {}
 
-    FATArch::~FATArch()
+    FatArch::~FatArch()
     {}
 
-    FATArch & FATArch::operator =( FATArch o )
+    FatArch & FatArch::operator =( FatArch o )
     {
         swap( *( this ), o );
         
         return *( this );
     }
     
-    Info FATArch::getInfo() const
+    Info FatArch::getInfo() const
     {
         return { this->cpu().description(), ToString::Size( this->size() ) };
     }
     
-    CPU FATArch::cpu() const
+    CPU FatArch::cpu() const
     {
         return this->impl->_cpu;
     }
     
-    uint32_t FATArch::offset() const
+    uint32_t FatArch::offset() const
     {
         return this->impl->_offset;
     }
     
-    uint32_t FATArch::size() const
+    uint32_t FatArch::size() const
     {
         return this->impl->_size;
     }
     
-    uint32_t FATArch::align() const
+    uint32_t FatArch::align() const
     {
         return this->impl->_align;
     }
     
-    void swap( FATArch & o1, FATArch & o2 )
+    void swap( FatArch & o1, FatArch & o2 )
     {
         using std::swap;
         
         swap( o1.impl, o2.impl );
     }
     
-    FATArch::IMPL::IMPL( BinaryStream & stream ):
+    FatArch::IMPL::IMPL( BinaryStream & stream ):
         _cpu(    stream.readBigEndianUInt32(), stream.readBigEndianUInt32() ),
         _offset( stream.readBigEndianUInt32() ),
         _size(   stream.readBigEndianUInt32() ),
         _align(  stream.readBigEndianUInt32() )
     {}
     
-    FATArch::IMPL::IMPL( const IMPL & o ):
+    FatArch::IMPL::IMPL( const IMPL & o ):
         _cpu(    o._cpu ),
         _offset( o._offset ),
         _size(   o._size ),
         _align(  o._align )
     {}
     
-    FATArch::IMPL::~IMPL()
+    FatArch::IMPL::~IMPL()
     {}
 }

@@ -35,8 +35,8 @@
 #include <MachO/BinaryStream.hpp>
 #include <MachO/CacheFile.hpp>
 #include <MachO/Casts.hpp>
-#include <MachO/FATArch.hpp>
-#include <MachO/FATFile.hpp>
+#include <MachO/FatArch.hpp>
+#include <MachO/FatFile.hpp>
 #include <MachO/File.hpp>
 #include <MachO/FileFlags.hpp>
 #include <MachO/FileType.hpp>

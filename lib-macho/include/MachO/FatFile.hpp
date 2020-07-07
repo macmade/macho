@@ -23,7 +23,7 @@
  ******************************************************************************/
 
 /*!
- * @header      FATFile.hpp
+ * @header      FatFile.hpp
  * @copyright   (c) 2020, Jean-David Gadina - www.xs-labs.com
  */
 
@@ -35,29 +35,29 @@
 #include <string>
 #include <vector>
 #include <MachO/BinaryStream.hpp>
-#include <MachO/FATArch.hpp>
+#include <MachO/FatArch.hpp>
 #include <MachO/File.hpp>
 #include <MachO/InfoObject.hpp>
 
 namespace MachO
 {
-    class FATFile: public InfoObject
+    class FatFile: public InfoObject
     {
         public:
             
-            FATFile( const std::string & path );
-            FATFile( BinaryStream & stream );
-            FATFile( const FATFile & o );
-            FATFile( FATFile && o ) noexcept;
-            ~FATFile() override;
+            FatFile( const std::string & path );
+            FatFile( BinaryStream & stream );
+            FatFile( const FatFile & o );
+            FatFile( FatFile && o ) noexcept;
+            ~FatFile() override;
             
-            FATFile & operator =( FATFile o );
+            FatFile & operator =( FatFile o );
             
             Info getInfo() const override;
             
-            std::vector< std::pair< FATArch, File > > architectures() const;
+            std::vector< std::pair< FatArch, File > > architectures() const;
             
-            friend void swap( FATFile & o1, FATFile & o2 );
+            friend void swap( FatFile & o1, FatFile & o2 );
             
         private:
             

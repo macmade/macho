@@ -23,7 +23,7 @@
  ******************************************************************************/
 
 /*!
- * @header      FATArch.hpp
+ * @header      FatArch.hpp
  * @copyright   (c) 2020, Jean-David Gadina - www.xs-labs.com
  */
 
@@ -39,16 +39,16 @@
 
 namespace MachO
 {
-    class FATArch: public InfoObject
+    class FatArch: public InfoObject
     {
         public:
             
-            FATArch( BinaryStream & stream );
-            FATArch( const FATArch & o );
-            FATArch( FATArch && o ) noexcept;
-            ~FATArch() override;
+            FatArch( BinaryStream & stream );
+            FatArch( const FatArch & o );
+            FatArch( FatArch && o ) noexcept;
+            ~FatArch() override;
             
-            FATArch & operator =( FATArch o );
+            FatArch & operator =( FatArch o );
             
             Info getInfo() const override;
             
@@ -57,7 +57,7 @@ namespace MachO
             uint32_t size()       const;
             uint32_t align()      const;
             
-            friend void swap( FATArch & o1, FATArch & o2 );
+            friend void swap( FatArch & o1, FatArch & o2 );
             
         private:
             

@@ -23,11 +23,11 @@
  ******************************************************************************/
 
 /*!
- * @file        FATFile.cpp
+ * @file        FatFile.cpp
  * @copyright   (c) 2020, Jean-David Gadina - www.xs-labs.com
  */
 
-#include <MachO/FATFile.hpp>
+#include <MachO/FatFile.hpp>
 #include <MachO/BinaryFileStream.hpp>
 #include <MachO/BinaryDataStream.hpp>
 #include <MachO/Casts.hpp>
@@ -36,7 +36,7 @@
 
 namespace MachO
 {
-    class FATFile::IMPL
+    class FatFile::IMPL
     {
         public:
             
@@ -48,38 +48,38 @@ namespace MachO
             void parse( BinaryStream & stream );
             
             std::optional< std::string >              _path;
-            std::vector< std::pair< FATArch, File > > _archs;
+            std::vector< std::pair< FatArch, File > > _archs;
     };
 
-    FATFile::FATFile( const std::string & path ):
+    FatFile::FatFile( const std::string & path ):
         impl( std::make_unique< IMPL >( path ) )
     {}
     
-    FATFile::FATFile( BinaryStream & stream ):
+    FatFile::FatFile( BinaryStream & stream ):
         impl( std::make_unique< IMPL >( stream ) )
     {}
     
-    FATFile::FATFile( const FATFile & o ):
+    FatFile::FatFile( const FatFile & o ):
         impl( std::make_unique< IMPL >( *( o.impl ) ) )
     {}
 
-    FATFile::FATFile( FATFile && o ) noexcept:
+    FatFile::FatFile( FatFile && o ) noexcept:
         impl( std::move( o.impl ) )
     {}
 
-    FATFile::~FATFile()
+    FatFile::~FatFile()
     {}
 
-    FATFile & FATFile::operator =( FATFile o )
+    FatFile & FatFile::operator =( FatFile o )
     {
         swap( *( this ), o );
         
         return *( this );
     }
             
-    Info FATFile::getInfo() const
+    Info FatFile::getInfo() const
     {
-        Info i( "FAT Mach-O file" );
+        Info i( "Fat Mach-O file" );
         Info archs( "Architectures" );
         
         if( this->impl->_path.has_value() )
@@ -102,19 +102,19 @@ namespace MachO
         return i;
     }
 
-    std::vector< std::pair< FATArch, File > > FATFile::architectures() const
+    std::vector< std::pair< FatArch, File > > FatFile::architectures() const
     {
         return this->impl->_archs;
     }
     
-    void swap( FATFile & o1, FATFile & o2 )
+    void swap( FatFile & o1, FatFile & o2 )
     {
         using std::swap;
         
         swap( o1.impl, o2.impl );
     }
     
-    FATFile::IMPL::IMPL( const std::string & path ):
+    FatFile::IMPL::IMPL( const std::string & path ):
         _path( path )
     {
         BinaryFileStream stream( path );
@@ -122,31 +122,31 @@ namespace MachO
         this->parse( stream );
     }
     
-    FATFile::IMPL::IMPL( BinaryStream & stream )
+    FatFile::IMPL::IMPL( BinaryStream & stream )
     {
         this->parse( stream );
     }
 
-    FATFile::IMPL::IMPL( const IMPL & o ):
+    FatFile::IMPL::IMPL( const IMPL & o ):
         _path(  o._path ),
         _archs( o._archs )
     {}
 
-    FATFile::IMPL::~IMPL()
+    FatFile::IMPL::~IMPL()
     {}
     
-    void FATFile::IMPL::parse( BinaryStream & stream )
+    void FatFile::IMPL::parse( BinaryStream & stream )
     {
         uint32_t magic( stream.readBigEndianUInt32() );
         
         if( magic != 0xCAFEBABE )
         {
-            throw std::runtime_error( "Invalid Mach-O FAT signature: " + ToString::Hex( magic ) );
+            throw std::runtime_error( "Invalid Mach-O fat signature: " + ToString::Hex( magic ) );
         }
         
         for( uint32_t i = 0, n = stream.readBigEndianUInt32(); i < n; i++ )
         {
-            FATArch arch( stream );
+            FatArch arch( stream );
             size_t  pos(  stream.tell() );
             
             stream.seek( arch.offset(), BinaryStream::SeekDirection::Begin );

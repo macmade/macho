@@ -77,7 +77,7 @@ Display & Display::operator =( Display o )
     return *( this );
 }
 
-void Display::operator()( const MachO::FATFile & file ) const
+void Display::operator()( const MachO::FatFile & file ) const
 {
     std::cout << file << std::endl;
 }

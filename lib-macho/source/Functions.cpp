@@ -32,7 +32,7 @@
 
 namespace MachO
 {
-    std::variant< File, FATFile, CacheFile > Parse( const std::string & path )
+    std::variant< File, FatFile, CacheFile > Parse( const std::string & path )
     {
         uint32_t magic( 0 );
         
@@ -48,7 +48,7 @@ namespace MachO
         }
         else if( magic == 0xCAFEBABE )
         {
-            return FATFile( path );
+            return FatFile( path );
         }
         
         return File( path );

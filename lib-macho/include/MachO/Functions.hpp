@@ -33,12 +33,12 @@
 #include <string>
 #include <variant>
 #include <MachO/File.hpp>
-#include <MachO/FATFile.hpp>
+#include <MachO/FatFile.hpp>
 #include <MachO/CacheFile.hpp>
 
 namespace MachO
 {
-    std::variant< File, FATFile, CacheFile > Parse( const std::string & path );
+    std::variant< File, FatFile, CacheFile > Parse( const std::string & path );
 }
 
 #endif /* MACHO_FUNCTIONS_HPP */
