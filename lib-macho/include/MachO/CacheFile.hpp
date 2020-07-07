@@ -1,7 +1,7 @@
 /*******************************************************************************
  * The MIT License (MIT)
  * 
- * Copyright (c) 2019 Jean-David Gadina - www.xs-labs.com
+ * Copyright (c) 2020 Jean-David Gadina - www.xs-labs.com
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,22 +23,41 @@
  ******************************************************************************/
 
 /*!
- * @header      Functions.hpp
+ * @header      CacheFile.hpp
  * @copyright   (c) 2020, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef MACHO_FUNCTIONS_HPP
-#define MACHO_FUNCTIONS_HPP
+#ifndef MACHO_CACHE_FILE_HPP
+#define MACHO_CACHE_FILE_HPP
 
-#include <string>
-#include <variant>
-#include <MachO/File.hpp>
-#include <MachO/FATFile.hpp>
-#include <MachO/CacheFile.hpp>
+#include <memory>
+#include <algorithm>
+#include <MachO/BinaryStream.hpp>
+#include <MachO/InfoObject.hpp>
 
 namespace MachO
 {
-    std::variant< File, FATFile, CacheFile > Parse( const std::string & path );
+    class CacheFile: public InfoObject
+    {
+        public:
+            
+            CacheFile( const std::string & path );
+            CacheFile( BinaryStream & stream );
+            CacheFile( const CacheFile & o );
+            CacheFile( CacheFile && o ) noexcept;
+            ~CacheFile( void ) override;
+            
+            CacheFile & operator =( CacheFile o );
+            
+            Info getInfo() const override;
+            
+            friend void swap( CacheFile & o1, CacheFile & o2 );
+            
+        private:
+            
+            class IMPL;
+            std::unique_ptr< IMPL > impl;
+    };
 }
 
-#endif /* MACHO_FUNCTIONS_HPP */
+#endif /* MACHO_CACHE_FILE_HPP */

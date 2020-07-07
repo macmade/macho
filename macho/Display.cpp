@@ -86,6 +86,11 @@ void Display::operator()( const MachO::File & file ) const
 {
     std::cout << file << std::endl;
 }
+
+void Display::operator()( const MachO::CacheFile & file ) const
+{
+    std::cout << file << std::endl;
+}
     
 void swap( Display & o1, Display & o2 )
 {

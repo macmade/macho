@@ -51,8 +51,9 @@ class Display
         
         Display & operator =( Display o );
         
-        void operator()( const MachO::FATFile & file ) const;
-        void operator()( const MachO::File    & file ) const;
+        void operator()( const MachO::FATFile   & file ) const;
+        void operator()( const MachO::File      & file ) const;
+        void operator()( const MachO::CacheFile & file ) const;
         
         friend void swap( Display & o1, Display & o2 );
             

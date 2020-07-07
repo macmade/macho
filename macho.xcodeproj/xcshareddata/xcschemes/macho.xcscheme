@@ -52,7 +52,7 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "/System/Library/Frameworks/Foundatiion.framework/Foundation"
+            argument = "/System/Library/Frameworks/Foundation.framework/Foundation"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument

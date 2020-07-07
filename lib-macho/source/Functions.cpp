@@ -32,18 +32,25 @@
 
 namespace MachO
 {
-    std::variant< File, FATFile > Parse( const std::string & path )
+    std::variant< File, FATFile, CacheFile > Parse( const std::string & path )
     {
-        BinaryFileStream stream( path );
-        uint32_t         magic( stream.readBigEndianUInt32() );
+        uint32_t magic( 0 );
         
-        stream.seek( 0, BinaryStream::SeekDirection::Begin );
-        
-        if( magic == 0xCAFEBABE )
         {
-            return FATFile( stream );
+            BinaryFileStream stream( path );
+            
+            magic = stream.readBigEndianUInt32();
         }
         
-        return File( stream );
+        if( magic == 0x64796C64 )
+        {
+            return CacheFile( path );
+        }
+        else if( magic == 0xCAFEBABE )
+        {
+            return FATFile( path );
+        }
+        
+        return File( path );
     }
 }

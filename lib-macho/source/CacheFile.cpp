@@ -23,98 +23,77 @@
  ******************************************************************************/
 
 /*!
- * @file        FATFile.cpp
+ * @file        CacheFile.cpp
  * @copyright   (c) 2020, Jean-David Gadina - www.xs-labs.com
  */
 
-#include <MachO/FATFile.hpp>
+#include <MachO/CacheFile.hpp>
 #include <MachO/BinaryFileStream.hpp>
-#include <MachO/BinaryDataStream.hpp>
-#include <MachO/Casts.hpp>
 #include <MachO/ToString.hpp>
 #include <optional>
 
 namespace MachO
 {
-    class FATFile::IMPL
+    class CacheFile::IMPL
     {
         public:
             
             IMPL( const std::string & path );
             IMPL( BinaryStream & stream );
             IMPL( const IMPL & o );
-            ~IMPL();
+            ~IMPL( void );
             
             void parse( BinaryStream & stream );
             
-            std::optional< std::string >              _path;
-            std::vector< std::pair< FATArch, File > > _archs;
+            std::optional< std::string > _path;
     };
 
-    FATFile::FATFile( const std::string & path ):
+    CacheFile::CacheFile( const std::string & path ):
         impl( std::make_unique< IMPL >( path ) )
     {}
     
-    FATFile::FATFile( BinaryStream & stream ):
+    CacheFile::CacheFile( BinaryStream & stream ):
         impl( std::make_unique< IMPL >( stream ) )
     {}
-    
-    FATFile::FATFile( const FATFile & o ):
+
+    CacheFile::CacheFile( const CacheFile & o ):
         impl( std::make_unique< IMPL >( *( o.impl ) ) )
     {}
 
-    FATFile::FATFile( FATFile && o ) noexcept:
+    CacheFile::CacheFile( CacheFile && o ) noexcept:
         impl( std::move( o.impl ) )
     {}
 
-    FATFile::~FATFile()
+    CacheFile::~CacheFile( void )
     {}
 
-    FATFile & FATFile::operator =( FATFile o )
+    CacheFile & CacheFile::operator =( CacheFile o )
     {
         swap( *( this ), o );
         
         return *( this );
     }
-            
-    Info FATFile::getInfo() const
+    
+    Info CacheFile::getInfo() const
     {
-        Info i( "FAT Mach-O file" );
-        Info archs( "Architectures" );
+        Info i( "Dyld cache file" );
         
         if( this->impl->_path.has_value() )
         {
             i.value( ToString::Filename( this->impl->_path.value() ) );
         }
         
-        for( const auto & p: this->impl->_archs )
-        {
-            archs.addChild( p.first );
-        }
-        
-        i.addChild( archs );
-        
-        for( const auto & p: this->impl->_archs )
-        {
-            i.addChild( p.second );
-        }
-        
         return i;
     }
-
-    std::vector< std::pair< FATArch, File > > FATFile::architectures() const
-    {
-        return this->impl->_archs;
-    }
     
-    void swap( FATFile & o1, FATFile & o2 )
+    void swap( CacheFile & o1, CacheFile & o2 )
     {
         using std::swap;
         
         swap( o1.impl, o2.impl );
     }
-    
-    FATFile::IMPL::IMPL( const std::string & path ):
+
+    CacheFile::IMPL::IMPL( const std::string & path ):
         _path( path )
     {
         BinaryFileStream stream( path );
@@ -122,42 +101,20 @@ namespace MachO
         this->parse( stream );
     }
     
-    FATFile::IMPL::IMPL( BinaryStream & stream )
+    CacheFile::IMPL::IMPL( BinaryStream & stream )
     {
         this->parse( stream );
     }
-
-    FATFile::IMPL::IMPL( const IMPL & o ):
-        _path(  o._path ),
-        _archs( o._archs )
+    
+    CacheFile::IMPL::IMPL( const IMPL & o ):
+        _path( o._path )
     {}
 
-    FATFile::IMPL::~IMPL()
+    CacheFile::IMPL::~IMPL( void )
     {}
     
-    void FATFile::IMPL::parse( BinaryStream & stream )
+    void CacheFile::IMPL::parse( BinaryStream & stream )
     {
-        uint32_t magic( stream.readBigEndianUInt32() );
-        
-        if( magic != 0xCAFEBABE )
-        {
-            throw std::runtime_error( "Invalid Mach-O FAT signature: " + ToString::Hex( magic ) );
-        }
-        
-        for( uint32_t i = 0, n = stream.readBigEndianUInt32(); i < n; i++ )
-        {
-            FATArch arch( stream );
-            size_t  pos(  stream.tell() );
-            
-            stream.seek( arch.offset(), BinaryStream::SeekDirection::Begin );
-            
-            {
-                BinaryDataStream data( stream.read( arch.size() ) );
-                
-                this->_archs.push_back( { arch, data } );
-            }
-            
-            stream.seek( numeric_cast< ssize_t >( pos ), BinaryStream::SeekDirection::Begin );
-        }
+        ( void )stream;
     }
 }

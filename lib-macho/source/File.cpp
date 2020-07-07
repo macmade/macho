@@ -33,6 +33,7 @@
 #include <MachO/InfoObject.hpp>
 #include <MachO/ToString.hpp>
 #include <MachO/Casts.hpp>
+#include <optional>
 
 #include <MachO/LoadCommands/BuildVersion.hpp>
 #include <MachO/LoadCommands/DyldInfo.hpp>
@@ -84,11 +85,12 @@ namespace MachO
             void parse( BinaryStream & stream );
             void parseLoadCommands( uint32_t count, BinaryStream & stream );
             
-            Kind       _kind;
-            Endianness _endianness;
-            CPU        _cpu;
-            FileType   _type;
-            FileFlags  _flags;
+            std::optional< std::string > _path;
+            Kind                         _kind;
+            Endianness                   _endianness;
+            CPU                          _cpu;
+            FileType                     _type;
+            FileFlags                    _flags;
             
             std::vector< std::shared_ptr< LoadCommand > > _loadCommands;
     };
@@ -124,6 +126,11 @@ namespace MachO
         Info i(        "Mach-O file" );
         Info commands( "Commands" );
         Info libs(     "Libraries" );
+        
+        if( this->impl->_path.has_value() )
+        {
+            i.value( ToString::Filename( this->impl->_path.value() ) );
+        }
         
         commands.value( std::to_string( this->loadCommands().size() ) );
         
@@ -198,7 +205,8 @@ namespace MachO
         swap( o1.impl, o2.impl );
     }
     
-    File::IMPL::IMPL( const std::string & path )
+    File::IMPL::IMPL( const std::string & path ):
+        _path( path )
     {
         BinaryFileStream stream( path );
         
@@ -211,6 +219,7 @@ namespace MachO
     }
 
     File::IMPL::IMPL( const IMPL & o ):
+        _path(         o._path ),
         _kind(         o._kind ),
         _endianness(   o._endianness ),
         _cpu(          o._cpu ),
