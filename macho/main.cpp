@@ -33,27 +33,33 @@
 
 int main( int argc, char * argv[] )
 {
-    Arguments   args( argc, argv );
-    std::string path( args.file() );
+    Arguments args( argc, argv );
     
-    if( args.showHelp() || args.file().length() == 0 )
+    if( args.showHelp() || args.files().size() == 0 )
     {
         Display::help();
         
         return EXIT_SUCCESS;
     }
     
-    try
     {
-        std::visit( Display( args ), MachO::Parse( args.file() ) );
+        int status( EXIT_SUCCESS );
         
-        return EXIT_SUCCESS;
-    }
-    catch( const std::exception & e )
-    {
-        Display::error( e );
+        for( const auto & file: args.files() )
+        {
+            try
+            {
+                std::visit( Display( args ), MachO::Parse( file ) );
+            }
+            catch( const std::exception & e )
+            {
+                Display::error( e );
+                
+                status = EXIT_FAILURE;
+            }
+        }
         
-        return EXIT_FAILURE;
+        return status;
     }
 }
 

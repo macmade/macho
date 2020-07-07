@@ -37,9 +37,9 @@ class Arguments::IMPL
         IMPL( const IMPL & o );
         ~IMPL();
         
-        bool        _showHelp;
-        std::string _exec;
-        std::string _file;
+        bool                       _showHelp;
+        std::string                _exec;
+        std::vector< std::string > _files;
 };
 
 Arguments::Arguments( int argc, char ** argv ):
@@ -74,9 +74,9 @@ std::string Arguments::exec() const
     return this->impl->_exec;
 }
 
-std::string Arguments::file() const
+std::vector< std::string > Arguments::files() const
 {
-    return this->impl->_file;
+    return this->impl->_files;
 }
 
 void swap( Arguments & o1, Arguments & o2 )
@@ -110,9 +110,9 @@ Arguments::IMPL::IMPL( int argc, char ** argv ):
             {
                 this->_showHelp = true;
             }
-            else if( this->_file.length() == 0 )
+            else
             {
-                this->_file = arg;
+                this->_files.push_back( arg );
             }
         }
     }
@@ -121,7 +121,7 @@ Arguments::IMPL::IMPL( int argc, char ** argv ):
 Arguments::IMPL::IMPL( const IMPL & o ):
     _showHelp( o._showHelp ),
     _exec(     o._exec ),
-    _file(     o._file )
+    _files(    o._files )
 {}
 
 Arguments::IMPL::~IMPL()

@@ -33,6 +33,7 @@
 #include <memory>
 #include <algorithm>
 #include <string>
+#include <vector>
 
 class Arguments
 {
@@ -45,9 +46,9 @@ class Arguments
         
         Arguments & operator =( Arguments o );
         
-        bool        showHelp() const;
-        std::string exec()     const;
-        std::string file()     const;
+        bool                       showHelp() const;
+        std::string                exec()     const;
+        std::vector< std::string > files()    const;
         
         friend void swap( Arguments & o1, Arguments & o2 );
         

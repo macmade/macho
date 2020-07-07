@@ -52,7 +52,15 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "/Users/macmade/Downloads/TestMachO"
+            argument = "/System/Library/Frameworks/Foundatiion.framework/Foundation"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "/System/Library/PrivateFrameworks/MobileDevice.framework/MobileDevice"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "/var/db/dyld/dyld_shared_cache_x86_64h"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
