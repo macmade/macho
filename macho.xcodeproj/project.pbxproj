@@ -120,6 +120,8 @@
 		05C8C45524B4C30D0095E313 /* CacheFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05C8C45424B4C30D0095E313 /* CacheFile.cpp */; };
 		05C8C45824B4CD360095E313 /* CacheImageInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05C8C45624B4CD360095E313 /* CacheImageInfo.cpp */; };
 		05C8C45924B4CD360095E313 /* CacheImageInfo.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 05C8C45724B4CD360095E313 /* CacheImageInfo.hpp */; };
+		05C8C45C24B4D3CE0095E313 /* CacheMappingInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05C8C45A24B4D3CE0095E313 /* CacheMappingInfo.cpp */; };
+		05C8C45D24B4D3CE0095E313 /* CacheMappingInfo.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 05C8C45B24B4D3CE0095E313 /* CacheMappingInfo.hpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -305,6 +307,8 @@
 		05C8C45424B4C30D0095E313 /* CacheFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CacheFile.cpp; sourceTree = "<group>"; };
 		05C8C45624B4CD360095E313 /* CacheImageInfo.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CacheImageInfo.cpp; sourceTree = "<group>"; };
 		05C8C45724B4CD360095E313 /* CacheImageInfo.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CacheImageInfo.hpp; sourceTree = "<group>"; };
+		05C8C45A24B4D3CE0095E313 /* CacheMappingInfo.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CacheMappingInfo.cpp; sourceTree = "<group>"; };
+		05C8C45B24B4D3CE0095E313 /* CacheMappingInfo.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CacheMappingInfo.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -507,6 +511,7 @@
 				05C8C32A24AE243F0095E313 /* BinaryStream.cpp */,
 				05C8C45424B4C30D0095E313 /* CacheFile.cpp */,
 				05C8C45624B4CD360095E313 /* CacheImageInfo.cpp */,
+				05C8C45A24B4D3CE0095E313 /* CacheMappingInfo.cpp */,
 				05C8C41924AFF5C10095E313 /* CPU.cpp */,
 				05C8C33E24AE49D10095E313 /* FatArch.cpp */,
 				05C8C33624AE2D050095E313 /* FatFile.cpp */,
@@ -533,6 +538,7 @@
 				05C8C32F24AE24460095E313 /* BinaryStream.hpp */,
 				05C8C45224B4C3060095E313 /* CacheFile.hpp */,
 				05C8C45724B4CD360095E313 /* CacheImageInfo.hpp */,
+				05C8C45B24B4D3CE0095E313 /* CacheMappingInfo.hpp */,
 				05C8C33424AE24B10095E313 /* Casts.hpp */,
 				05C8C41A24AFF5C10095E313 /* CPU.hpp */,
 				05C8C33F24AE49D10095E313 /* FatArch.hpp */,
@@ -672,6 +678,7 @@
 				05C8C41224AFECCC0095E313 /* Info.hpp in Headers */,
 				05C8C39A24AFDDEE0095E313 /* UUID.hpp in Headers */,
 				05C8C3DD24AFE9440095E313 /* Routines64.hpp in Headers */,
+				05C8C45D24B4D3CE0095E313 /* CacheMappingInfo.hpp in Headers */,
 				05C8C39B24AFDDEE0095E313 /* SubUmbrella.hpp in Headers */,
 				05C8C33D24AE2D400095E313 /* Functions.hpp in Headers */,
 				05C8C41C24AFF5C10095E313 /* CPU.hpp in Headers */,
@@ -807,6 +814,7 @@
 				05C8C3F924AFE94F0095E313 /* EntryPoint.cpp in Sources */,
 				05C8C3B324AFDDF60095E313 /* Unknown.cpp in Sources */,
 				05C8C3B724AFDDF60095E313 /* Segment64.cpp in Sources */,
+				05C8C45C24B4D3CE0095E313 /* CacheMappingInfo.cpp in Sources */,
 				05C8C3F724AFE94F0095E313 /* SymSeg.cpp in Sources */,
 				05C8C43724B1070C0095E313 /* Tool.cpp in Sources */,
 				05C8C3F524AFE94F0095E313 /* LinkerOption.cpp in Sources */,

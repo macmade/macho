@@ -23,48 +23,41 @@
  ******************************************************************************/
 
 /*!
- * @header      CacheFile.hpp
+ * @header      CacheMappingInfo.hpp
  * @copyright   (c) 2020, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef MACHO_CACHE_FILE_HPP
-#define MACHO_CACHE_FILE_HPP
+#ifndef MACHO_CACHE_MAPPING_INFO_HPP
+#define MACHO_CACHE_MAPPING_INFO_HPP
 
 #include <memory>
 #include <algorithm>
-#include <vector>
-#include <MachO/BinaryStream.hpp>
 #include <MachO/InfoObject.hpp>
-#include <MachO/CacheImageInfo.hpp>
-#include <MachO/CacheMappingInfo.hpp>
+#include <MachO/BinaryStream.hpp>
+#include <string>
 
 namespace MachO
 {
-    class CacheFile: public InfoObject
+    class CacheMappingInfo: public InfoObject
     {
         public:
             
-            CacheFile( const std::string & path );
-            CacheFile( BinaryStream & stream );
-            CacheFile( const CacheFile & o );
-            CacheFile( CacheFile && o ) noexcept;
-            ~CacheFile( void ) override;
+            CacheMappingInfo( BinaryStream & stream );
+            CacheMappingInfo( const CacheMappingInfo & o );
+            CacheMappingInfo( CacheMappingInfo && o ) noexcept;
+            ~CacheMappingInfo( void ) override;
             
-            CacheFile & operator =( CacheFile o );
+            CacheMappingInfo & operator =( CacheMappingInfo o );
             
             Info getInfo() const override;
             
-            std::string header()        const;
-            uint32_t    mappingOffset() const;
-            uint32_t    mappingCount()  const;
-            uint32_t    imageOffset()   const;
-            uint32_t    imageCount()    const;
-            uint32_t    baseAddress()   const;
+            uint64_t address()    const;
+            uint64_t size()       const;
+            uint64_t fileOffset() const;
+            uint32_t maxProt()    const;
+            uint32_t initProt()   const;
             
-            std::vector< CacheImageInfo >   images()   const;
-            std::vector< CacheMappingInfo > mappings() const;
-            
-            friend void swap( CacheFile & o1, CacheFile & o2 );
+            friend void swap( CacheMappingInfo & o1, CacheMappingInfo & o2 );
             
         private:
             
@@ -73,4 +66,4 @@ namespace MachO
     };
 }
 
-#endif /* MACHO_CACHE_FILE_HPP */
+#endif /* MACHO_CACHE_MAPPING_INFO_HPP */
