@@ -184,6 +184,23 @@ namespace MachO
         return commands;
     }
     
+    std::vector< std::string > File::linkedLibraries() const
+    {
+        std::vector< std::string > libs;
+        
+        for( const auto & command: this->impl->_loadCommands )
+        {
+            MachO::LoadCommands::Dylib * lib( dynamic_cast< MachO::LoadCommands::Dylib * >( command.get() ) );
+            
+            if( lib != nullptr )
+            {
+                libs.push_back( lib->name() );
+            }
+        }
+        
+        return libs;
+    }
+    
     void swap( File & o1, File & o2 )
     {
         using std::swap;

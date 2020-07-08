@@ -76,7 +76,8 @@ namespace MachO
             FileType                     type()       const;
             FileFlags                    flags()      const;
             
-            std::vector< std::reference_wrapper< LoadCommand > > loadCommands() const;
+            std::vector< std::reference_wrapper< LoadCommand > > loadCommands()    const;
+            std::vector< std::string >                           linkedLibraries() const;
             
             friend void swap( File & o1, File & o2 );
             
