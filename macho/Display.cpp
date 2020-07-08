@@ -48,106 +48,84 @@ namespace Display
                   << std::endl;
     }
 
-    void File( const MachO::File & file )
+    XS::Info FileInfo( const MachO::File & file, const Arguments & args )
     {
-        XS::Info i( "Mach-O file", XS::ToString::Filename( file.path().value_or( "" ) ) );
+        XS::Info i( file.getInfo() );
         
-        i.addChild( file.cpu() );
-        
-        std::cout << i << std::endl;
-    }
-    
-    void File( const MachO::FatFile & file )
-    {
-        XS::Info i( "Fat Mach-O file", XS::ToString::Filename( file.path().value_or( "" ) ) );
-        
-        for( const auto & p: file.architectures() )
+        if( args.showInfo() == false )
         {
-            i.addChild( p.first );
+            i.removeLevel( 2 );
         }
         
-        std::cout << i << std::endl;
-    }
-    
-    void File( const MachO::CacheFile & file )
-    {
-        XS::Info i( "Dyld cache file", XS::ToString::Filename( file.path().value_or( "" ) ) );
-        
-        for( const auto & image: file.images() )
+        if( args.showLibs() )
         {
-            i.addChild( XS::ToString::Filename( image.path() ) );
+            i.addChild( Libs( file ) );
         }
         
-        std::cout << i << std::endl;
+        return i;
     }
     
-    void Libs( const MachO::File & file )
+    XS::Info FileInfo( const MachO::FatFile & file, const Arguments & args )
     {
-        XS::Info i( "Mach-O file", XS::ToString::Filename( file.path().value_or( "" ) ) );
+        XS::Info                i( file.getInfo() );
+        std::vector< XS::Info > children;
+        
+        if( i.children().size() > 0 )
+        {
+            children.push_back( i.children()[ 0 ] );
+            
+            for( const auto & p: file.architectures() )
+            {
+                children.push_back( FileInfo( p.second, args ) );
+            }
+            
+            i.children( children );
+        }
+        
+        return i;
+    }
+    
+    XS::Info FileInfo( const MachO::CacheFile & file, const Arguments & args )
+    {
+        XS::Info i( file.getInfo() );
+        
+        if( args.showInfo() == false )
+        {
+            i.children( {} );
+            
+            for( const auto & image: file.images() )
+            {
+                i.addChild( XS::ToString::Filename( image.path() ) );
+            }
+        }
+        
+        return i;
+    }
+    
+    XS::Info Libs( const MachO::File & file )
+    {
         XS::Info libs( "Libraries" );
         
-        for( const auto & command: file.loadCommands() )
+        for( const auto & lib: file.linkedLibraries() )
         {
-            try
-            {
-                MachO::LoadCommands::Dylib & lib( dynamic_cast< MachO::LoadCommands::Dylib & >( command.get() ) );
-                
-                libs.addChild( XS::ToString::Filename( lib.name() ) );
-            }
-            catch( ... )
-            {}
+            libs.addChild( XS::ToString::Filename( lib ) );
         }
         
-        i.addChild( file.cpu() );
-        i.addChild( libs );
-        
-        std::cout << i << std::endl;
+        return libs;
+    }
+
+    void File( const MachO::File & file, const Arguments & args )
+    {
+        std::cout << FileInfo( file, args ) << std::endl;
     }
     
-    void Libs( const MachO::FatFile & file )
+    void File( const MachO::FatFile & file, const Arguments & args )
     {
-        XS::Info i( "Fat Mach-O file", XS::ToString::Filename( file.path().value_or( "" ) ) );
-        
-        for( const auto & p: file.architectures() )
-        {
-            XS::Info libs( "Libraries" );
-            
-            for( const auto & command: p.second.loadCommands() )
-            {
-                try
-                {
-                    MachO::LoadCommands::Dylib & lib( dynamic_cast< MachO::LoadCommands::Dylib & >( command.get() ) );
-                    
-                    libs.addChild( XS::ToString::Filename( lib.name() ) );
-                }
-                catch( ... )
-                {}
-            }
-            
-            i.addChild( p.first );
-            i.addChild( libs );
-        }
-        
-        std::cout << i << std::endl;
+        std::cout << FileInfo( file, args ) << std::endl;
     }
     
-    void Libs( const MachO::CacheFile & file )
+    void File( const MachO::CacheFile & file, const Arguments & args )
     {
-        File( file );
-    }
-
-    void Info( const MachO::File & file )
-    {
-        std::cout << file << std::endl;
-    }
-
-    void Info( const MachO::FatFile & file )
-    {
-        std::cout << file << std::endl;
-    }
-
-    void Info( const MachO::CacheFile & file )
-    {
-        std::cout << file << std::endl;
+        std::cout << FileInfo( file, args ) << std::endl;
     }
 }

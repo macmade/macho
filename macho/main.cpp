@@ -54,20 +54,7 @@ int main( int argc, char * argv[] )
                 (
                     [ & ]( const auto & var )
                     {
-                        if( args.showInfo() )
-                        {
-                            Display::Info( var );
-                        }
-                        
-                        if( args.showLibs() )
-                        {
-                            Display::Libs( var );
-                        }
-                        
-                        if( args.showInfo() == false && args.showLibs() == false )
-                        {
-                            Display::File( var );
-                        }
+                        Display::File( var, args );
                     },
                     MachO::Parse( file )
                 );

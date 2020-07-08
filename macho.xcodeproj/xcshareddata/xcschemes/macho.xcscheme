@@ -52,7 +52,11 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "-l"
+            argument = "--info"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "--libs"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument

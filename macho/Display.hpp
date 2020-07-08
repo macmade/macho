@@ -41,17 +41,15 @@ namespace Display
     void Error( const std::exception & e );
     void Help();
     
-    void File( const MachO::File      & file );
-    void File( const MachO::FatFile   & file );
-    void File( const MachO::CacheFile & file );
+    XS::Info FileInfo( const MachO::File      & file, const Arguments & args );
+    XS::Info FileInfo( const MachO::FatFile   & file, const Arguments & args );
+    XS::Info FileInfo( const MachO::CacheFile & file, const Arguments & args );
     
-    void Libs( const MachO::File      & file );
-    void Libs( const MachO::FatFile   & file );
-    void Libs( const MachO::CacheFile & file );
+    XS::Info Libs( const MachO::File & file );
     
-    void Info( const MachO::File      & file );
-    void Info( const MachO::FatFile   & file );
-    void Info( const MachO::CacheFile & file );
+    void File( const MachO::File      & file, const Arguments & args );
+    void File( const MachO::FatFile   & file, const Arguments & args );
+    void File( const MachO::CacheFile & file, const Arguments & args );
 }
 
 #endif /* DISPLAY_HPP */
