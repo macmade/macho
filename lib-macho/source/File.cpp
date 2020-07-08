@@ -30,6 +30,7 @@
 #include <MachO/File.hpp>
 #include <MachO/ToString.hpp>
 #include <XS.hpp>
+#include <set>
 
 #include <MachO/LoadCommands/BuildVersion.hpp>
 #include <MachO/LoadCommands/DyldInfo.hpp>
@@ -198,13 +199,13 @@ namespace MachO
     
     std::vector< std::string > File::strings() const
     {
-        std::vector< std::vector< uint8_t > > sections;
+        std::vector< std::vector< uint8_t > > cstrings;
         
         for( const auto & command: this->loadCommands< LoadCommands::Segment >() )
         {
             for( const auto & section: command.sections( { "__cstring", "__oslogstring" } ) )
             {
-                sections.push_back( section.data() );
+                cstrings.push_back( section.data() );
             }
         }
         
@@ -212,24 +213,30 @@ namespace MachO
         {
             for( const auto & section: command.sections( { "__cstring", "__oslogstring" } ) )
             {
-                sections.push_back( section.data() );
+                cstrings.push_back( section.data() );
             }
         }
         
         {
-            std::vector< std::string > strings;
+            std::set< std::string > set;
             
-            for( const auto & data: sections )
+            for( const auto & data: cstrings )
             {
                 XS::IO::BinaryDataStream s( data );
                 
                 while( s.hasBytesAvailable() )
                 {
-                    strings.push_back( s.readNULLTerminatedString() );
+                    set.insert( s.readNULLTerminatedString() );
                 }
             }
             
-            return strings;
+            {
+                std::vector< std::string > strings( set.begin(), set.end() );
+                
+                std::sort( strings.begin(), strings.end() );
+                
+                return strings;
+            }
         }
     }
     
