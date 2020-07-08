@@ -80,6 +80,7 @@ namespace MachO
             std::vector< std::string >                           linkedLibraries() const;
             std::vector< std::string >                           strings()         const;
             std::vector< std::string >                           objcClasses()     const;
+            std::vector< std::string >                           objcMethods()     const;
             
             template< typename T, typename std::enable_if< std::is_base_of< LoadCommand, T >::value >::type * = nullptr >
             std::vector< T > loadCommands() const

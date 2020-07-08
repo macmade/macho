@@ -26,11 +26,12 @@ Mach-O file parser.
     
     Options:
         
-        -h / --help     Shows this help dialog.
-        -i / --info     Prints a complete info dump.
-        -l / --libs     Prints the list of linked libraries.
-        -s / --str      Prints the list of strings.
-        -c / --objc-cls Prints the list of Objective-C classes.
+        -h / --help         Shows this help dialog.
+        -i / --info         Prints a complete info dump.
+        -l / --libs         Prints the list of linked libraries.
+        -s / --str          Prints the list of strings.
+        -c / --objc-class   Prints the list of Objective-C classes.
+        -m / --objc-method  Prints the list of Objective-C methods.
 
 ### Example output
 

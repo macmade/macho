@@ -42,6 +42,7 @@ class Arguments::IMPL
         bool                       _showLibs;
         bool                       _showStrings;
         bool                       _showObjcClasses;
+        bool                       _showObjcMethods;
         std::string                _exec;
         std::vector< std::string > _files;
 };
@@ -78,6 +79,7 @@ XS::Info Arguments::getInfo() const
     i.addChild( { "Libs",                std::to_string( this->showLibs() ) } );
     i.addChild( { "Strings",             std::to_string( this->showStrings() ) } );
     i.addChild( { "Objective-C classes", std::to_string( this->showObjcClasses() ) } );
+    i.addChild( { "Objective-C methods", std::to_string( this->showObjcMethods() ) } );
     
     for( const auto & file: this->files() )
     {
@@ -118,6 +120,11 @@ bool Arguments::showObjcClasses() const
     return this->impl->_showObjcClasses;
 }
 
+bool Arguments::showObjcMethods() const
+{
+    return this->impl->_showObjcMethods;
+}
+
 std::string Arguments::exec() const
 {
     return this->impl->_exec;
@@ -140,7 +147,8 @@ Arguments::IMPL::IMPL( int argc, char ** argv ):
     _showInfo(        false ),
     _showLibs(        false ),
     _showStrings(     false ),
-    _showObjcClasses( false )
+    _showObjcClasses( false ),
+    _showObjcMethods( false )
 {
     if( argc == 0 || argv == nullptr )
     {
@@ -164,11 +172,12 @@ Arguments::IMPL::IMPL( int argc, char ** argv ):
                 continue;
             }
             
-                 if( arg == "--help" ) { this->_showHelp        = true; }
-            else if( arg == "--info" ) { this->_showInfo        = true; }
-            else if( arg == "--libs" ) { this->_showLibs        = true; }
-            else if( arg == "--str"  ) { this->_showStrings     = true; }
-            else if( arg == "--objc" ) { this->_showObjcClasses = true; }
+                 if( arg == "--help"        ) { this->_showHelp        = true; }
+            else if( arg == "--info"        ) { this->_showInfo        = true; }
+            else if( arg == "--libs"        ) { this->_showLibs        = true; }
+            else if( arg == "--str"         ) { this->_showStrings     = true; }
+            else if( arg == "--objc-class"  ) { this->_showObjcClasses = true; }
+            else if( arg == "--objc-method" ) { this->_showObjcMethods = true; }
             else if( arg[ 0 ] == '-' )
             {
                 for( auto c: arg.substr( 1 ) )
@@ -177,7 +186,8 @@ Arguments::IMPL::IMPL( int argc, char ** argv ):
                     if( c == 'i' ) { this->_showInfo        = true; }
                     if( c == 'l' ) { this->_showLibs        = true; }
                     if( c == 's' ) { this->_showStrings     = true; }
-                    if( c == 'o' ) { this->_showObjcClasses = true; }
+                    if( c == 'c' ) { this->_showObjcClasses = true; }
+                    if( c == 'm' ) { this->_showObjcMethods = true; }
                 }
             }
             else
@@ -194,6 +204,7 @@ Arguments::IMPL::IMPL( const IMPL & o ):
     _showLibs(        o._showLibs ),
     _showStrings(     o._showStrings ),
     _showObjcClasses( o._showObjcClasses ),
+    _showObjcMethods( o._showObjcMethods ),
     _exec(            o._exec ),
     _files(           o._files )
 {}
