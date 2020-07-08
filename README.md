@@ -29,6 +29,7 @@ Mach-O file parser.
         -h / --help    Shows this help dialog.
         -i / --info    Prints a complete info dump.
         -l / --libs    Prints the list of linked libraries.
+        -c / --cstr    Prints the list of C strings.
 
 ### Example output
 

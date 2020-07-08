@@ -45,6 +45,7 @@ namespace Display
                      "    -h / --help    Shows this help dialog.\n"
                      "    -i / --info    Prints a complete info dump.\n"
                      "    -l / --libs    Prints the list of linked libraries."
+                     "    -c / --cstr    Prints the list of C strings."
                   << std::endl;
     }
 
@@ -59,7 +60,28 @@ namespace Display
         
         if( args.showLibs() )
         {
-            i.addChild( Libs( file ) );
+            XS::Info libs( "Libraries" );
+            
+            for( const auto & lib: file.linkedLibraries() )
+            {
+                libs.addChild( XS::ToString::Filename( lib ) );
+            }
+            
+            libs.value( std::to_string( libs.children().size() ) );
+            i.addChild( libs );
+        }
+        
+        if( args.showCStrings() )
+        {
+            XS::Info strings( "C strings" );
+            
+            for( const auto & str: file.cStrings() )
+            {
+                strings.addChild( str );
+            }
+            
+            strings.value( std::to_string( strings.children().size() ) );
+            i.addChild( strings );
         }
         
         return i;
@@ -102,18 +124,6 @@ namespace Display
         return i;
     }
     
-    XS::Info Libs( const MachO::File & file )
-    {
-        XS::Info libs( "Libraries" );
-        
-        for( const auto & lib: file.linkedLibraries() )
-        {
-            libs.addChild( XS::ToString::Filename( lib ) );
-        }
-        
-        return libs;
-    }
-
     void File( const MachO::File & file, const Arguments & args )
     {
         std::cout << FileInfo( file, args ) << std::endl;

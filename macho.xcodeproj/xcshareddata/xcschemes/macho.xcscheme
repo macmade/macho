@@ -60,6 +60,10 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
+            argument = "--cstr"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
             argument = "/System/Library/Frameworks/Foundation.framework/Foundation"
             isEnabled = "YES">
          </CommandLineArgument>

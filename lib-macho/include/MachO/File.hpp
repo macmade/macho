@@ -78,6 +78,7 @@ namespace MachO
             
             std::vector< std::reference_wrapper< LoadCommand > > loadCommands()    const;
             std::vector< std::string >                           linkedLibraries() const;
+            std::vector< std::string >                           cStrings()        const;
             
             friend void swap( File & o1, File & o2 );
             

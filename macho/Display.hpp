@@ -45,8 +45,6 @@ namespace Display
     XS::Info FileInfo( const MachO::FatFile   & file, const Arguments & args );
     XS::Info FileInfo( const MachO::CacheFile & file, const Arguments & args );
     
-    XS::Info Libs( const MachO::File & file );
-    
     void File( const MachO::File      & file, const Arguments & args );
     void File( const MachO::FatFile   & file, const Arguments & args );
     void File( const MachO::CacheFile & file, const Arguments & args );

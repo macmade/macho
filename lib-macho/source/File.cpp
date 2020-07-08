@@ -201,6 +201,13 @@ namespace MachO
         return libs;
     }
     
+    std::vector< std::string > File::cStrings() const
+    {
+        std::vector< std::string > strings;
+        
+        return strings;
+    }
+    
     void swap( File & o1, File & o2 )
     {
         using std::swap;
