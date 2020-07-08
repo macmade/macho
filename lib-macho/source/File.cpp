@@ -198,9 +198,45 @@ namespace MachO
     
     std::vector< std::string > File::cStrings() const
     {
-        std::vector< std::string > strings;
+        std::vector< std::vector< uint8_t > > sections;
         
-        return strings;
+        for( const auto & command: this->loadCommands< LoadCommands::Segment >() )
+        {
+            for( const auto & section: command.sections() )
+            {
+                if( section.section() == "__cstring" )
+                {
+                    sections.push_back( section.data() );
+                }
+            }
+        }
+        
+        for( const auto & command: this->loadCommands< LoadCommands::Segment64 >() )
+        {
+            for( const auto & section: command.sections() )
+            {
+                if( section.section() == "__cstring" )
+                {
+                    sections.push_back( section.data() );
+                }
+            }
+        }
+        
+        {
+            std::vector< std::string > strings;
+            
+            for( const auto & data: sections )
+            {
+                XS::IO::BinaryDataStream s( data );
+                
+                while( s.hasBytesAvailable() )
+                {
+                    strings.push_back( s.readNULLTerminatedString() );
+                }
+            }
+            
+            return strings;
+        }
     }
     
     void swap( File & o1, File & o2 )

@@ -51,15 +51,16 @@ namespace MachO
             
             XS::Info getInfo() const override;
             
-            std::string  section()          const;
-            std::string  segment()          const;
-            uint32_t     address()          const;
-            uint32_t     size()             const;
-            uint32_t     offset()           const;
-            uint32_t     alignment()        const;
-            uint32_t     relocationOffset() const;
-            uint32_t     relocationCount()  const;
-            SectionFlags flags()            const;
+            std::string            section()          const;
+            std::string            segment()          const;
+            uint32_t               address()          const;
+            uint32_t               size()             const;
+            uint32_t               offset()           const;
+            uint32_t               alignment()        const;
+            uint32_t               relocationOffset() const;
+            uint32_t               relocationCount()  const;
+            SectionFlags           flags()            const;
+            std::vector< uint8_t > data()             const;
             
             friend void swap( Section & o1, Section & o2 );
             

@@ -77,7 +77,7 @@ namespace Display
             
             for( const auto & str: file.cStrings() )
             {
-                strings.addChild( str );
+                strings.addChild( "\"" + XS::String::ReplaceAll( str, "\n", "\\n" ) + "\"" );
             }
             
             strings.value( std::to_string( strings.children().size() ) );

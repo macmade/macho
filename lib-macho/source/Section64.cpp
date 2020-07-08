@@ -40,15 +40,16 @@ namespace MachO
             IMPL( const IMPL & o );
             ~IMPL( void );
             
-            std::string  _section;
-            std::string  _segment;
-            uint64_t     _address;
-            uint64_t     _size;
-            uint32_t     _offset;
-            uint32_t     _alignment;
-            uint32_t     _relocationOffset;
-            uint32_t     _relocationCount;
-            SectionFlags _flags;
+            std::string            _section;
+            std::string            _segment;
+            uint64_t               _address;
+            uint64_t               _size;
+            uint32_t               _offset;
+            uint32_t               _alignment;
+            uint32_t               _relocationOffset;
+            uint32_t               _relocationCount;
+            SectionFlags           _flags;
+            std::vector< uint8_t > _data;
     };
 
     Section64::Section64( XS::IO::BinaryStream & stream ):
@@ -135,6 +136,11 @@ namespace MachO
         return this->impl->_flags;
     }
     
+    std::vector< uint8_t > Section64::data() const
+    {
+        return this->impl->_data;
+    }
+    
     void swap( Section64 & o1, Section64 & o2 )
     {
         using std::swap;
@@ -156,6 +162,16 @@ namespace MachO
         stream.readUInt32();
         stream.readUInt32();
         stream.readUInt32();
+        
+        {
+            size_t pos( stream.tell() );
+            
+            stream.seek( this->_offset, XS::IO::BinaryStream::SeekDirection::Begin );
+            
+            this->_data = stream.read( this->_size );
+            
+            stream.seek( pos, XS::IO::BinaryStream::SeekDirection::Begin );
+        }
     }
 
     Section64::IMPL::IMPL( const IMPL & o ):
@@ -167,7 +183,8 @@ namespace MachO
         _alignment(        o._alignment ),
         _relocationOffset( o._relocationOffset ),
         _relocationCount(  o._relocationCount ),
-        _flags(            o._flags )
+        _flags(            o._flags ),
+        _data(             o._data )
     {}
 
     Section64::IMPL::~IMPL( void )
