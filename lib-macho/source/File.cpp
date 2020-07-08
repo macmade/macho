@@ -188,14 +188,9 @@ namespace MachO
     {
         std::vector< std::string > libs;
         
-        for( const auto & command: this->impl->_loadCommands )
+        for( const auto & lib: this->loadCommands< LoadCommands::Dylib >() )
         {
-            MachO::LoadCommands::Dylib * lib( dynamic_cast< MachO::LoadCommands::Dylib * >( command.get() ) );
-            
-            if( lib != nullptr )
-            {
-                libs.push_back( lib->name() );
-            }
+            libs.push_back( lib.name() );
         }
         
         return libs;

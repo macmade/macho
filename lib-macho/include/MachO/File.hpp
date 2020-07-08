@@ -80,6 +80,24 @@ namespace MachO
             std::vector< std::string >                           linkedLibraries() const;
             std::vector< std::string >                           cStrings()        const;
             
+            template< typename T, typename std::enable_if< std::is_base_of< LoadCommand, T >::value >::type * = nullptr >
+            std::vector< T > loadCommands() const
+            {
+                std::vector< T > commands;
+                
+                for( const auto & p: this->loadCommands() )
+                {
+                    try
+                    {
+                        commands.push_back( dynamic_cast< T & >( p.get() ) );
+                    }
+                    catch( ... )
+                    {}
+                }
+                
+                return commands;
+            }
+            
             friend void swap( File & o1, File & o2 );
             
         private:
