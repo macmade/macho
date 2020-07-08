@@ -161,6 +161,31 @@ namespace MachO
             return this->impl->_sections;
         }
         
+        std::vector< Section > Segment::sections( const std::string & name ) const
+        {
+            return this->sections( std::initializer_list< std::string > { name } );
+        }
+        
+        std::vector< Section > Segment::sections( const std::initializer_list< std::string > & names ) const
+        {
+            std::vector< Section > sections;
+            
+            for( const auto & section: this->impl->_sections )
+            {
+                for( const auto & name: names )
+                {
+                    if( section.section() == name )
+                    {
+                        sections.push_back( section );
+                        
+                        break;
+                    }
+                }
+            }
+            
+            return sections;
+        }
+        
         void swap( Segment & o1, Segment & o2 )
         {
             using std::swap;

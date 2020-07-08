@@ -40,7 +40,7 @@ class Arguments::IMPL
         bool                       _showHelp;
         bool                       _showInfo;
         bool                       _showLibs;
-        bool                       _showCStrings;
+        bool                       _showStrings;
         std::string                _exec;
         std::vector< std::string > _files;
 };
@@ -72,10 +72,10 @@ XS::Info Arguments::getInfo() const
     XS::Info i( "Arguments" );
     XS::Info files( "Files" );
     
-    i.addChild( { "Help",     std::to_string( this->showHelp() ) } );
-    i.addChild( { "Info",     std::to_string( this->showInfo() ) } );
-    i.addChild( { "Libs",     std::to_string( this->showLibs() ) } );
-    i.addChild( { "CStrings", std::to_string( this->showCStrings() ) } );
+    i.addChild( { "Help",    std::to_string( this->showHelp() ) } );
+    i.addChild( { "Info",    std::to_string( this->showInfo() ) } );
+    i.addChild( { "Libs",    std::to_string( this->showLibs() ) } );
+    i.addChild( { "Strings", std::to_string( this->showStrings() ) } );
     
     for( const auto & file: this->files() )
     {
@@ -106,9 +106,9 @@ bool Arguments::showLibs() const
     return this->impl->_showLibs;
 }
 
-bool Arguments::showCStrings() const
+bool Arguments::showStrings() const
 {
-    return this->impl->_showCStrings;
+    return this->impl->_showStrings;
 }
 
 std::string Arguments::exec() const
@@ -129,10 +129,10 @@ void swap( Arguments & o1, Arguments & o2 )
 }
 
 Arguments::IMPL::IMPL( int argc, char ** argv ):
-    _showHelp(     false ),
-    _showInfo(     false ),
-    _showLibs(     false ),
-    _showCStrings( false )
+    _showHelp(    false ),
+    _showInfo(    false ),
+    _showLibs(    false ),
+    _showStrings( false )
 {
     if( argc == 0 || argv == nullptr )
     {
@@ -156,18 +156,18 @@ Arguments::IMPL::IMPL( int argc, char ** argv ):
                 continue;
             }
             
-                 if( arg == "--help" ) { this->_showHelp     = true; }
-            else if( arg == "--info" ) { this->_showInfo     = true; }
-            else if( arg == "--libs" ) { this->_showLibs     = true; }
-            else if( arg == "--cstr" ) { this->_showCStrings = true; }
+                 if( arg == "--help" ) { this->_showHelp    = true; }
+            else if( arg == "--info" ) { this->_showInfo    = true; }
+            else if( arg == "--libs" ) { this->_showLibs    = true; }
+            else if( arg == "--str"  ) { this->_showStrings = true; }
             else if( arg[ 0 ] == '-' )
             {
                 for( auto c: arg.substr( 1 ) )
                 {
-                    if( c == 'h' ) { this->_showHelp     = true; }
-                    if( c == 'i' ) { this->_showInfo     = true; }
-                    if( c == 'l' ) { this->_showLibs     = true; }
-                    if( c == 'c' ) { this->_showCStrings = true; }
+                    if( c == 'h' ) { this->_showHelp    = true; }
+                    if( c == 'i' ) { this->_showInfo    = true; }
+                    if( c == 'l' ) { this->_showLibs    = true; }
+                    if( c == 's' ) { this->_showStrings = true; }
                 }
             }
             else
@@ -179,12 +179,12 @@ Arguments::IMPL::IMPL( int argc, char ** argv ):
 }
 
 Arguments::IMPL::IMPL( const IMPL & o ):
-    _showHelp(     o._showHelp ),
-    _showInfo(     o._showInfo ),
-    _showLibs(     o._showLibs ),
-    _showCStrings( o._showCStrings ),
-    _exec(         o._exec ),
-    _files(        o._files )
+    _showHelp(    o._showHelp ),
+    _showInfo(    o._showInfo ),
+    _showLibs(    o._showLibs ),
+    _showStrings( o._showStrings ),
+    _exec(        o._exec ),
+    _files(       o._files )
 {}
 
 Arguments::IMPL::~IMPL()

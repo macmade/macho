@@ -196,29 +196,23 @@ namespace MachO
         return libs;
     }
     
-    std::vector< std::string > File::cStrings() const
+    std::vector< std::string > File::strings() const
     {
         std::vector< std::vector< uint8_t > > sections;
         
         for( const auto & command: this->loadCommands< LoadCommands::Segment >() )
         {
-            for( const auto & section: command.sections() )
+            for( const auto & section: command.sections( { "__cstring", "__oslogstring" } ) )
             {
-                if( section.section() == "__cstring" )
-                {
-                    sections.push_back( section.data() );
-                }
+                sections.push_back( section.data() );
             }
         }
         
         for( const auto & command: this->loadCommands< LoadCommands::Segment64 >() )
         {
-            for( const auto & section: command.sections() )
+            for( const auto & section: command.sections( { "__cstring", "__oslogstring" } ) )
             {
-                if( section.section() == "__cstring" )
-                {
-                    sections.push_back( section.data() );
-                }
+                sections.push_back( section.data() );
             }
         }
         

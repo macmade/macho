@@ -45,7 +45,7 @@ namespace Display
                      "    -h / --help    Shows this help dialog.\n"
                      "    -i / --info    Prints a complete info dump.\n"
                      "    -l / --libs    Prints the list of linked libraries."
-                     "    -c / --cstr    Prints the list of C strings."
+                     "    -s / --str     Prints the list of strings."
                   << std::endl;
     }
 
@@ -71,11 +71,11 @@ namespace Display
             i.addChild( libs );
         }
         
-        if( args.showCStrings() )
+        if( args.showStrings() )
         {
-            XS::Info strings( "C strings" );
+            XS::Info strings( "Strings" );
             
-            for( const auto & str: file.cStrings() )
+            for( const auto & str: file.strings() )
             {
                 strings.addChild( "\"" + XS::String::ReplaceAll( str, "\n", "\\n" ) + "\"" );
             }

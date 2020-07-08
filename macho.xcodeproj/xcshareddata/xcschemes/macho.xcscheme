@@ -57,10 +57,10 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--libs"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "--cstr"
+            argument = "--str"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
@@ -69,11 +69,11 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "/System/Library/PrivateFrameworks/MobileDevice.framework/MobileDevice"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "/var/db/dyld/dyld_shared_cache_x86_64h"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>
    </LaunchAction>

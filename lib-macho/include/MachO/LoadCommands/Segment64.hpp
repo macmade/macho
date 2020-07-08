@@ -66,7 +66,9 @@ namespace MachO
                 uint32_t    initProtection()   const;
                 uint32_t    flags()            const;
                 
-                std::vector< Section64 > sections() const;
+                std::vector< Section64 > sections()                                           const;
+                std::vector< Section64 > sections( const std::string & name )                 const;
+                std::vector< Section64 > sections( const std::initializer_list< std::string > & names ) const;
                 
                 friend void swap( Segment64 & o1, Segment64 & o2 );
                 
