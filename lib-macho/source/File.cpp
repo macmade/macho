@@ -200,12 +200,18 @@ namespace MachO
     std::vector< std::string > File::strings() const
     {
         std::vector< std::vector< uint8_t > > cstrings;
+        std::vector< std::vector< uint8_t > > ustrings;
         
         for( const auto & command: this->loadCommands< LoadCommands::Segment >() )
         {
             for( const auto & section: command.sections( { "__cstring", "__oslogstring" } ) )
             {
                 cstrings.push_back( section.data() );
+            }
+            
+            for( const auto & section: command.sections( "__ustring" ) )
+            {
+                ustrings.push_back( section.data() );
             }
         }
         
@@ -214,6 +220,11 @@ namespace MachO
             for( const auto & section: command.sections( { "__cstring", "__oslogstring" } ) )
             {
                 cstrings.push_back( section.data() );
+            }
+            
+            for( const auto & section: command.sections( "__ustring" ) )
+            {
+                ustrings.push_back( section.data() );
             }
         }
         
@@ -227,6 +238,21 @@ namespace MachO
                 while( s.hasBytesAvailable() )
                 {
                     set.insert( s.readNULLTerminatedString() );
+                }
+            }
+            
+            for( const auto & data: ustrings )
+            {
+                XS::IO::BinaryDataStream s( data );
+                
+                while( s.hasBytesAvailable() )
+                {
+                    std::optional< std::string > str( XS::String::FromUTF16( s.readNULLTerminatedUTF16String() ) );
+                    
+                    if( str.has_value() )
+                    {
+                        set.insert( str.value() );
+                    }
                 }
             }
             

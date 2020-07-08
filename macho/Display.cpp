@@ -28,6 +28,8 @@
  */
 
 #include "Display.hpp"
+#include <cctype>
+#include <XS.hpp>
 
 namespace Display
 {
@@ -75,9 +77,13 @@ namespace Display
         {
             XS::Info strings( "Strings" );
             
-            for( const auto & str: file.strings() )
+            for( auto str: file.strings() )
             {
-                strings.addChild( "\"" + XS::String::ReplaceAll( str, "\n", "\\n" ) + "\"" );
+                str = XS::String::ReplaceAll( str, "\r",     "\\r" );
+                str = XS::String::ReplaceAll( str, "\n",     "\\n" );
+                str = XS::String::ReplaceAll( str, "\u2029", "\uFFFD" );
+                
+                strings.addChild( "\"" + str + "\"" );
             }
             
             strings.value( std::to_string( strings.children().size() ) );
