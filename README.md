@@ -24,14 +24,20 @@ Mach-O file parser.
     
     Usage: macho [OPTIONS] [PATH] ...
     
+    Supports regular and Fat Mach-O files as well as dyld cache files.
+    Multiple files can be passed at once.
+    
     Options:
         
         -h / --help         Shows this help dialog.
-        -i / --info         Prints a complete info dump.
+        -i / --info         Prints the detailed Mach-O structure.
         -l / --libs         Prints the list of linked libraries.
-        -s / --str          Prints the list of strings.
-        -c / --objc-class   Prints the list of Objective-C classes.
-        -m / --objc-method  Prints the list of Objective-C methods.
+        -s / --str          Prints the list of strings from __cstring,
+                            __oslogstring and __ustring.
+        -c / --objc-class   Prints the list of Objective-C classes from
+                            __objc_classname.
+        -m / --objc-method  Prints the list of Objective-C methods
+                            from __objc_methname.
 
 ### Example output
 

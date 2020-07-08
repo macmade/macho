@@ -42,14 +42,20 @@ namespace Display
     {
         std::cout << "Usage: macho [OPTIONS] [PATH] ...\n"
                      "\n"
+                     "Supports regular and Fat Mach-O files as well as dyld cache files.\n"
+                     "Multiple files can be passed at once.\n"
+                     "\n"
                      "Options:\n"
                      "\n"
                      "    -h / --help         Shows this help dialog.\n"
-                     "    -i / --info         Prints a complete info dump.\n"
+                     "    -i / --info         Prints the detailed Mach-O structure.\n"
                      "    -l / --libs         Prints the list of linked libraries.\n"
-                     "    -s / --str          Prints the list of strings.\n"
-                     "    -c / --objc-class   Prints the list of Objective-C classes.\n"
-                     "    -m / --objc-method  Prints the list of Objective-C methods."
+                     "    -s / --str          Prints the list of strings from __cstring,\n"
+                     "                        __oslogstring and __ustring.\n"
+                     "    -c / --objc-class   Prints the list of Objective-C classes from\n"
+                     "                        __objc_classname.\n"
+                     "    -m / --objc-method  Prints the list of Objective-C methods\n"
+                     "                        from __objc_methname."
                   << std::endl;
     }
 
