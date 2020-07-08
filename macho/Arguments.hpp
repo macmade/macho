@@ -49,12 +49,13 @@ class Arguments: public XS::Info::Object
         
         XS::Info getInfo() const override;
         
-        bool                       showHelp()    const;
-        bool                       showInfo()    const;
-        bool                       showLibs()    const;
-        bool                       showStrings() const;
-        std::string                exec()        const;
-        std::vector< std::string > files()       const;
+        bool                       showHelp()        const;
+        bool                       showInfo()        const;
+        bool                       showLibs()        const;
+        bool                       showStrings()     const;
+        bool                       showObjcClasses() const;
+        std::string                exec()            const;
+        std::vector< std::string > files()           const;
         
         friend void swap( Arguments & o1, Arguments & o2 );
         

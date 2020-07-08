@@ -266,6 +266,65 @@ namespace MachO
         }
     }
     
+    std::vector< std::string > File::objcClasses() const
+    {
+        std::vector< std::vector< uint8_t > > sections;
+        
+        for( const auto & command: this->loadCommands< LoadCommands::Segment >() )
+        {
+            for( const auto & section: command.sections( "__objc_classname" ) )
+            {
+                sections.push_back( section.data() );
+            }
+        }
+        
+        for( const auto & command: this->loadCommands< LoadCommands::Segment64 >() )
+        {
+            for( const auto & section: command.sections( "__objc_classname" ) )
+            {
+                sections.push_back( section.data() );
+            }
+        }
+        
+        {
+            std::vector< std::string > classes;
+            
+            for( const auto & data: sections )
+            {
+                XS::IO::BinaryDataStream s( data );
+                
+                while( s.hasBytesAvailable() )
+                {
+                    std::string cls( s.readNULLTerminatedString() );
+                    std::string name;
+                    
+                    if( cls.length() == 0 )
+                    {
+                        continue;
+                    }
+                    
+                    for( auto c: cls )
+                    {
+                        if( std::isprint( c ) )
+                        {
+                            name += c;
+                        }
+                        else
+                        {
+                            name += "\\x" + XS::ToString::Hex( static_cast< uint8_t >( c ), false );
+                        }
+                    }
+                    
+                    classes.push_back( name );
+                }
+            }
+            
+            std::sort( classes.begin(), classes.end() );
+            
+            return classes;
+        }
+    }
+    
     void swap( File & o1, File & o2 )
     {
         using std::swap;

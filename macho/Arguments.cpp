@@ -41,6 +41,7 @@ class Arguments::IMPL
         bool                       _showInfo;
         bool                       _showLibs;
         bool                       _showStrings;
+        bool                       _showObjcClasses;
         std::string                _exec;
         std::vector< std::string > _files;
 };
@@ -72,10 +73,11 @@ XS::Info Arguments::getInfo() const
     XS::Info i( "Arguments" );
     XS::Info files( "Files" );
     
-    i.addChild( { "Help",    std::to_string( this->showHelp() ) } );
-    i.addChild( { "Info",    std::to_string( this->showInfo() ) } );
-    i.addChild( { "Libs",    std::to_string( this->showLibs() ) } );
-    i.addChild( { "Strings", std::to_string( this->showStrings() ) } );
+    i.addChild( { "Help",                std::to_string( this->showHelp() ) } );
+    i.addChild( { "Info",                std::to_string( this->showInfo() ) } );
+    i.addChild( { "Libs",                std::to_string( this->showLibs() ) } );
+    i.addChild( { "Strings",             std::to_string( this->showStrings() ) } );
+    i.addChild( { "Objective-C classes", std::to_string( this->showObjcClasses() ) } );
     
     for( const auto & file: this->files() )
     {
@@ -111,6 +113,11 @@ bool Arguments::showStrings() const
     return this->impl->_showStrings;
 }
 
+bool Arguments::showObjcClasses() const
+{
+    return this->impl->_showObjcClasses;
+}
+
 std::string Arguments::exec() const
 {
     return this->impl->_exec;
@@ -129,10 +136,11 @@ void swap( Arguments & o1, Arguments & o2 )
 }
 
 Arguments::IMPL::IMPL( int argc, char ** argv ):
-    _showHelp(    false ),
-    _showInfo(    false ),
-    _showLibs(    false ),
-    _showStrings( false )
+    _showHelp(        false ),
+    _showInfo(        false ),
+    _showLibs(        false ),
+    _showStrings(     false ),
+    _showObjcClasses( false )
 {
     if( argc == 0 || argv == nullptr )
     {
@@ -156,18 +164,20 @@ Arguments::IMPL::IMPL( int argc, char ** argv ):
                 continue;
             }
             
-                 if( arg == "--help" ) { this->_showHelp    = true; }
-            else if( arg == "--info" ) { this->_showInfo    = true; }
-            else if( arg == "--libs" ) { this->_showLibs    = true; }
-            else if( arg == "--str"  ) { this->_showStrings = true; }
+                 if( arg == "--help" ) { this->_showHelp        = true; }
+            else if( arg == "--info" ) { this->_showInfo        = true; }
+            else if( arg == "--libs" ) { this->_showLibs        = true; }
+            else if( arg == "--str"  ) { this->_showStrings     = true; }
+            else if( arg == "--objc" ) { this->_showObjcClasses = true; }
             else if( arg[ 0 ] == '-' )
             {
                 for( auto c: arg.substr( 1 ) )
                 {
-                    if( c == 'h' ) { this->_showHelp    = true; }
-                    if( c == 'i' ) { this->_showInfo    = true; }
-                    if( c == 'l' ) { this->_showLibs    = true; }
-                    if( c == 's' ) { this->_showStrings = true; }
+                    if( c == 'h' ) { this->_showHelp        = true; }
+                    if( c == 'i' ) { this->_showInfo        = true; }
+                    if( c == 'l' ) { this->_showLibs        = true; }
+                    if( c == 's' ) { this->_showStrings     = true; }
+                    if( c == 'o' ) { this->_showObjcClasses = true; }
                 }
             }
             else
@@ -179,12 +189,13 @@ Arguments::IMPL::IMPL( int argc, char ** argv ):
 }
 
 Arguments::IMPL::IMPL( const IMPL & o ):
-    _showHelp(    o._showHelp ),
-    _showInfo(    o._showInfo ),
-    _showLibs(    o._showLibs ),
-    _showStrings( o._showStrings ),
-    _exec(        o._exec ),
-    _files(       o._files )
+    _showHelp(        o._showHelp ),
+    _showInfo(        o._showInfo ),
+    _showLibs(        o._showLibs ),
+    _showStrings(     o._showStrings ),
+    _showObjcClasses( o._showObjcClasses ),
+    _exec(            o._exec ),
+    _files(           o._files )
 {}
 
 Arguments::IMPL::~IMPL()

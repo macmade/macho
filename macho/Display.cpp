@@ -44,10 +44,11 @@ namespace Display
                      "\n"
                      "Options:\n"
                      "\n"
-                     "    -h / --help    Shows this help dialog.\n"
-                     "    -i / --info    Prints a complete info dump.\n"
-                     "    -l / --libs    Prints the list of linked libraries.\n"
-                     "    -s / --str     Prints the list of strings."
+                     "    -h / --help     Shows this help dialog.\n"
+                     "    -i / --info     Prints a complete info dump.\n"
+                     "    -l / --libs     Prints the list of linked libraries.\n"
+                     "    -s / --str      Prints the list of strings.\n"
+                     "    -c / --objc-cls Prints the list of Objective-C classes."
                   << std::endl;
     }
 
@@ -88,6 +89,19 @@ namespace Display
             
             strings.value( std::to_string( strings.children().size() ) );
             i.addChild( strings );
+        }
+        
+        if( args.showObjcClasses() )
+        {
+            XS::Info classes( "Objective-C" );
+            
+            for( auto cls: file.objcClasses() )
+            {
+                classes.addChild( cls );
+            }
+            
+            classes.value( std::to_string( classes.children().size() ) );
+            i.addChild( classes );
         }
         
         return i;
