@@ -46,7 +46,7 @@ namespace Display
                      "\n"
                      "    -h / --help    Shows this help dialog.\n"
                      "    -i / --info    Prints a complete info dump.\n"
-                     "    -l / --libs    Prints the list of linked libraries."
+                     "    -l / --libs    Prints the list of linked libraries.\n"
                      "    -s / --str     Prints the list of strings."
                   << std::endl;
     }
