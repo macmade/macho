@@ -93,7 +93,7 @@ namespace Display
         
         if( args.showObjcClasses() )
         {
-            XS::Info classes( "Objective-C" );
+            XS::Info classes( "Classes" );
             
             for( auto cls: file.objcClasses() )
             {
