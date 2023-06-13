@@ -64,16 +64,12 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "/System/Library/Frameworks/Foundation.framework/Foundation"
+            argument = "--data"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "/System/Library/PrivateFrameworks/MobileDevice.framework/MobileDevice"
-            isEnabled = "NO">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "/var/db/dyld/dyld_shared_cache_x86_64h"
-            isEnabled = "NO">
+            argument = "/Library/Apple/System/Library/PrivateFrameworks/Mercury.framework/Mercury"
+            isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
    </LaunchAction>
