@@ -900,9 +900,6 @@
 			baseConfigurationReference = 055C8E70245DC6870099DFF8 /* Debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_CODE_COVERAGE = NO;
-				CODE_SIGN_IDENTITY = "-";
-				DEVELOPMENT_TEAM = "";
-				ENABLE_HARDENED_RUNTIME = NO;
 				GCC_GENERATE_TEST_COVERAGE_FILES = NO;
 				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = NO;
 				HEADER_SEARCH_PATHS = (
@@ -918,9 +915,6 @@
 			baseConfigurationReference = 055C8E71245DC6870099DFF8 /* Release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_CODE_COVERAGE = NO;
-				CODE_SIGN_IDENTITY = "-";
-				DEVELOPMENT_TEAM = "";
-				ENABLE_HARDENED_RUNTIME = NO;
 				GCC_GENERATE_TEST_COVERAGE_FILES = NO;
 				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = NO;
 				HEADER_SEARCH_PATHS = (
@@ -934,6 +928,8 @@
 		055C8E66245DC6570099DFF8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				PRODUCT_BUNDLE_IDENTIFIER = "com.xs-labs.macho";
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "com.xs-labs.macho";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -941,6 +937,8 @@
 		055C8E67245DC6570099DFF8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				PRODUCT_BUNDLE_IDENTIFIER = "com.xs-labs.macho";
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "com.xs-labs.macho";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
