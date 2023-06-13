@@ -55,6 +55,7 @@ namespace MachO
                 uint32_t _lazyBindingSize;
                 uint32_t _exportOffset;
                 uint32_t _exportSize;
+                DataList _data;
         };
 
         DyldInfo::DyldInfo( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream ):
@@ -157,6 +158,11 @@ namespace MachO
             return this->impl->_exportSize;
         }
         
+        LoadCommand::DataList DyldInfo::data() const
+        {
+            return this->impl->_data;
+        }
+        
         void swap( DyldInfo & o1, DyldInfo & o2 )
         {
             using std::swap;
@@ -178,7 +184,26 @@ namespace MachO
             _exportOffset(      stream.readUInt32() ),
             _exportSize(        stream.readUInt32() )
         {
+            size_t pos( stream.tell() );
+            
             ( void )kind;
+            
+            stream.seek( this->_rebaseOffset, XS::IO::BinaryStream::SeekDirection::Begin );
+            this->_data.push_back( { "Rebase", stream.read( this->_rebaseSize ) } );
+            
+            stream.seek( this->_bindingOffset, XS::IO::BinaryStream::SeekDirection::Begin );
+            this->_data.push_back( { "Binding", stream.read( this->_bindingSize ) } );
+            
+            stream.seek( this->_weakBindingOffset, XS::IO::BinaryStream::SeekDirection::Begin );
+            this->_data.push_back( { "Weak binding", stream.read( this->_weakBindingSize ) } );
+            
+            stream.seek( this->_lazyBindingOffset, XS::IO::BinaryStream::SeekDirection::Begin );
+            this->_data.push_back( { "Lazy binding", stream.read( this->_lazyBindingSize ) } );
+            
+            stream.seek( this->_exportOffset, XS::IO::BinaryStream::SeekDirection::Begin );
+            this->_data.push_back( { "Export", stream.read( this->_exportSize ) } );
+            
+            stream.seek( pos, XS::IO::BinaryStream::SeekDirection::Begin );
         }
         
         DyldInfo::IMPL::IMPL( const IMPL & o ):
@@ -193,9 +218,8 @@ namespace MachO
             _lazyBindingOffset( o._lazyBindingOffset ),
             _lazyBindingSize(   o._lazyBindingSize ),
             _exportOffset(      o._exportOffset ),
-            _exportSize(        o._exportSize )
-            
-            
+            _exportSize(        o._exportSize ),
+            _data(              o._data )
         {}
 
         DyldInfo::IMPL::~IMPL()

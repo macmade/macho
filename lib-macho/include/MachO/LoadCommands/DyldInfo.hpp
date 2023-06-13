@@ -64,6 +64,8 @@ namespace MachO
                 uint32_t exportOffset()      const;
                 uint32_t exportSize()        const;
                 
+                DataList data() const override;
+                
                 friend void swap( DyldInfo & o1, DyldInfo & o2 );
                 
             private:
