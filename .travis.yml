@@ -1,6 +1,0 @@
-language: objective-c
-osx_image: xcode12
-script:
-- set -o pipefail && xcodebuild -project "macho.xcodeproj" -scheme "macho" build analyze
-notifications:
-    slack: xs-labs:FXh1yLXNkpcVxKZhZU6icdhI
