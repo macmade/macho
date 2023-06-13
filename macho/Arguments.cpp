@@ -43,6 +43,7 @@ class Arguments::IMPL
         bool                       _showStrings;
         bool                       _showObjcClasses;
         bool                       _showObjcMethods;
+        bool                       _showData;
         std::string                _exec;
         std::vector< std::string > _files;
 };
@@ -80,6 +81,7 @@ XS::Info Arguments::getInfo() const
     i.addChild( { "Strings",             std::to_string( this->showStrings() ) } );
     i.addChild( { "Objective-C classes", std::to_string( this->showObjcClasses() ) } );
     i.addChild( { "Objective-C methods", std::to_string( this->showObjcMethods() ) } );
+    i.addChild( { "Data",                std::to_string( this->showData() ) } );
     
     for( const auto & file: this->files() )
     {
@@ -125,6 +127,11 @@ bool Arguments::showObjcMethods() const
     return this->impl->_showObjcMethods;
 }
 
+bool Arguments::showData() const
+{
+    return this->impl->_showData;
+}
+
 std::string Arguments::exec() const
 {
     return this->impl->_exec;
@@ -148,7 +155,8 @@ Arguments::IMPL::IMPL( int argc, char ** argv ):
     _showLibs(        false ),
     _showStrings(     false ),
     _showObjcClasses( false ),
-    _showObjcMethods( false )
+    _showObjcMethods( false ),
+    _showData(        false )
 {
     if( argc == 0 || argv == nullptr )
     {
@@ -178,6 +186,7 @@ Arguments::IMPL::IMPL( int argc, char ** argv ):
             else if( arg == "--str"         ) { this->_showStrings     = true; }
             else if( arg == "--objc-class"  ) { this->_showObjcClasses = true; }
             else if( arg == "--objc-method" ) { this->_showObjcMethods = true; }
+            else if( arg == "--data"        ) { this->_showData        = true; }
             else if( arg[ 0 ] == '-' )
             {
                 for( auto c: arg.substr( 1 ) )
@@ -188,6 +197,7 @@ Arguments::IMPL::IMPL( int argc, char ** argv ):
                     if( c == 's' ) { this->_showStrings     = true; }
                     if( c == 'c' ) { this->_showObjcClasses = true; }
                     if( c == 'm' ) { this->_showObjcMethods = true; }
+                    if( c == 'd' ) { this->_showData        = true; }
                 }
             }
             else
@@ -205,6 +215,7 @@ Arguments::IMPL::IMPL( const IMPL & o ):
     _showStrings(     o._showStrings ),
     _showObjcClasses( o._showObjcClasses ),
     _showObjcMethods( o._showObjcMethods ),
+    _showData(        o._showData ),
     _exec(            o._exec ),
     _files(           o._files )
 {}

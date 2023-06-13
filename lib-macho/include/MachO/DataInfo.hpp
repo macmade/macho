@@ -23,38 +23,46 @@
  ******************************************************************************/
 
 /*!
- * @header      LoadCommand.hpp
+ * @header      DataInfo.hpp
  * @copyright   (c) 2020, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef MACHO_LOAD_COMMAND_HPP
-#define MACHO_LOAD_COMMAND_HPP
+#ifndef MACHO_DATA_INFO_HPP
+#define MACHO_DATA_INFO_HPP
 
-#include <cstdint>
+#include <memory>
+#include <algorithm>
 #include <string>
-#include <optional>
 #include <vector>
-#include <utility>
+#include <cstdint>
 #include <XS.hpp>
 
 namespace MachO
 {
-    class LoadCommand: public XS::Info::Object
+    class DataInfo: public XS::Info::Object
     {
         public:
             
-            using DataList = std::vector< std::pair< std::string, std::vector< uint8_t > > >;
+            DataInfo( const std::string & label, const std::vector< uint8_t > & data );
+            DataInfo( const DataInfo & o );
+            DataInfo( DataInfo && o ) noexcept;
+            ~DataInfo( void ) override;
+            
+            DataInfo & operator =( DataInfo o );
             
             XS::Info getInfo() const override;
             
-            virtual uint32_t command() const = 0;
-            virtual uint32_t size()    const = 0;
+            std::string            label() const;
+            std::vector< uint8_t > data()  const;
             
-            virtual std::string             commandName() const;
-            virtual std::string             description() const;
-            virtual DataList                data()        const;
-            virtual std::vector< XS::Info > dataInfo()    const;
+            friend void swap( DataInfo & o1, DataInfo & o2 );
+            
+        private:
+            
+            class IMPL;
+            
+            std::unique_ptr< IMPL > impl;
     };
 }
 
-#endif /* MACHO_LOAD_COMMAND_HPP */
+#endif /* MACHO_DATA_INFO_HPP */

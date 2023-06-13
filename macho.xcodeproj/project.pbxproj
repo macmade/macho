@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		055E596C24B71CC7005343D3 /* DataInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 055E596A24B71CC7005343D3 /* DataInfo.cpp */; };
+		055E596D24B71CC7005343D3 /* DataInfo.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 055E596B24B71CC7005343D3 /* DataInfo.hpp */; };
 		05A29D3B24AC8E480025C57D /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05A29D3A24AC8E480025C57D /* main.cpp */; };
 		05A29D4424AC90ED0025C57D /* Arguments.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05A29D4224AC90ED0025C57D /* Arguments.cpp */; };
 		05C8C31E24AE1BAE0095E313 /* libmacho.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 05C8C31124AE1B030095E313 /* libmacho.a */; };
@@ -202,6 +204,8 @@
 		055C8E9E245DC6870099DFF8 /* ccache-config.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "ccache-config.sh"; sourceTree = "<group>"; };
 		055C8E9F245DC6870099DFF8 /* ccache.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ccache.sh; sourceTree = "<group>"; };
 		055C8EF3246075A80099DFF8 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		055E596A24B71CC7005343D3 /* DataInfo.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DataInfo.cpp; sourceTree = "<group>"; };
+		055E596B24B71CC7005343D3 /* DataInfo.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = DataInfo.hpp; sourceTree = "<group>"; };
 		05A29D3A24AC8E480025C57D /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		05A29D4224AC90ED0025C57D /* Arguments.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Arguments.cpp; sourceTree = "<group>"; };
 		05A29D4324AC90ED0025C57D /* Arguments.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Arguments.hpp; sourceTree = "<group>"; };
@@ -518,6 +522,7 @@
 				05C8C45624B4CD360095E313 /* CacheImageInfo.cpp */,
 				05C8C45A24B4D3CE0095E313 /* CacheMappingInfo.cpp */,
 				05C8C41924AFF5C10095E313 /* CPU.cpp */,
+				055E596A24B71CC7005343D3 /* DataInfo.cpp */,
 				05C8C33E24AE49D10095E313 /* FatArch.cpp */,
 				05C8C33624AE2D050095E313 /* FatFile.cpp */,
 				05C8C32224AE1BE90095E313 /* File.cpp */,
@@ -543,6 +548,7 @@
 				05C8C45724B4CD360095E313 /* CacheImageInfo.hpp */,
 				05C8C45B24B4D3CE0095E313 /* CacheMappingInfo.hpp */,
 				05C8C41A24AFF5C10095E313 /* CPU.hpp */,
+				055E596B24B71CC7005343D3 /* DataInfo.hpp */,
 				05C8C33F24AE49D10095E313 /* FatArch.hpp */,
 				05C8C33724AE2D050095E313 /* FatFile.hpp */,
 				05C8C32324AE1BE90095E313 /* File.hpp */,
@@ -686,6 +692,7 @@
 				05C8C43424B0F55E0095E313 /* Platform.hpp in Headers */,
 				05C8C39A24AFDDEE0095E313 /* UUID.hpp in Headers */,
 				05C8C3DD24AFE9440095E313 /* Routines64.hpp in Headers */,
+				055E596D24B71CC7005343D3 /* DataInfo.hpp in Headers */,
 				05C8C45D24B4D3CE0095E313 /* CacheMappingInfo.hpp in Headers */,
 				05C8C39B24AFDDEE0095E313 /* SubUmbrella.hpp in Headers */,
 				05C8C33D24AE2D400095E313 /* Functions.hpp in Headers */,
@@ -848,6 +855,7 @@
 				05C8C3BA24AFDDF60095E313 /* SubFramework.cpp in Sources */,
 				05C8C3B924AFDDF60095E313 /* SymTab.cpp in Sources */,
 				05C8C45824B4CD360095E313 /* CacheImageInfo.cpp in Sources */,
+				055E596C24B71CC7005343D3 /* DataInfo.cpp in Sources */,
 				05C8C3FB24AFE94F0095E313 /* SourceVersion.cpp in Sources */,
 				05C8C3B824AFDDF60095E313 /* Segment.cpp in Sources */,
 				05C8C33824AE2D050095E313 /* FatFile.cpp in Sources */,

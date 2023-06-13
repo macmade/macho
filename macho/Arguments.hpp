@@ -55,6 +55,7 @@ class Arguments: public XS::Info::Object
         bool                       showStrings()     const;
         bool                       showObjcClasses() const;
         bool                       showObjcMethods() const;
+        bool                       showData()        const;
         std::string                exec()            const;
         std::vector< std::string > files()           const;
         

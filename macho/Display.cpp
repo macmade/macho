@@ -55,7 +55,8 @@ namespace Display
                      "    -c / --objc-class   Prints the list of Objective-C classes from\n"
                      "                        __objc_classname.\n"
                      "    -m / --objc-method  Prints the list of Objective-C methods\n"
-                     "                        from __objc_methname."
+                     "                        from __objc_methname.\n"
+                     "    -d / --data         Prints the file data."
                   << std::endl;
     }
 
@@ -122,6 +123,28 @@ namespace Display
             
             methods.value( std::to_string( methods.children().size() ) );
             i.addChild( methods );
+        }
+        
+        if( args.showData() )
+        {
+            XS::Info data( "Data" );
+            
+            for( const auto & ref: file.loadCommands() )
+            {
+                XS::Info                command( ref.get().commandName() );
+                std::vector< XS::Info > info( ref.get().dataInfo() );
+                
+                if( info.size() > 0 )
+                {
+                    command.children( info );
+                    data.addChild( command );
+                }
+            }
+            
+            if( data.children().size() > 0 )
+            {
+                i.addChild( data );
+            }
         }
         
         return i;

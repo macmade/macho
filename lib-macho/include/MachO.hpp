@@ -33,6 +33,8 @@
 #include <MachO/CacheFile.hpp>
 #include <MachO/CacheImageInfo.hpp>
 #include <MachO/CacheMappingInfo.hpp>
+#include <MachO/CPU.hpp>
+#include <MachO/DataInfo.hpp>
 #include <MachO/FatArch.hpp>
 #include <MachO/FatFile.hpp>
 #include <MachO/File.hpp>

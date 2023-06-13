@@ -38,6 +38,7 @@ Mach-O file parser.
                             __objc_classname.
         -m / --objc-method  Prints the list of Objective-C methods
                             from __objc_methname.
+        -d / --data         Prints the file data.
 
 ### Example output
 
