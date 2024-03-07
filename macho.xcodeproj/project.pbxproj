@@ -944,6 +944,7 @@
 		055C8E66245DC6570099DFF8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.xs-labs.macho";
 				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "com.xs-labs.macho";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -953,6 +954,7 @@
 		055C8E67245DC6570099DFF8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.xs-labs.macho";
 				"PRODUCT_BUNDLE_IDENTIFIER[sdk=macosx*]" = "com.xs-labs.macho";
 				PRODUCT_NAME = "$(TARGET_NAME)";
