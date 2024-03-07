@@ -77,7 +77,22 @@ namespace MachO
 
         i.addChild( { "Name",         this->name() } );
         i.addChild( { "Name Index",   XS::ToString::Hex( this->nameIndex() ) } );
-        i.addChild( { "Type",         XS::ToString::Hex( this->type() ) } );
+
+        {
+            XS::Info type( "Type", XS::ToString::Hex( this->type() ) );
+
+            type.addChild( { "Symbolic Debugging Entry", std::to_string( ( this->type() & 0xE0 ) != 0 ) } );
+            type.addChild( { "Private External Symbol",  std::to_string( ( this->type() & 0x10 ) != 0 ) } );
+            type.addChild( { "Undefined",                std::to_string( ( this->type() & 0x0E ) == 0x0 ) } );
+            type.addChild( { "Absolute",                 std::to_string( ( this->type() & 0x0E ) == 0x2 ) } );
+            type.addChild( { "Defined in Section",       std::to_string( ( this->type() & 0x0E ) == 0xE ) } );
+            type.addChild( { "Prebound Undefined",       std::to_string( ( this->type() & 0x0E ) == 0xC ) } );
+            type.addChild( { "Indirect",                 std::to_string( ( this->type() & 0x0E ) == 0xA ) } );
+            type.addChild( { "External Symbol",          std::to_string( ( this->type() & 0x01 ) != 0 ) } );
+
+            i.addChild( type );
+        }
+
         i.addChild( { "Section",      XS::ToString::Hex( this->section() ) } );
         i.addChild( { "Description",  XS::ToString::Hex( this->description() ) } );
         i.addChild( { "Value",        XS::ToString::Hex( this->value() ) } );
