@@ -60,7 +60,11 @@ namespace MachO
                 LittleEndian,
                 BigEndian
             };
-            
+
+            #ifdef __APPLE__
+            static std::optional< std::tuple< File, const void * > > fromCurrentProcess( const std::string & path );
+            #endif
+
             File( const std::string & path );
             File( XS::IO::BinaryStream & stream );
             File( const File & o );

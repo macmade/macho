@@ -68,6 +68,10 @@
 #include <MachO/LoadCommands/UUID.hpp>
 #include <MachO/LoadCommands/VersionMin.hpp>
 
+#ifdef __APPLE__
+#include <mach-o/dyld.h>
+#endif
+
 namespace MachO
 {
     class File::IMPL
@@ -91,6 +95,39 @@ namespace MachO
             
             std::vector< std::shared_ptr< LoadCommand > > _loadCommands;
     };
+
+    #ifdef __APPLE__
+    std::optional< std::tuple< File, const void * > > File::fromCurrentProcess( const std::string & path )
+    {
+        std::optional< uint32_t > index;
+
+        for( uint32_t i = 0; i < _dyld_image_count(); i++ )
+        {
+            std::string image( _dyld_get_image_name( i ) );
+
+            if( image == path )
+            {
+                index = i;
+            }
+        }
+
+        if( index.has_value() == false )
+        {
+            return {};
+        }
+
+        const void * header = _dyld_get_image_header( index.value() );
+
+        if( header == nullptr )
+        {
+            return {};
+        }
+
+        XS::IO::BinaryMemoryStream stream( static_cast< const uint8_t * >( header ) );
+
+        return { { stream, header } };
+    }
+    #endif
 
     File::File( const std::string & path ):
         impl( std::make_unique< IMPL >( path ) )
