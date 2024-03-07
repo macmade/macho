@@ -68,7 +68,7 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "/Library/Apple/System/Library/PrivateFrameworks/Mercury.framework/Mercury"
+            argument = "/Library/Apple/System/Library/PrivateFrameworks/AirTrafficHost.framework/AirTrafficHost"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
