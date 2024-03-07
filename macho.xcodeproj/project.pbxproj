@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		055E596C24B71CC7005343D3 /* DataInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 055E596A24B71CC7005343D3 /* DataInfo.cpp */; };
 		055E596D24B71CC7005343D3 /* DataInfo.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 055E596B24B71CC7005343D3 /* DataInfo.hpp */; };
+		056ECE482B9A637900C186E2 /* Symbol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 056ECE462B9A637900C186E2 /* Symbol.cpp */; };
+		056ECE492B9A637900C186E2 /* Symbol.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 056ECE472B9A637900C186E2 /* Symbol.hpp */; };
 		05A29D3B24AC8E480025C57D /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05A29D3A24AC8E480025C57D /* main.cpp */; };
 		05A29D4424AC90ED0025C57D /* Arguments.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05A29D4224AC90ED0025C57D /* Arguments.cpp */; };
 		05C8C31E24AE1BAE0095E313 /* libmacho.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 05C8C31124AE1B030095E313 /* libmacho.a */; };
@@ -206,6 +208,8 @@
 		055C8EF3246075A80099DFF8 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		055E596A24B71CC7005343D3 /* DataInfo.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DataInfo.cpp; sourceTree = "<group>"; };
 		055E596B24B71CC7005343D3 /* DataInfo.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = DataInfo.hpp; sourceTree = "<group>"; };
+		056ECE462B9A637900C186E2 /* Symbol.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Symbol.cpp; sourceTree = "<group>"; };
+		056ECE472B9A637900C186E2 /* Symbol.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Symbol.hpp; sourceTree = "<group>"; };
 		05A29D3A24AC8E480025C57D /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		05A29D4224AC90ED0025C57D /* Arguments.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Arguments.cpp; sourceTree = "<group>"; };
 		05A29D4324AC90ED0025C57D /* Arguments.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Arguments.hpp; sourceTree = "<group>"; };
@@ -535,6 +539,7 @@
 				05C8C45E24B4E5DA0095E313 /* Section.cpp */,
 				05C8C46224B4E8B40095E313 /* Section64.cpp */,
 				05C8C46624B503490095E313 /* SectionFlags.cpp */,
+				056ECE462B9A637900C186E2 /* Symbol.cpp */,
 				05C8C43524B1070C0095E313 /* Tool.cpp */,
 				05C8C41524AFEF6E0095E313 /* ToString.cpp */,
 			);
@@ -562,6 +567,7 @@
 				05C8C45F24B4E5DA0095E313 /* Section.hpp */,
 				05C8C46424B4E8C00095E313 /* Section64.hpp */,
 				05C8C46724B503490095E313 /* SectionFlags.hpp */,
+				056ECE472B9A637900C186E2 /* Symbol.hpp */,
 				05C8C43624B1070C0095E313 /* Tool.hpp */,
 				05C8C41624AFEF6E0095E313 /* ToString.hpp */,
 			);
@@ -689,6 +695,7 @@
 				05C8C3D024AFE9440095E313 /* BuildVersion.hpp in Headers */,
 				05C8C3DC24AFE9440095E313 /* EntryPoint.hpp in Headers */,
 				05C8C3D624AFE9440095E313 /* Note.hpp in Headers */,
+				056ECE492B9A637900C186E2 /* Symbol.hpp in Headers */,
 				05C8C43424B0F55E0095E313 /* Platform.hpp in Headers */,
 				05C8C39A24AFDDEE0095E313 /* UUID.hpp in Headers */,
 				05C8C3DD24AFE9440095E313 /* Routines64.hpp in Headers */,
@@ -856,6 +863,7 @@
 				05C8C3B924AFDDF60095E313 /* SymTab.cpp in Sources */,
 				05C8C45824B4CD360095E313 /* CacheImageInfo.cpp in Sources */,
 				055E596C24B71CC7005343D3 /* DataInfo.cpp in Sources */,
+				056ECE482B9A637900C186E2 /* Symbol.cpp in Sources */,
 				05C8C3FB24AFE94F0095E313 /* SourceVersion.cpp in Sources */,
 				05C8C3B824AFDDF60095E313 /* Segment.cpp in Sources */,
 				05C8C33824AE2D050095E313 /* FatFile.cpp in Sources */,

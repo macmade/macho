@@ -40,6 +40,7 @@ class Arguments::IMPL
         bool                       _showHelp;
         bool                       _showInfo;
         bool                       _showLibs;
+        bool                       _showSymbols;
         bool                       _showStrings;
         bool                       _showObjcClasses;
         bool                       _showObjcMethods;
@@ -78,11 +79,12 @@ XS::Info Arguments::getInfo() const
     i.addChild( { "Help",                std::to_string( this->showHelp() ) } );
     i.addChild( { "Info",                std::to_string( this->showInfo() ) } );
     i.addChild( { "Libs",                std::to_string( this->showLibs() ) } );
+    i.addChild( { "Symbols",             std::to_string( this->showSymbols() ) } );
     i.addChild( { "Strings",             std::to_string( this->showStrings() ) } );
     i.addChild( { "Objective-C classes", std::to_string( this->showObjcClasses() ) } );
     i.addChild( { "Objective-C methods", std::to_string( this->showObjcMethods() ) } );
     i.addChild( { "Data",                std::to_string( this->showData() ) } );
-    
+
     for( const auto & file: this->files() )
     {
         files.addChild( file );
@@ -110,6 +112,11 @@ bool Arguments::showInfo() const
 bool Arguments::showLibs() const
 {
     return this->impl->_showLibs;
+}
+
+bool Arguments::showSymbols() const
+{
+    return this->impl->_showSymbols;
 }
 
 bool Arguments::showStrings() const
@@ -153,6 +160,7 @@ Arguments::IMPL::IMPL( int argc, char ** argv ):
     _showHelp(        false ),
     _showInfo(        false ),
     _showLibs(        false ),
+    _showSymbols(     false ),
     _showStrings(     false ),
     _showObjcClasses( false ),
     _showObjcMethods( false ),
@@ -183,6 +191,7 @@ Arguments::IMPL::IMPL( int argc, char ** argv ):
                  if( arg == "--help"        ) { this->_showHelp        = true; }
             else if( arg == "--info"        ) { this->_showInfo        = true; }
             else if( arg == "--libs"        ) { this->_showLibs        = true; }
+            else if( arg == "--symbols"     ) { this->_showSymbols     = true; }
             else if( arg == "--str"         ) { this->_showStrings     = true; }
             else if( arg == "--objc-class"  ) { this->_showObjcClasses = true; }
             else if( arg == "--objc-method" ) { this->_showObjcMethods = true; }
@@ -194,6 +203,7 @@ Arguments::IMPL::IMPL( int argc, char ** argv ):
                     if( c == 'h' ) { this->_showHelp        = true; }
                     if( c == 'i' ) { this->_showInfo        = true; }
                     if( c == 'l' ) { this->_showLibs        = true; }
+                    if( c == 'f' ) { this->_showSymbols     = true; }
                     if( c == 's' ) { this->_showStrings     = true; }
                     if( c == 'c' ) { this->_showObjcClasses = true; }
                     if( c == 'm' ) { this->_showObjcMethods = true; }
@@ -212,6 +222,7 @@ Arguments::IMPL::IMPL( const IMPL & o ):
     _showHelp(        o._showHelp ),
     _showInfo(        o._showInfo ),
     _showLibs(        o._showLibs ),
+    _showSymbols(     o._showSymbols ),
     _showStrings(     o._showStrings ),
     _showObjcClasses( o._showObjcClasses ),
     _showObjcMethods( o._showObjcMethods ),

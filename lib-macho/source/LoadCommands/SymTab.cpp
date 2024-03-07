@@ -49,6 +49,9 @@ namespace MachO
                 uint32_t _symbolCount;
                 uint32_t _stringOffset;
                 uint32_t _stringSize;
+
+                std::vector< std::string >  _strings;
+                std::vector< Symbol >       _symbols;
         };
 
         SymTab::SymTab( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream ):
@@ -114,7 +117,17 @@ namespace MachO
         {
             return this->impl->_stringSize;
         }
-        
+
+        std::vector< std::string > SymTab::strings() const
+        {
+            return this->impl->_strings;
+        }
+
+        std::vector< Symbol > SymTab::symbols() const
+        {
+            return this->impl->_symbols;
+        }
+
         void swap( SymTab & o1, SymTab & o2 )
         {
             using std::swap;
@@ -130,7 +143,19 @@ namespace MachO
             _stringOffset( stream.readUInt32() ),
             _stringSize(   stream.readUInt32() )
         {
-            ( void )kind;
+            stream.seek( this->_stringOffset, XS::IO::BinaryStream::SeekDirection::Begin );
+
+            while( stream.tell() < this->_stringOffset + this->_stringSize )
+            {
+                this->_strings.push_back( stream.readNULLTerminatedString() );
+            }
+
+            stream.seek( this->_symbolOffset, XS::IO::BinaryStream::SeekDirection::Begin );
+
+            for( uint32_t i = 0; i < this->_symbolCount; i++ )
+            {
+                this->_symbols.push_back( { kind, this->_stringOffset, stream } );
+            }
         }
         
         SymTab::IMPL::IMPL( const IMPL & o ):
@@ -139,7 +164,9 @@ namespace MachO
             _symbolOffset( o._symbolOffset ),
             _symbolCount(  o._symbolCount ),
             _stringOffset( o._stringOffset ),
-            _stringSize(   o._stringSize )
+            _stringSize(   o._stringSize ),
+            _strings(      o._strings ),
+            _symbols(      o._symbols )
         {}
 
         SymTab::IMPL::~IMPL()

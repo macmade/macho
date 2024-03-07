@@ -57,7 +57,11 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--libs"
-            isEnabled = "NO">
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "--symbols"
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--str"

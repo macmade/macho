@@ -50,6 +50,7 @@ namespace Display
                      "    -h / --help         Shows this help dialog.\n"
                      "    -i / --info         Prints the detailed Mach-O structure.\n"
                      "    -l / --libs         Prints the list of linked libraries.\n"
+                     "    -f / --symbols      Prints the list of symbols.\n"
                      "    -s / --str          Prints the list of strings from __cstring,\n"
                      "                        __oslogstring and __ustring.\n"
                      "    -c / --objc-class   Prints the list of Objective-C classes from\n"
@@ -80,6 +81,19 @@ namespace Display
             
             libs.value( std::to_string( libs.children().size() ) );
             i.addChild( libs );
+        }
+        
+        if( args.showSymbols() )
+        {
+            XS::Info syms( "Symbols" );
+            
+            for( const auto & sym: file.symbols() )
+            {
+                syms.addChild( sym );
+            }
+            
+            syms.value( std::to_string( syms.children().size() ) );
+            i.addChild( syms );
         }
         
         if( args.showStrings() )

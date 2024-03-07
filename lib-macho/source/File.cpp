@@ -197,6 +197,21 @@ namespace MachO
         return libs;
     }
     
+    std::vector< Symbol > File::symbols() const
+    {
+        std::vector< Symbol > syms;
+
+        for( const auto & symTab: this->loadCommands< LoadCommands::SymTab >() )
+        {
+            for( const auto & sym: symTab.symbols() )
+            {
+                syms.push_back( sym );
+            }
+        }
+        
+        return syms;
+    }
+    
     std::vector< std::string > File::strings() const
     {
         std::vector< std::vector< uint8_t > > cstrings;

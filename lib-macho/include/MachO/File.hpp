@@ -43,6 +43,8 @@
 
 namespace MachO
 {
+    class Symbol;
+    
     class File: public XS::Info::Object
     {
         public:
@@ -78,6 +80,7 @@ namespace MachO
             
             std::vector< std::reference_wrapper< LoadCommand > > loadCommands()    const;
             std::vector< std::string >                           linkedLibraries() const;
+            std::vector< Symbol >                                symbols()         const;
             std::vector< std::string >                           strings()         const;
             std::vector< std::string >                           objcClasses()     const;
             std::vector< std::string >                           objcMethods()     const;

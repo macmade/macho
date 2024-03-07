@@ -32,6 +32,7 @@
 
 #include <MachO/LoadCommand.hpp>
 #include <MachO/File.hpp>
+#include <MachO/Symbol.hpp>
 #include <XS.hpp>
 
 namespace MachO
@@ -41,8 +42,8 @@ namespace MachO
         class SymTab: public LoadCommand
         {
             public:
-                
-                SymTab( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
+
+                SymTab( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream );
                 SymTab( const SymTab & o );
                 SymTab( SymTab && o ) noexcept;
                 ~SymTab() override;
@@ -57,7 +58,10 @@ namespace MachO
                 uint32_t symbolCount()  const;
                 uint32_t stringOffset() const;
                 uint32_t stringSize()   const;
-                
+
+                std::vector< std::string >  strings() const;
+                std::vector< Symbol >       symbols() const;
+
                 friend void swap( SymTab & o1, SymTab & o2 );
                 
             private:

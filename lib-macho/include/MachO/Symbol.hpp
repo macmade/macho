@@ -23,50 +23,50 @@
  ******************************************************************************/
 
 /*!
- * @header      Arguments.hpp
+ * @header      Symbol.hpp
  * @copyright   (c) 2020, Jean-David Gadina - www.xs-labs.com
  */
 
-#ifndef ARGUMENTS_HPP
-#define ARGUMENTS_HPP
+#ifndef MACHO_SYMBOL_HPP
+#define MACHO_SYMBOL_HPP
 
 #include <memory>
 #include <algorithm>
 #include <string>
-#include <vector>
+#include <cstdint>
 #include <XS.hpp>
+#include <MachO/File.hpp>
 
-class Arguments: public XS::Info::Object
+namespace MachO
 {
-    public:
-        
-        Arguments( int argc, char ** argv );
-        Arguments( const Arguments & o );
-        Arguments( Arguments && o ) noexcept;
-        ~Arguments() override;
-        
-        Arguments & operator =( Arguments o );
-        
-        XS::Info getInfo() const override;
-        
-        bool                       showHelp()        const;
-        bool                       showInfo()        const;
-        bool                       showLibs()        const;
-        bool                       showSymbols()     const;
-        bool                       showStrings()     const;
-        bool                       showObjcClasses() const;
-        bool                       showObjcMethods() const;
-        bool                       showData()        const;
-        std::string                exec()            const;
-        std::vector< std::string > files()           const;
-        
-        friend void swap( Arguments & o1, Arguments & o2 );
-        
-    private:
-        
-        class IMPL;
-        
-        std::unique_ptr< IMPL > impl;
-};
+    class Symbol: public XS::Info::Object
+    {
+        public:
 
-#endif /* ARGUMENTS_HPP */
+            Symbol( File::Kind kind, uint32_t stringTableOffset, XS::IO::BinaryStream & stream );
+            Symbol( const Symbol & o );
+            Symbol( Symbol && o ) noexcept;
+            virtual ~Symbol() override;
+
+            Symbol & operator =( Symbol o );
+
+            XS::Info getInfo() const override;
+
+            std::string name()        const;
+            uint32_t    nameIndex()   const;
+            uint8_t     type()        const;
+            uint8_t     section()     const;
+            uint16_t    description() const;
+            uint64_t    value()       const;
+
+            friend void swap( Symbol & o1, Symbol & o2 );
+
+        private:
+
+            class IMPL;
+
+            std::unique_ptr< IMPL > impl;
+    };
+}
+
+#endif /* MACHO_SYMBOL_HPP */

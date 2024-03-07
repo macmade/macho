@@ -47,6 +47,7 @@
 #include <MachO/Section.hpp>
 #include <MachO/Section64.hpp>
 #include <MachO/SectionFlags.hpp>
+#include <MachO/Symbol.hpp>
 #include <MachO/Tool.hpp>
 #include <MachO/ToString.hpp>
 

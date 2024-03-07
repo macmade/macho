@@ -29,6 +29,7 @@ Mach-O file parser.
         -h / --help         Shows this help dialog.
         -i / --info         Prints the detailed Mach-O structure.
         -l / --libs         Prints the list of linked libraries.
+        -f / --symbols      Prints the list of symbols.
         -s / --str          Prints the list of strings from __cstring,
                             __oslogstring and __ustring.
         -c / --objc-class   Prints the list of Objective-C classes from
