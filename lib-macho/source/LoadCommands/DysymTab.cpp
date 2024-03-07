@@ -45,10 +45,24 @@ namespace MachO
                 
                 uint32_t _command;
                 uint32_t _size;
-                uint32_t _symbolOffset;
-                uint32_t _symbolCount;
-                uint32_t _stringOffset;
-                uint32_t _stringSize;
+                uint32_t _localSymbolIndex;
+                uint32_t _localSymbolCount;
+                uint32_t _externSymbolIndex;
+                uint32_t _externSymbolCount;
+                uint32_t _undefinedSymbolIndex;
+                uint32_t _undefinedSymbolCount;
+                uint32_t _contentTableOffset;
+                uint32_t _contentTableCount;
+                uint32_t _moduleTableOffset;
+                uint32_t _moduleTableCount;
+                uint32_t _referencedSymbolTableOffset;
+                uint32_t _referencedSymbolTableCount;
+                uint32_t _indirectSymbolTableOffset;
+                uint32_t _indirectSymbolTableCount;
+                uint32_t _externalRelocationOffset;
+                uint32_t _externalRelocationCount;
+                uint32_t _localRelocationOffset;
+                uint32_t _localRelocationCount;
         };
 
         DysymTab::DysymTab( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream ):
@@ -76,12 +90,26 @@ namespace MachO
         XS::Info DysymTab::getInfo() const
         {
             XS::Info i( LoadCommand::getInfo() );
-            
-            i.addChild( { "Symbol offset", XS::ToString::Hex( this->symbolOffset() ) } );
-            i.addChild( { "Symbol size",   XS::ToString::Hex( this->symbolCount() ) } );
-            i.addChild( { "String offset", XS::ToString::Hex( this->stringOffset() ) } );
-            i.addChild( { "String size",   XS::ToString::Hex( this->stringSize() ) } );
-            
+
+            i.addChild( { "Local Symbol Index",             XS::ToString::Hex( this->localSymbolIndex() ) } );
+            i.addChild( { "Local Symbol Count",             XS::ToString::Hex( this->localSymbolCount() ) } );
+            i.addChild( { "Extern Symbol Index",            XS::ToString::Hex( this->externSymbolIndex() ) } );
+            i.addChild( { "Extern Symbol Count",            XS::ToString::Hex( this->externSymbolCount() ) } );
+            i.addChild( { "Undefined Symbol Index",         XS::ToString::Hex( this->undefinedSymbolIndex() ) } );
+            i.addChild( { "Undefined Symbol Count",         XS::ToString::Hex( this->undefinedSymbolCount() ) } );
+            i.addChild( { "Content Table Offset",           XS::ToString::Hex( this->contentTableOffset() ) } );
+            i.addChild( { "Content Table Count",            XS::ToString::Hex( this->contentTableCount() ) } );
+            i.addChild( { "Module Table Offset",            XS::ToString::Hex( this->moduleTableOffset() ) } );
+            i.addChild( { "Module Table Count",             XS::ToString::Hex( this->moduleTableCount() ) } );
+            i.addChild( { "Referenced Symbol Table Offset", XS::ToString::Hex( this->referencedSymbolTableOffset() ) } );
+            i.addChild( { "Referenced Symbol Table Count",  XS::ToString::Hex( this->referencedSymbolTableCount() ) } );
+            i.addChild( { "Indirect Symbol Table Offset",   XS::ToString::Hex( this->indirectSymbolTableOffset() ) } );
+            i.addChild( { "Indirect Symbol Table Count",    XS::ToString::Hex( this->indirectSymbolTableCount() ) } );
+            i.addChild( { "External Relocation Offset",     XS::ToString::Hex( this->externalRelocationOffset() ) } );
+            i.addChild( { "External Relocation Count",      XS::ToString::Hex( this->externalRelocationCount() ) } );
+            i.addChild( { "Local Relocation Offset",        XS::ToString::Hex( this->localRelocationOffset() ) } );
+            i.addChild( { "Local Relocation Count",         XS::ToString::Hex( this->localRelocationCount() ) } );
+
             return i;
         }
         
@@ -94,27 +122,97 @@ namespace MachO
         {
             return this->impl->_size;
         }
-        
-        uint32_t DysymTab::symbolOffset() const
+
+        uint32_t DysymTab::localSymbolIndex() const
         {
-            return this->impl->_symbolOffset;
+            return this->impl->_localSymbolIndex;
         }
-        
-        uint32_t DysymTab::symbolCount() const
+
+        uint32_t DysymTab::localSymbolCount() const
         {
-            return this->impl->_symbolCount;
+            return this->impl->_localSymbolCount;
         }
-        
-        uint32_t DysymTab::stringOffset() const
+
+        uint32_t DysymTab::externSymbolIndex() const
         {
-            return this->impl->_stringOffset;
+            return this->impl->_externSymbolIndex;
         }
-        
-        uint32_t DysymTab::stringSize() const
+
+        uint32_t DysymTab::externSymbolCount() const
         {
-            return this->impl->_stringSize;
+            return this->impl->_externSymbolCount;
         }
-        
+
+        uint32_t DysymTab::undefinedSymbolIndex() const
+        {
+            return this->impl->_undefinedSymbolIndex;
+        }
+
+        uint32_t DysymTab::undefinedSymbolCount() const
+        {
+            return this->impl->_undefinedSymbolCount;
+        }
+
+        uint32_t DysymTab::contentTableOffset() const
+        {
+            return this->impl->_contentTableOffset;
+        }
+
+        uint32_t DysymTab::contentTableCount() const
+        {
+            return this->impl->_contentTableCount;
+        }
+
+        uint32_t DysymTab::moduleTableOffset() const
+        {
+            return this->impl->_moduleTableOffset;
+        }
+
+        uint32_t DysymTab::moduleTableCount() const
+        {
+            return this->impl->_moduleTableCount;
+        }
+
+        uint32_t DysymTab::referencedSymbolTableOffset() const
+        {
+            return this->impl->_referencedSymbolTableOffset;
+        }
+
+        uint32_t DysymTab::referencedSymbolTableCount() const
+        {
+            return this->impl->_referencedSymbolTableCount;
+        }
+
+        uint32_t DysymTab::indirectSymbolTableOffset() const
+        {
+            return this->impl->_indirectSymbolTableOffset;
+        }
+
+        uint32_t DysymTab::indirectSymbolTableCount() const
+        {
+            return this->impl->_indirectSymbolTableCount;
+        }
+
+        uint32_t DysymTab::externalRelocationOffset() const
+        {
+            return this->impl->_externalRelocationOffset;
+        }
+
+        uint32_t DysymTab::externalRelocationCount() const
+        {
+            return this->impl->_externalRelocationCount;
+        }
+
+        uint32_t DysymTab::localRelocationOffset() const
+        {
+            return this->impl->_localRelocationOffset;
+        }
+
+        uint32_t DysymTab::localRelocationCount() const
+        {
+            return this->impl->_localRelocationCount;
+        }
+
         void swap( DysymTab & o1, DysymTab & o2 )
         {
             using std::swap;
@@ -123,26 +221,55 @@ namespace MachO
         }
         
         DysymTab::IMPL::IMPL( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream ):
-            _command(      command ),
-            _size(         size ),
-            _symbolOffset( stream.readUInt32() ),
-            _symbolCount(  stream.readUInt32() ),
-            _stringOffset( stream.readUInt32() ),
-            _stringSize(   stream.readUInt32() )
+            _command(                     command ),
+            _size(                        size ),
+            _localSymbolIndex(            stream.readUInt32() ),
+            _localSymbolCount(            stream.readUInt32() ),
+            _externSymbolIndex(           stream.readUInt32() ),
+            _externSymbolCount(           stream.readUInt32() ),
+            _undefinedSymbolIndex(        stream.readUInt32() ),
+            _undefinedSymbolCount(        stream.readUInt32() ),
+            _contentTableOffset(          stream.readUInt32() ),
+            _contentTableCount(           stream.readUInt32() ),
+            _moduleTableOffset(           stream.readUInt32() ),
+            _moduleTableCount(            stream.readUInt32() ),
+            _referencedSymbolTableOffset( stream.readUInt32() ),
+            _referencedSymbolTableCount(  stream.readUInt32() ),
+            _indirectSymbolTableOffset(   stream.readUInt32() ),
+            _indirectSymbolTableCount(    stream.readUInt32() ),
+            _externalRelocationOffset(    stream.readUInt32() ),
+            _externalRelocationCount(     stream.readUInt32() ),
+            _localRelocationOffset(       stream.readUInt32() ),
+            _localRelocationCount(        stream.readUInt32() )
         {
             ( void )kind;
         }
         
         DysymTab::IMPL::IMPL( const IMPL & o ):
-            _command(      o._command ),
-            _size(         o._size ),
-            _symbolOffset( o._symbolOffset ),
-            _symbolCount(  o._symbolCount ),
-            _stringOffset( o._stringOffset ),
-            _stringSize(   o._stringSize )
+            _command(                     o._command ),
+            _size(                        o._size ),
+            _localSymbolIndex(            o._localSymbolIndex ),
+            _localSymbolCount(            o._localSymbolCount ),
+            _externSymbolIndex(           o._externSymbolIndex ),
+            _externSymbolCount(           o._externSymbolCount ),
+            _undefinedSymbolIndex(        o._undefinedSymbolIndex ),
+            _undefinedSymbolCount(        o._undefinedSymbolCount ),
+            _contentTableOffset(          o._contentTableOffset ),
+            _contentTableCount(           o._contentTableCount ),
+            _moduleTableOffset(           o._moduleTableOffset ),
+            _moduleTableCount(            o._moduleTableCount ),
+            _referencedSymbolTableOffset( o._referencedSymbolTableOffset ),
+            _referencedSymbolTableCount(  o._referencedSymbolTableCount ),
+            _indirectSymbolTableOffset(   o._indirectSymbolTableOffset ),
+            _indirectSymbolTableCount(    o._indirectSymbolTableCount ),
+            _externalRelocationOffset(    o._externalRelocationOffset ),
+            _externalRelocationCount(     o._externalRelocationCount ),
+            _localRelocationOffset(       o._localRelocationOffset ),
+            _localRelocationCount(        o._localRelocationCount )
         {}
 
         DysymTab::IMPL::~IMPL()
         {}
     }
 }
+#include <mach-o/loader.h>

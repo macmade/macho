@@ -51,13 +51,27 @@ namespace MachO
                 
                 XS::Info getInfo() const override;
                 
-                uint32_t command()      const override;
-                uint32_t size()         const override;
-                uint32_t symbolOffset() const;
-                uint32_t symbolCount()  const;
-                uint32_t stringOffset() const;
-                uint32_t stringSize()   const;
-                
+                uint32_t command()                     const override;
+                uint32_t size()                        const override;
+                uint32_t localSymbolIndex()            const;
+                uint32_t localSymbolCount()            const;
+                uint32_t externSymbolIndex()           const;
+                uint32_t externSymbolCount()           const;
+                uint32_t undefinedSymbolIndex()        const;
+                uint32_t undefinedSymbolCount()        const;
+                uint32_t contentTableOffset()          const;
+                uint32_t contentTableCount()           const;
+                uint32_t moduleTableOffset()           const;
+                uint32_t moduleTableCount()            const;
+                uint32_t referencedSymbolTableOffset() const;
+                uint32_t referencedSymbolTableCount()  const;
+                uint32_t indirectSymbolTableOffset()   const;
+                uint32_t indirectSymbolTableCount()    const;
+                uint32_t externalRelocationOffset()    const;
+                uint32_t externalRelocationCount()     const;
+                uint32_t localRelocationOffset()       const;
+                uint32_t localRelocationCount()        const;
+
                 friend void swap( DysymTab & o1, DysymTab & o2 );
                 
             private:
