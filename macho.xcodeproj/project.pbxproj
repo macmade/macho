@@ -777,7 +777,7 @@
 		055C8E40245DC5FD0099DFF8 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1150;
+				LastUpgradeCheck = 1530;
 				ORGANIZATIONNAME = DigiDNA;
 				TargetAttributes = {
 					055C8E60245DC6570099DFF8 = {
