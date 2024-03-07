@@ -81,7 +81,7 @@ namespace MachO
         
         if( this->impl->_path.has_value() )
         {
-            i.value( XS::ToString::Filename( this->impl->_path.value() ) );
+            i.value( XS::ToString::Filename( *( this->impl->_path ) ) );
         }
         
         for( const auto & p: this->impl->_archs )

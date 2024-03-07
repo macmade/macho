@@ -116,7 +116,7 @@ namespace MachO
             return {};
         }
 
-        const void * header = _dyld_get_image_header( index.value() );
+        const void * header = _dyld_get_image_header( *( index ) );
 
         if( header == nullptr )
         {
@@ -162,7 +162,7 @@ namespace MachO
         
         if( this->impl->_path.has_value() )
         {
-            i.value( XS::ToString::Filename( this->impl->_path.value() ) );
+            i.value( XS::ToString::Filename( *( this->impl->_path ) ) );
         }
         
         commands.value( std::to_string( this->loadCommands().size() ) );
@@ -303,7 +303,7 @@ namespace MachO
                     
                     if( str.has_value() )
                     {
-                        set.insert( str.value() );
+                        set.insert( *( str ) );
                     }
                 }
             }

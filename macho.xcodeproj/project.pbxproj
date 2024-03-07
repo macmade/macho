@@ -922,7 +922,7 @@
 					"$(SRCROOT)/lib-macho/include/",
 					"$(SRCROOT)/Submodules/STDXS/XS++/include/",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 			};
 			name = Debug;
 		};
@@ -937,7 +937,7 @@
 					"$(SRCROOT)/lib-macho/include/",
 					"$(SRCROOT)/Submodules/STDXS/XS++/include/",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 			};
 			name = Release;
 		};
