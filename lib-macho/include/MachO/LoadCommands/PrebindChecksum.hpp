@@ -42,7 +42,7 @@ namespace MachO
         {
             public:
                 
-                PrebindChecksum( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
+                PrebindChecksum( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream );
                 PrebindChecksum( const PrebindChecksum & o );
                 PrebindChecksum( PrebindChecksum && o ) noexcept;
                 ~PrebindChecksum() override;

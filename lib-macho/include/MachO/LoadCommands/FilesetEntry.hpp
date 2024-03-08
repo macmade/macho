@@ -42,7 +42,7 @@ namespace MachO
         {
             public:
                 
-                FilesetEntry( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
+                FilesetEntry( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream );
                 FilesetEntry( const FilesetEntry & o );
                 FilesetEntry( FilesetEntry && o ) noexcept;
                 ~FilesetEntry() override;

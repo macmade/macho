@@ -42,7 +42,7 @@ namespace MachO
         {
             public:
                 
-                SymSeg( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
+                SymSeg( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream );
                 SymSeg( const SymSeg & o );
                 SymSeg( SymSeg && o ) noexcept;
                 ~SymSeg() override;

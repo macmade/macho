@@ -45,7 +45,7 @@ namespace MachO
         {
             public:
                 
-                Segment( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
+                Segment( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream );
                 Segment( const Segment & o );
                 Segment( Segment && o ) noexcept;
                 ~Segment() override;

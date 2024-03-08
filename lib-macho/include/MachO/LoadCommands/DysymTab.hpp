@@ -42,7 +42,7 @@ namespace MachO
         {
             public:
                 
-                DysymTab( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
+                DysymTab( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream );
                 DysymTab( const DysymTab & o );
                 DysymTab( DysymTab && o ) noexcept;
                 ~DysymTab() override;

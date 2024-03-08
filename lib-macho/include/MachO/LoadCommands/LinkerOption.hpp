@@ -44,7 +44,7 @@ namespace MachO
         {
             public:
                 
-                LinkerOption( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
+                LinkerOption( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream );
                 LinkerOption( const LinkerOption & o );
                 LinkerOption( LinkerOption && o ) noexcept;
                 ~LinkerOption() override;

@@ -42,7 +42,7 @@ namespace MachO
         {
             public:
                 
-                UUID( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
+                UUID( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream );
                 UUID( const UUID & o );
                 UUID( UUID && o ) noexcept;
                 ~UUID() override;

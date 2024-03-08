@@ -42,7 +42,7 @@ namespace MachO
         {
             public:
                 
-                Dylinker( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
+                Dylinker( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream );
                 Dylinker( const Dylinker & o );
                 Dylinker( Dylinker && o ) noexcept;
                 ~Dylinker() override;

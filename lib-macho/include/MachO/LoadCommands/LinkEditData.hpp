@@ -42,7 +42,7 @@ namespace MachO
         {
             public:
                 
-                LinkEditData( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
+                LinkEditData( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream );
                 LinkEditData( const LinkEditData & o );
                 LinkEditData( LinkEditData && o ) noexcept;
                 ~LinkEditData() override;

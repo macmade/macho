@@ -42,7 +42,7 @@ namespace MachO
         {
             public:
                 
-                SubClient( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
+                SubClient( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream );
                 SubClient( const SubClient & o );
                 SubClient( SubClient && o ) noexcept;
                 ~SubClient() override;

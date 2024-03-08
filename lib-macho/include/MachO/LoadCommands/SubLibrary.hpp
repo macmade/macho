@@ -42,7 +42,7 @@ namespace MachO
         {
             public:
                 
-                SubLibrary( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
+                SubLibrary( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream );
                 SubLibrary( const SubLibrary & o );
                 SubLibrary( SubLibrary && o ) noexcept;
                 ~SubLibrary() override;

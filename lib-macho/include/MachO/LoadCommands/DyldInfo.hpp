@@ -42,7 +42,7 @@ namespace MachO
         {
             public:
                 
-                DyldInfo( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
+                DyldInfo( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream );
                 DyldInfo( const DyldInfo & o );
                 DyldInfo( DyldInfo && o ) noexcept;
                 ~DyldInfo() override;

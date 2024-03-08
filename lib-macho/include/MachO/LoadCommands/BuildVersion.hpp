@@ -45,7 +45,7 @@ namespace MachO
         {
             public:
                 
-                BuildVersion( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
+                BuildVersion( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream );
                 BuildVersion( const BuildVersion & o );
                 BuildVersion( BuildVersion && o ) noexcept;
                 ~BuildVersion() override;

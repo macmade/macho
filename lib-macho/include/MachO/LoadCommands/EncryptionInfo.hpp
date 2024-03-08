@@ -42,7 +42,7 @@ namespace MachO
         {
             public:
                 
-                EncryptionInfo( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
+                EncryptionInfo( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream );
                 EncryptionInfo( const EncryptionInfo & o );
                 EncryptionInfo( EncryptionInfo && o ) noexcept;
                 ~EncryptionInfo() override;

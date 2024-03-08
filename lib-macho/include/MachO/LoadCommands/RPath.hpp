@@ -42,7 +42,7 @@ namespace MachO
         {
             public:
                 
-                RPath( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
+                RPath( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream );
                 RPath( const RPath & o );
                 RPath( RPath && o ) noexcept;
                 ~RPath() override;

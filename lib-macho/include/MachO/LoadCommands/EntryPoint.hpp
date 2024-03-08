@@ -42,7 +42,7 @@ namespace MachO
         {
             public:
                 
-                EntryPoint( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
+                EntryPoint( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream );
                 EntryPoint( const EntryPoint & o );
                 EntryPoint( EntryPoint && o ) noexcept;
                 ~EntryPoint() override;

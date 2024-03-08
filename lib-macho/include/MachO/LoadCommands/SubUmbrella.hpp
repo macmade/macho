@@ -42,7 +42,7 @@ namespace MachO
         {
             public:
                 
-                SubUmbrella( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
+                SubUmbrella( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream );
                 SubUmbrella( const SubUmbrella & o );
                 SubUmbrella( SubUmbrella && o ) noexcept;
                 ~SubUmbrella() override;

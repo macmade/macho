@@ -42,7 +42,7 @@ namespace MachO
         {
             public:
                 
-                TwoLevelHints( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
+                TwoLevelHints( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream );
                 TwoLevelHints( const TwoLevelHints & o );
                 TwoLevelHints( TwoLevelHints && o ) noexcept;
                 ~TwoLevelHints() override;

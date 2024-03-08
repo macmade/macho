@@ -42,7 +42,7 @@ namespace MachO
         {
             public:
                 
-                Unknown( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
+                Unknown( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream );
                 Unknown( const Unknown & o );
                 Unknown( Unknown && o ) noexcept;
                 ~Unknown() override;

@@ -42,7 +42,7 @@ namespace MachO
         {
             public:
                 
-                SourceVersion( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
+                SourceVersion( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream );
                 SourceVersion( const SourceVersion & o );
                 SourceVersion( SourceVersion && o ) noexcept;
                 ~SourceVersion() override;

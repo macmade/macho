@@ -42,7 +42,7 @@ namespace MachO
         {
             public:
                 
-                VersionMin( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
+                VersionMin( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream );
                 VersionMin( const VersionMin & o );
                 VersionMin( VersionMin && o ) noexcept;
                 ~VersionMin() override;

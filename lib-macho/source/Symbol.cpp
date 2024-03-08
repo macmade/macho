@@ -37,7 +37,7 @@ namespace MachO
     {
         public:
 
-            IMPL( File::Kind kind, uint32_t stringTableOffset, XS::IO::BinaryStream & stream  );
+            IMPL( File::Kind kind, uint32_t stringTableOffset, XS::IO::BinaryStream & stream );
             IMPL( const IMPL & o );
             ~IMPL();
 

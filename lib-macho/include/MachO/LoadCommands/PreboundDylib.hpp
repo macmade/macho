@@ -43,7 +43,7 @@ namespace MachO
         {
             public:
                 
-                PreboundDylib( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
+                PreboundDylib( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream );
                 PreboundDylib( const PreboundDylib & o );
                 PreboundDylib( PreboundDylib && o ) noexcept;
                 ~PreboundDylib() override;

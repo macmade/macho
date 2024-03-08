@@ -42,7 +42,7 @@ namespace MachO
         {
             public:
                 
-                FVMLib( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
+                FVMLib( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream );
                 FVMLib( const FVMLib & o );
                 FVMLib( FVMLib && o ) noexcept;
                 ~FVMLib() override;

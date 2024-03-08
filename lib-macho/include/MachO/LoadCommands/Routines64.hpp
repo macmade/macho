@@ -42,7 +42,7 @@ namespace MachO
         {
             public:
                 
-                Routines64( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
+                Routines64( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream );
                 Routines64( const Routines64 & o );
                 Routines64( Routines64 && o ) noexcept;
                 ~Routines64() override;

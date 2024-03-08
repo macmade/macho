@@ -42,7 +42,7 @@ namespace MachO
         {
             public:
                 
-                Ident( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
+                Ident( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream );
                 Ident( const Ident & o );
                 Ident( Ident && o ) noexcept;
                 ~Ident() override;

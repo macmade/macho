@@ -42,7 +42,7 @@ namespace MachO
         {
             public:
                 
-                Note( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream  );
+                Note( uint32_t command, uint32_t size, File::Kind kind, XS::IO::BinaryStream & stream );
                 Note( const Note & o );
                 Note( Note && o ) noexcept;
                 ~Note() override;
