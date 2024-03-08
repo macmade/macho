@@ -27,7 +27,7 @@
  * @copyright   (c) 2020, Jean-David Gadina - www.xs-labs.com
  */
 
-#include <MachO/LoadCommands/SymTab.hpp>
+#include <MachO/Symbol.hpp>
 #include <MachO/ToString.hpp>
 #include <XS.hpp>
 
