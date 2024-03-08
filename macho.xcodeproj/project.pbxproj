@@ -146,6 +146,13 @@
 			remoteGlobalIDString = 05C8C31024AE1B030095E313;
 			remoteInfo = "XS++";
 		};
+		05F077102B9A8CB1003AD213 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 05C8C49C24B5191D0095E313 /* XS++.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 05C8C31024AE1B030095E313;
+			remoteInfo = "XS++";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -765,6 +772,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				05F077112B9A8CB1003AD213 /* PBXTargetDependency */,
 			);
 			name = "lib-macho";
 			productName = "lib-macho";
@@ -907,6 +915,11 @@
 			isa = PBXTargetDependency;
 			name = "XS++";
 			targetProxy = 05C8C4A224B519370095E313 /* PBXContainerItemProxy */;
+		};
+		05F077112B9A8CB1003AD213 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "XS++";
+			targetProxy = 05F077102B9A8CB1003AD213 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
